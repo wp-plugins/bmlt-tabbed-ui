@@ -1,11 +1,9 @@
 <?php
 /**
 Plugin Name: BMLT Tabbed UI
-Plugin URI: http://naflorida.org
-Description: Adds a tabbed UI for BMLT.
-Author: Jack Spence
-Author URI: http://naflorida.org
-Version: 1.1
+Plugin URI: http://wordpress.org/extend/plugins/bmlt-tabbed-ui/
+Description: Adds a jQuery Tabbed UI for BMLT.
+Version: 1.2
 */
 
 /* Disallow direct access to the plugin file */
