@@ -1,9 +1,9 @@
-=== bmlt-tabbed-ui ===
+=== BMLT Tabbed UI ===
 Contributors: Jack
 Tags: na, meeting list, meeting finder, maps, recovery, addiction, webservant, bmlt
 Requires at least: 2.6
 Tested up to: 3.3.1
-Stable tag: 1.1
+Stable tag: 1.2
 
 BMLT Tabbed UI implements a jQuery tabbed UI for BMLT.
 
@@ -31,9 +31,13 @@ If you don't know your service body ID, ask your BMLT administrator.
 
 == Screenshots ==
 
-<a href="http://orlandana.org/">Go to this Web page to get an idea of how this looks.</a>
+<a href="http://orlandona.org/meetings/">Go to this Web page to get an idea of how this works.</a>
 
 == Changelog ==
+
+= 1.2 =
+* Fixed URI on the screenshots page
+* Changed Plugin URI to Wordpress plugin directory
 
 = 1.1 =
 * Complete rewrite of plugin to conform with Wordpress standards
