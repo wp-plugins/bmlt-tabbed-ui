@@ -52,7 +52,7 @@ class BMLTTabs {
 	*/
 	function enqueue_frontend_files() {
 		wp_enqueue_style("bmlttabsfrontend-css", plugin_dir_url( __FILE__ ) . "css/bmlt_tabs.css", false, "1.0", 'all');
-		wp_enqueue_script("bmlt-ui-jquery-tools-js", "http://cdn.jquerytools.org/1.2.6/jquery.tools.min.js", array('jquery'), "1.2.6", false);
+		wp_enqueue_script("bmlt-ui-jquery-tools-js", plugin_dir_url( __FILE__ ) . "js/tabs.js", array(), "1.0", false);
 		wp_enqueue_script("bmlt-ui-dataTables-js", plugin_dir_url( __FILE__ ) . "js/jquery.dataTables.min.js", array(), "1.0", false);
 		wp_enqueue_script("bmlt-ui-colReorder-js", plugin_dir_url( __FILE__ ) . "js/ColReorder.min.js", array(), "1.0", false);
 		wp_enqueue_script("bmlttabsfrontend-js", plugin_dir_url( __FILE__ ) . "js/bmlt_tabs.js", array(), "1.0", false);
