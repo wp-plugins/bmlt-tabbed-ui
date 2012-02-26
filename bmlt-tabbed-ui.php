@@ -3,7 +3,7 @@
 Plugin Name: BMLT Tabbed UI
 Plugin URI: http://wordpress.org/extend/plugins/bmlt-tabbed-ui/
 Description: Adds a jQuery Tabbed UI for BMLT.
-Version: 1.2
+Version: 1.3
 */
 
 /* Disallow direct access to the plugin file */
