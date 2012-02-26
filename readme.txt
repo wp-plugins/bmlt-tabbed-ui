@@ -3,7 +3,7 @@ Contributors: Jack
 Tags: na, meeting list, meeting finder, maps, recovery, addiction, webservant, bmlt
 Requires at least: 2.6
 Tested up to: 3.3.1
-Stable tag: 1.3
+Stable tag: 1.4
 
 BMLT Tabbed UI implements a jQuery tabbed UI for BMLT.
 
@@ -34,6 +34,9 @@ If you don't know your service body ID, ask your BMLT administrator.
 <a href="http://orlandona.org/meetings/">Go to this Web page to get an idea of how this works.</a>
 
 == Changelog ==
+
+= 1.4 =
+* left out jquery dependency for tabs.js on 1.3
 
 = 1.3 =
 * removed jquery.tools.min.js (which was being loaded from maxcdn which keeps going down)
