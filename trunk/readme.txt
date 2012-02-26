@@ -9,7 +9,7 @@ BMLT Tabbed UI implements a jQuery tabbed UI for BMLT.
 
 == Description ==
 
-This plugin provides a jQuery tabbed UI for the Basic Meeting List Toolbox (BMLT).  So, you must have BMLT installed and running.  Just put the shortcode into a Wordpress page to get your very own tabbed interface to BMLT.  There are no settings as of yet.
+This plugin provides a jQuery tabbed UI for the Basic Meeting List Toolbox (BMLT).  You must have BMLT installed and running.  Just put the shortcode into a Wordpress page to get your very own tabbed interface to BMLT.  There are no settings as of yet.
 
 == Installation ==
 
