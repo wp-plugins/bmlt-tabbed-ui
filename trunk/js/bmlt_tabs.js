@@ -4,6 +4,7 @@ jQuery(function() {
 });
 jQuery(document).ready(function() {
 	jQuery(".entry").show();
+	jQuery(".css-panes").show();
 	jQuery('.bmlt_simple_meeting_one_meeting_name_td a').attr('target', '_blank');
 	jQuery('.bmlt_simple_meeting_one_meeting_address_td a').attr('target', '_blank');
 	jQuery('.bmlt_simple_format_table').prepend('<thead><th class="bmlt_simple_format_table_header">h1</th><th class="bmlt_simple_format_table_header">h1</th><th class="bmlt_simple_format_table_header">h1</th></thead>');
