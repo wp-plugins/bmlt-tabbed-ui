@@ -3,7 +3,7 @@
 Plugin Name: BMLT Tabbed UI
 Plugin URI: http://wordpress.org/extend/plugins/bmlt-tabbed-ui/
 Description: Adds a jQuery Tabbed UI for BMLT.
-Version: 1.4
+Version: 1.5
 */
 
 /* Disallow direct access to the plugin file */
@@ -72,7 +72,7 @@ class BMLTTabs {
 					<li><a href="#">Saturday</a></li>
 					<li><a href="#">Legend</a></li>
 				</ul>
-				<div class="css-panes">
+				<div class="css-panes" style="display:none;">
 					<div>' . apply_filters( 'the_content',"<!--BMLT_SIMPLE(switcher=GetSearchResults&weekdays[]=1&services[]={$service_body})-->" ) . '</div>
 					<div>' . apply_filters( 'the_content',"<!--BMLT_SIMPLE(switcher=GetSearchResults&weekdays[]=2&services[]={$service_body})-->" ) . '</div>
 					<div>' . apply_filters( 'the_content',"<!--BMLT_SIMPLE(switcher=GetSearchResults&weekdays[]=3&services[]={$service_body})-->" ) . '</div>
