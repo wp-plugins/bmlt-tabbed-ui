@@ -3,10 +3,10 @@ Contributors: Jack
 Tags: na, meeting list, meeting finder, maps, recovery, addiction, webservant, bmlt
 Requires at least: 3.6
 Tested up to: 3.6
-Stable tag: 3.1
+Stable tag: 3.2
 BMLT Tabbed UI implements a jQuery tabbed UI for BMLT.
 == Description ==
-This plugin provides a jQuery Tabbed UI for the Basic Meeting List Toolbox (BMLT).  You must have BMLT installed and running.  Simply put the shortcode into a Wordpress page to get your very own tabbed interface to BMLT.  Not into a tabbed interface?  There is a template for displaying meetings in a table without tabs.  Please This plugin also provides a number of shortcodes to return the number of meetings and groups in specified service bodies.  
+This plugin provides a jQuery Tabbed UI for the Basic Meeting List Toolbox (BMLT).  You must have BMLT installed and running.  Simply put the shortcode into a Wordpress page to get your very own tabbed interface to BMLT.  Not into a tabbed interface?  There is a template for displaying meetings in a table without tabs.  This plugin also provides various shortcodes to return the number of meetings and groups in specified service bodies.  Please visit settings - BMLT Tabbed UI for shortcode instructions.
 == Installation ==
 1. Place the 'bmlt-tabbed-ui' folder in your '/wp-content/plugins/' directory.
 2. Activate bmlt-tabbed-ui.
@@ -17,7 +17,7 @@ This plugin provides a jQuery Tabbed UI for the Basic Meeting List Toolbox (BMLT
 == Screenshots ==
 <a href="http://orlandona.org/meetings/">Go to this Web page to get an idea of how this works.</a>
 == Changelog ==
-= 3.0 =* Added shortcode parameter to display meeting in a table.* Changed code to support additional templates in the future.* Changed method in which meetings are fetched from the server to a more efficient JSON query.* Removed unnecessary jquery scripts making code more efficient.= 2.0 =* Added the ability to include multiple service bodies in the tabbed UI list of meetings.
+= 3.2 =* Added new template.  There are now 3 templates.* Removed unnecessary styles and styles that over-wrote theme styles.= 3.1 =* Added some missing help text.= 3.0 =* Added shortcode parameter to display meeting in a table.* Changed code to support additional templates in the future.* Changed method in which meetings are fetched from the server to a more efficient JSON query.* Removed unnecessary jquery scripts making code more efficient.= 2.0 =* Added the ability to include multiple service bodies in the tabbed UI list of meetings.
 * Added the ability to include meetings from parent service bodies from the BMLT database in the tabbed UI list of meetings.
 * Added a new shortcode [bmlt_count] to return the number of meetings in a specific service body, muliple service bodies or all meetings.
 * Added a feature in which the tabbed UI interface defaults to the current day of week.

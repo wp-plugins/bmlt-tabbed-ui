@@ -3,7 +3,7 @@
 	Plugin Name: BMLT Tabbed UI
 	Plugin URI: http://wordpress.org/extend/plugins/bmlt-tabbed-ui/
 	Description: Adds a jQuery Tabbed UI for BMLT.
-	Version: 3.1
+	Version: 3.2
 	*/
 	/* Disallow direct access to the plugin file */
 	if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
@@ -82,8 +82,8 @@
 				if (!$template) {
 					$template = '1';
 				}
-				if ($template != '1' && $template != '2') {
-					Return '<p>BMLT Tabs Error: Template must = 1 or 2.</p>';
+				if ($template != '1' && $template != '2' && $template != '3') {
+					Return '<p>BMLT Tabs Error: Template must = 1 or 2 or 3.</p>';
 				}
 				if ($service_body_parent != Null && $service_body != Null) {
 					Return '<p>BMLT Tabs Error: Cannot use service_body_parent and service_body at the same time.</p>';
@@ -242,6 +242,7 @@
 						};
 						if ($value[comments]) {
 							$value[comments] = '<br/>' . $value[comments];
+							$value[comments] = preg_replace('/(https?):\/\/([A-Za-z0-9\._\-\/\?=&;%,]+)/i', '<a href="$1://$2" target="_blank">$1://$2</a>', $value[comments]);
 						};
 						$location = "$value[meeting_name]</br>$location_text$value[location_street] $value[location_municipality], $value[location_province] $value[location_postal_code_1]$location_info";
 						$map = "<a target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]+($value[meeting_name])&ll=$value[latitude],$value[longitude]'>Map and Directions</a>";
@@ -305,6 +306,90 @@
 					$table .= $sunday;
 					$table .= '</table><br/>';
 				}
+				if ( $template == '3' ) {
+					$sunday = '<table class="bmlt_simple_meetings_table sunday" cellpadding="0" cellspacing="0" summary="Meetings">';
+					$monday = '<table class="bmlt_simple_meetings_table monday" cellpadding="0" cellspacing="0" summary="Meetings">';
+					$tuesday = '<table class="bmlt_simple_meetings_table tuesday" cellpadding="0" cellspacing="0" summary="Meetings">';
+					$wednesday = '<table class="bmlt_simple_meetings_table wednesday" cellpadding="0" cellspacing="0" summary="Meetings">';
+					$thursday = '<table class="bmlt_simple_meetings_table thursday" cellpadding="0" cellspacing="0" summary="Meetings">';
+					$friday = '<table class="bmlt_simple_meetings_table friday" cellpadding="0" cellspacing="0" summary="Meetings">';
+					$saturday = '<table class="bmlt_simple_meetings_table saturday" cellpadding="0" cellspacing="0" summary="Meetings">';
+					foreach ($result as $key => $value) {
+						$duration = explode(':',$value[duration_time]);
+						$minutes = intval($duration[0])*60 + intval($duration[1]) + intval($duration[2]);
+						$addtime = '+ ' . $minutes . ' minutes';
+						$end_time = date ('g:i A',strtotime($value[start_time] . ' ' . $addtime));
+						$value[start_time] = date ('g:i A',strtotime($value[start_time]));
+						$value[start_time] = "$value[start_time] - $end_time";
+						if ($value[location_text]) {
+							$location_text = $value[location_text] . '<br/>';
+						} else { 
+							$location_text = '';
+						};
+						if ($value[location_info]) {
+							$location_info = '<br/>' . $value[location_info];
+							$location_info = preg_replace('/(https?):\/\/([A-Za-z0-9\._\-\/\?=&;%,]+)/i', '<a href="$1://$2" target="_blank">$1://$2</a>', $location_info);
+						} else { 
+							$location_info = '';
+						};
+						if ($value[comments]) {
+							$value[comments] = '<br/>' . $value[comments];
+							$value[comments] = preg_replace('/(https?):\/\/([A-Za-z0-9\._\-\/\?=&;%,]+)/i', '<a href="$1://$2" target="_blank">$1://$2</a>', $value[comments]);
+						};
+						$location = "$value[meeting_name]</br>$location_text$value[location_street] $value[location_municipality], $value[location_province] $value[location_postal_code_1]$location_info";
+						$map = "<a target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]+($value[meeting_name])&ll=$value[latitude],$value[longitude]'>Map and Directions</a>";
+						if ( $value[weekday_tinyint] == 1 && $value[location_street] ) {
+							$sunday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
+							$sunday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'>$value[start_time]<br/>$value[formats]$value[comments]</td>";
+							$sunday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
+							$sunday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
+							$sunday .= "</tr>";
+						} elseif ( $value[weekday_tinyint] == 2 && $value[location_street] ) {
+							$monday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
+							$monday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'>$value[start_time]<br/>$value[formats]$value[comments]</td>";
+							$monday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
+							$monday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
+							$monday .= "</tr>";
+						} elseif ( $value[weekday_tinyint] == 3 && $value[location_street] ) {
+							$tuesday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
+							$tuesday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'>$value[start_time]<br/>$value[formats]$value[comments]</td>";
+							$tuesday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
+							$tuesday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
+							$tuesday .= "</tr>";
+						} elseif ( $value[weekday_tinyint] == 4 && $value[location_street] ) {
+							$wednesday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
+							$wednesday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'>$value[start_time]<br/>$value[formats]$value[comments]</td>";
+							$wednesday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
+							$wednesday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
+							$wednesday .= "</tr>";
+						} elseif ( $value[weekday_tinyint] == 5 && $value[location_street] ) {
+							$thursday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
+							$thursday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'>$value[start_time]<br/>$value[formats]$value[comments]</td>";
+							$thursday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
+							$thursday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
+							$thursday .= "</tr>";
+						} elseif ( $value[weekday_tinyint] == 6 && $value[location_street] ) {
+							$friday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
+							$friday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'>$value[start_time]<br/>$value[formats]$value[comments]</td>";
+							$friday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
+							$friday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
+							$friday .= "</tr>";
+						} elseif ( $value[weekday_tinyint] == 7 && $value[location_street] ) {
+							$saturday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
+							$saturday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'>$value[start_time]<br/>$value[formats]$value[comments]</td>";
+							$saturday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
+							$saturday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
+							$saturday .= "</tr>";
+						}
+					}
+					$sunday .= "</table>";
+					$monday .= "</table>";
+					$tuesday .= "</table>";
+					$wednesday .= "</table>";
+					$thursday .= "</table>";
+					$friday .= "</table>";
+					$saturday .= "</table>";
+				}
 				$format_table = '<a id="legend" name="legend"></a><table class="bmlt_simple_format_table" cellpadding="0" cellspacing="0" summary="Format Codes">';
 				if ( $template == '2' ) {
 					$format_table .= "<tr><td colspan='3' style='font-size:16px !important;'><strong>MEETING FORMATS</strong></td></tr>";
@@ -318,8 +403,10 @@
 					$format_table .= "</tr>";
 				}
 				$format_table .= "</table>";
-				//$output .= '<script type="text/javascript" src="http://naflorida.org/wp-content/plugins/bmlt-tabbed-ui/js/bmlt_tabs.js?ver=1.0"></script>';
-				if ( $template == '1' ) {
+				
+				$format_table = preg_replace('/(https?):\/\/([A-Za-z0-9\._\-\/\?=&;%,]+)/i', '<a href="$1://$2" target="_blank">$1://$2</a>', $format_table);			
+
+				if ( $template == '1' || $template == '3' ) {
 					$output .= '<div id="tabs">';
 					$output .= '<ul>';
 					$output .= '<li><a href="#tabs-1">Sunday</a></li>';
@@ -346,13 +433,6 @@
 					$output .= '<div>' . $format_table . '</div>';
 				}
 				return $output;
-			}
-			/**
-			* @desc BMLT Make Links
-			*/
-			function makeLinks($str)
-			{    
-				return preg_replace('/(https?):\/\/([A-Za-z0-9\._\-\/\?=&;%,]+)/i', '<a href="$1://$2" target="_blank">$1://$2</a>', $str);
 			}
 			/**
 			* @desc BMLT Meeting Count
