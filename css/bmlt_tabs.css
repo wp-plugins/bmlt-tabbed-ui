@@ -1,41 +1,1 @@
-.bmlt_alt_0
-{
-	background-color:#E2E4FF;
-}
-.bmlt_alt_1
-{
-	background-color:#FFF;
-}
-.bmlt_simple_meeting_one_meeting_time_td
-{
-	width:63px!important;
-}
-.bmlt_simple_meeting_one_meeting_time_t2_td
-{
-	width:30%;
-	text-align: left;
-}
-.bmlt_simple_meeting_one_meeting_address_t2_td
-{
-	width:50%;
-	text-align: left;
-}
-.bmlt_simple_meeting_one_meeting_map_t2_td
-{
-	width:20%;
-	text-align: center;
-}
-.ui-tabs .ui-tabs-panel {
-padding: .5em .4em !important;
-}
-#tabs {
-display: none;
-}
-.bmlt_simple_meeting_one_meeting_map_t2_td {
-width: 20%;
-text-align: center;
-vertical-align: middle;
-}
-.bmlt_simple_meetings_table	td {
-padding-left:8px !important;
-}
+.bmlt_alt_0{background-color:#E2E4FF;}.bmlt_alt_1{background-color:#FFF;}.bmlt_simple_meeting_one_meeting_time_td{width:63px!important;}.bmlt_simple_meeting_one_meeting_time_t2_td{width:30%;text-align: left;}.bmlt_simple_meeting_one_meeting_address_t2_td{width:50%;text-align: left;}.bmlt_simple_meeting_one_meeting_map_t2_td{width:20%;text-align: center;}.ui-tabs .ui-tabs-panel {padding: .5em .4em !important;}#tabs {display: none;}.bmlt_simple_meeting_one_meeting_map_t2_td {width: 20%;text-align: center;vertical-align: middle;}.bmlt_simple_meetings_table td {padding-left:8px !important;}.bmlt_simple_meetings_table {margin: 0 !important;}
