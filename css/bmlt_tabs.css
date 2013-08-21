@@ -2,205 +2,40 @@
 {
 	background-color:#E2E4FF;
 }
-
 .bmlt_alt_1
 {
 	background-color:#FFF;
 }
-
-.bmlt_simple_meeting_one_meeting_address_td a
-{
-	text-decoration:none!important;
-	color:#7C7CCC!important;
-}
-
-.bmlt_simple_meeting_one_meeting_address_td a:hover,.bmlt_simple_meeting_one_meeting_address_td a:visited
-{
-	text-decoration:underline!important;
-}
-
-.bmlt_simple_meetings_table,.bmlt_simple_format_table
-{
-	width:100%;
-	border:1px solid #DDD;
-	border-collapse:collapse;
-	margin:0;
-}
-
-.bmlt_simple_meetings_table td,.bmlt_simple_format_table td
-{
-	border-right:1px solid #DDD!important;
-	border-top:1px solid #DDD!important;
-	border-bottom:1px solid #DDD!important;
-	border-left:1px solid #DDD!important;
-	padding:7px!important;
-	vertical-align:middle!important;
-	color: #555 !important;
-	border-collapse: collapse !important;
-}
-
-.c_comdef_search_results_province,.bmlt_simple_format_table_header
-{
-	display:none!important;
-}
-
 .bmlt_simple_meeting_one_meeting_time_td
 {
-	font-size:12px;
 	width:63px!important;
-	color:#111!important;
 }
-
 .bmlt_simple_meeting_one_meeting_time_t2_td
 {
-	font-size:14px;
 	width:30%;
-	color:#111!important;
 	text-align: left;
 }
-
 .bmlt_simple_meeting_one_meeting_address_t2_td
 {
-	font-size:14px;
 	width:50%;
-	color:#111!important;
 	text-align: left;
 }
-
 .bmlt_simple_meeting_one_meeting_map_t2_td
 {
-	font-size:14px;
 	width:20%;
-	color:#111!important;
 	text-align: center;
 }
-
-.bmlt_float_right
-{
-	background-color:#006699!important;
-	float:right;
-	margin-left:8px;
-	margin-top:8px;
-	padding:4px;
-	width:35%;
+.ui-tabs .ui-tabs-panel {
+padding: .5em .4em !important;
 }
-
-.bmlt_float_left
-{
-	background-color:white!important;
-	color:#333333!important;
-	float:left;
-	font-family:"MS Serif","New York",serif;
-	font-size:medium;
-	font-style:italic;
-	margin-left:8px;
-	margin-top:8px;
-	padding:10px;
-	width:40%;
+#tabs {
+display: none;
 }
-
-.bmlt_float_left .header
-{
-	color:#990000!important;
-	font-family:"Comic Sans MS",cursive;
-	font-size:large;
-	font-style:normal;
-	font-weight:bold;
-	padding-bottom:8px;
+.bmlt_simple_meeting_one_meeting_map_t2_td {
+width: 20%;
+text-align: center;
+vertical-align: middle;
 }
-
-.bmlt_float_left .bmlt_simple_meeting_one_meeting_div
-{
-	margin-bottom:16px;
-	margin-left:1em;
-}
-
-.bmlt_float_left div
-{
-	margin-left:1em;
-}
-
-.bmlt_float_left div.bmlt_simple_meeting_one_meeting_name_div
-{
-	font-weight:bold;
-	margin-left:0;
-}
-
-.bmlt_float_left div.bmlt_simple_meeting_one_meeting_time_div,.bmlt_float_left div.bmlt_simple_meeting_one_meeting_weekday_div
-{
-	float:left;
-	font-style:normal;
-	font-weight:bold;
-}
-
-.bmlt_float_left div.bmlt_simple_meeting_one_meeting_address_div
-{
-	clear:left;
-}
-
-.bmlt_float_left div.bmlt_simple_meeting_one_meeting_format_div
-{
-	font-style:normal;
-}
-
-.bmlt_float_left a,.bmlt_float_left a:visited
-{
-	text-decoration:none!important;
-}
-
-.bmlt_float_left a:hover,.bmlt_float_left a:active
-{
-	text-decoration:underline!important;
-}
-
-.dataTables_wrapper
-{
-	border:0 none!important;
-	clear:none;
-	margin-bottom:0!important;
-}
-
-#bmlt_page_items
-{
-	border:0;
-}
-
-.bmlt_simple_meeting_one_meeting_weekday_td
-{
-	display:none;
-}
-
-#tabs
-{
-	display:none;
-}
-
-td.group
-{
-	border-top:1px solid !important;
-	border-bottom:0;
-}
-
-.map-head
-{
-	display:none;
-}
-
-td.sorting_3
-{
-	border-top:1px !important;
-}
-
-#grouptabs td
-{
-	border:0;
-	padding-bottom: 5px;
-	padding-top: 5px;
-}
-table#grouptabs {
-	border: 1px solid;
-}
-.ui-tabs .ui-tabs-nav {
-margin: 0 !important;
-padding: .2em .2em 0 !important;
+.bmlt_simple_meetings_table	td {
+padding-left:8px !important;
 }
