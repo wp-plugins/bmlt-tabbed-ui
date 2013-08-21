@@ -3,7 +3,7 @@
 	Plugin Name: BMLT Tabbed UI
 	Plugin URI: http://wordpress.org/extend/plugins/bmlt-tabbed-ui/
 	Description: Adds a jQuery Tabbed UI for BMLT.
-	Version: 3.2
+	Version: 3.3
 	*/
 	/* Disallow direct access to the plugin file */
 	if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
@@ -501,7 +501,7 @@
 					}
 				}
 				$ch      = curl_init();
-				$timeout = 0; // set to zero for no timeout
+				$timeout = 0; // set to zero for no time-out
 				curl_setopt($ch, CURLOPT_URL, 'http://naflorida.org/bmlt_server/client_interface/json/index.php?switcher=GetSearchResults&data_field_key=meeting_name&formats[]=-47' . $services);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
@@ -520,12 +520,12 @@
 	
 			}
 			/**
-			* @desc Adds the options subpanel
+			* @desc Adds the options sub-panel
 			*/
 			function admin_menu_link()
 			{
 				//If you change this from add_options_page, MAKE SURE you change the filter_plugin_actions function (below) to
-				//reflect the page filename (ie - options-general.php) of the page your plugin is under!
+				//reflect the page file name (i.e. - options-general.php) of the page your plugin is under!
 				add_options_page('BMLT Tabs', 'BMLT Tabs', 10, basename(__FILE__), array(
 					&$this,
 					'admin_options_page'
@@ -544,7 +544,7 @@
 					if (!wp_verify_nonce($_POST['_wpnonce'], 'bmlttabsupdate-options'))
 						die('Whoops! There was a problem with the data you posted. Please go back and try again.');
 					$this->save_admin_options();
-					echo '<div class="updated"><p>Success! Your changes were sucessfully saved!</p></div>';
+					echo '<div class="updated"><p>Success! Your changes were successfully saved!</p></div>';
 				}
 				echo '<div class="wrap">';
 				echo '<h2>BMLT Tabs</h2>';
@@ -571,6 +571,7 @@
 				echo '<p><b>[bmlt_count template="1" service_body="2"]</b></p>';
 				echo '<p>template = "1" will display a tabbed UI</p>';
 				echo '<p>template = "2" will display a table (not tabbed).</p>';
+				echo '<p>template = "3" will display a tabbed UI with a different twist.</p>';
 				echo '<h2>BMLT Count</h2>';
 				echo '<p>Will return the number of meetings for one or more BMLT service bodies.</p>';
 				echo '<p><b>Shortcode Usage</b></p>';
@@ -606,7 +607,7 @@
 			*/
 			function filter_plugin_actions($links, $file)
 			{
-				//If your plugin is under a different top-level menu than Settiongs (IE - you changed the function above to something other than add_options_page)
+				//If your plugin is under a different top-level menu than Settings (IE - you changed the function above to something other than add_options_page)
 				//Then you're going to want to change options-general.php below to the name of your top-level page
 				$settings_link = '<a href="options-general.php?page=' . basename(__FILE__) . '">' . __('Settings') . '</a>';
 				array_unshift($links, $settings_link); // before other links
