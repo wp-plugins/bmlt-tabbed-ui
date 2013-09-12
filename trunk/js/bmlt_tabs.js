@@ -28,32 +28,41 @@ jQuery(document).ready( function($) {
 	});
 
 	$("#e2").select2({
-                placeholder: "Select a City",
+                placeholder: "Cities",
 				dropdownAutoWidth: true,
                 allowClear: false,
-                width: "180px",
+                width: "copy",
 				minimumResultsForSearch: 1
      });
 	
 	$("#e3").select2({
-                placeholder: "Select a Home Group",
+                placeholder: "Home Groups",
 				dropdownAutoWidth: true,
                 allowClear: false,
-                width: "180px",
+                width: "copy",
 				minimumResultsForSearch: 1
      });
 	
 	$("#e4").select2({
-                placeholder: "Select a Location",
+                placeholder: "Locations",
 				dropdownAutoWidth: true,
                 allowClear: false,
-                width: "180px",
+                width: "copy",
+				minimumResultsForSearch: 1
+     });
+	
+	$("#e5").select2({
+                placeholder: "Zip Codes",
+				dropdownAutoWidth: true,
+                allowClear: false,
+                width: "copy",
 				minimumResultsForSearch: 1
      });
 	
 	$("#e2").on('click', function(){
 		$("#e3").select2("val", null);
 		$("#e4").select2("val", null);
+		$("#e5").select2("val", null);
         // check the pages to find the page that is visible and hide it
 		var val = $("#e2").val();
         $('.page').each(function(index) {
@@ -72,6 +81,7 @@ jQuery(document).ready( function($) {
         // check the pages to find the page that is visible and hide it
 		$("#e2").select2("val", null);
 		$("#e4").select2("val", null);
+		$("#e5").select2("val", null);
 		var val = $("#e3").val();
         $('.page').each(function(index) {
             if(this.className.indexOf('show', 0) > -1){
@@ -89,7 +99,26 @@ jQuery(document).ready( function($) {
         // check the pages to find the page that is visible and hide it
 		$("#e2").select2("val", null);
 		$("#e3").select2("val", null);
+		$("#e5").select2("val", null);
 		var val = $("#e4").val();
+        $('.page').each(function(index) {
+            if(this.className.indexOf('show', 0) > -1){
+                $("#"+this.id).fadeOut(function(){
+                    $("#"+this.id).removeClass("show").addClass("hide");
+                    showPage(val);
+                });
+                // found the visible page now break out of the each loop.
+                return;
+            }
+        });
+   });
+
+	$("#e5").on('click', function(){
+        // check the pages to find the page that is visible and hide it
+		$("#e2").select2("val", null);
+		$("#e3").select2("val", null);
+		$("#e4").select2("val", null);
+		var val = $("#e5").val();
         $('.page').each(function(index) {
             if(this.className.indexOf('show', 0) > -1){
                 $("#"+this.id).fadeOut(function(){
@@ -107,6 +136,7 @@ jQuery(document).ready( function($) {
 		$("#e2").select2("val", null);
 		$("#e3").select2("val", null);
 		$("#e4").select2("val", null);
+		$("#e5").select2("val", null);
 	
         // check the pages to find the page that is visible and hide it
         $('.page').each(function(index) {
