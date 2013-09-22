@@ -140,7 +140,7 @@ color: #000 !important;
 	padding: .8em;
 }
 #day {
-	background: #DB4865 url(images/ui-bg_diagonals-small_40_db4865_40x40.png) 50% 50% repeat;
+	background: #DB4865 url(images/ui-bg_diagonals-small_40_db4865_40x40.png) 50% 50% repeat !important;
 	font-weight: normal;
 	font-size: 1.0em;
 }
