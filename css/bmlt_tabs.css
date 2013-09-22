@@ -22,6 +22,11 @@
 .bmlt-time {
 	margin-bottom:8px;
 }
+.bmlt-table th {
+background: #93C3CD url(images/ui-bg_diagonals-small_50_93c3cd_40x40.png) 50% 50% repeat !important;
+font-weight: bold;
+color: #333;
+}
 .bmlt-comments {
 	margin-top:8px;
 }
@@ -78,7 +83,7 @@ div.meeting-header{
 	border: 1px solid #AFC7D8;
 	padding: .8em;
 }
-.bmlt-table {
+table.bmlt-table {
 	background-color: #FFF;
 	margin-top: 0;
 	margin-bottom: 0;
@@ -89,7 +94,7 @@ div.meeting-header{
 	border: 1px solid #08578E;
 	margin-bottom: 10px;
 }
-.ui-bmlt-table {
+table.ui-bmlt-table {
 	margin-top: 0;
 	border-collapse: collapse;
 	margin-bottom: 0px;
