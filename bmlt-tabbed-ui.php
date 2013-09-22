@@ -3,7 +3,7 @@
 	Plugin Name: BMLT Tabbed UI
 	Plugin URI: http://wordpress.org/extend/plugins/bmlt-tabbed-ui/
 	Description: Adds a jQuery Tabbed UI for BMLT.
-	Version: 4.3
+	Version: 4.5
 	*/
 	/* Disallow direct access to the plugin file */
 	if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
@@ -132,6 +132,8 @@
 					"service_body_parent" => '',
 					"has_tabs" => '',
 					"template" => '',
+					"dropdown_width" => '',
+					"has_zip_codes" => '',
 					"header" => ''
 				), $atts));
 				$root_server = $this->options['root_server'];
@@ -142,6 +144,12 @@
 				$services = '';
 				if ( $template == '' ) {
 					$template = '1';
+				}
+				if ( $dropdown_width == '' ) {
+					$dropdown_width = 'auto';
+				}
+				if ( $has_zip_codes == '' ) {
+					$has_zip_codes = '1';
 				}
 				if ( $has_tabs != '0' ) {
 					$has_tabs = '1';
@@ -241,6 +249,7 @@
 						$result = json_decode($results,true);
 						set_transient( $root_server_services, $result, 60*60*12 );
 					}
+					$unique_zips = array();
 					$unique_cities = array();
 					$unique_groups = array();
 					$unique_locations = array();
@@ -248,25 +257,36 @@
 						$unique_cities[] = $value[location_municipality];
 						if ( $value[location_street] ) {
 							$unique_groups[] = $value[meeting_name];
-							$unique_location[] = $value[location_text];
+							$unique_locations[] = $value[location_text];
+						}
+						if ( $value[location_postal_code_1] ) {
+							$unique_zips[] = $value[location_postal_code_1];
 						}
 					}
+					
+					$unique_zip = array_unique($unique_zips);
 					$unique_city = array_unique($unique_cities);
 					$unique_group = array_unique($unique_groups);
-					$unique_location = array_unique($unique_location);
+					$unique_location = array_unique($unique_locations);
+					
+					$unique_zip = array_filter( $unique_zip );
 					$unique_city = array_filter( $unique_city );
 					$unique_group = array_filter( $unique_group );
 					$unique_location = array_filter( $unique_location );
+					
+					$unique_zip = array_slice($unique_zip, 0);
 					$unique_city = array_slice($unique_city, 0);
 					$unique_group = array_slice($unique_group, 0);
 					$unique_location = array_slice($unique_location, 0);
+					
+					asort($unique_zip);
 					asort($unique_city);
 					$number_cities = count($unique_city);
 					$number_locations = count($unique_location);
 					asort($unique_group);
 					asort($unique_location);
 				}
-				$root_server_services = 'f_'.$root_server.''.$services;
+				$root_server_services = 'ff_'.$root_server;
 				if ( false === ( $format = get_transient( $root_server_services ) ) ) {
 					// It wasn't there, so regenerate the data and save the transient
 					$ch      = curl_init();
@@ -276,7 +296,7 @@
 					$formats = curl_exec($ch);
 					curl_close($ch);
 					$format = json_decode($formats,true);
-					set_transient( $root_server_services, $result, 60*60*12 );
+					set_transient( $root_server_services, $format, 60*60*12 );
 				}
 
 				$format_table = '<table class="bmlt-table">';
@@ -679,8 +699,7 @@
 						<div class="hide ui-bmlt-header ui-state-default">
 						
 							<button id="day" class="icon-format ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="bmlt-button-weekday ui-button-text">Weekdays</span></button>
-							
-							<select style="width:200px" class="dropdown-menu" data-placeholder="Select a City" id="e2">
+							<select style="width:'.$dropdown_width.';" data-placeholder="Cities" id="e2">
 								<option></option>';
 								foreach ($unique_city as $city_value) {
 									$output .= "<option value=".preg_replace('/[\s\W]+/', '', $city_value).">$city_value</option>";
@@ -688,7 +707,7 @@
 								$output .= '
 							</select>
 
-							<select style="width:200px" class="dropdown-menu" data-placeholder="Select a Home Group" id="e3">
+							<select style="width:'.$dropdown_width.';" data-placeholder="Home Groups" id="e3">
 								<option></option>';
 								foreach ($unique_group as $group_value) {
 									$output .= "<option value=".preg_replace('/[\s\W]+/', '', $group_value).">$group_value</option>";
@@ -696,14 +715,30 @@
 								$output .= '
 							</select>
 
-							<select style="width:200px" class="dropdown-menu" data-placeholder="Select a Location" id="e4">
+							<select style="width:'.$dropdown_width.';" data-placeholder="Locations" id="e4">
 								<option></option>';
 								foreach ($unique_location as $location_value) {
 									$output .= "<option value=".preg_replace('/[\s\W]+/', '', $location_value).">$location_value</option>";
 								}
 								$output .= '
-							</select>
+							</select>';
 
+							if ( $has_zip_codes == '1' ) {
+
+							$output .= '
+
+							<select style="width:'.$dropdown_width.';" data-placeholder="Zip Codes" id="e5">
+								<option></option>';
+								foreach ($unique_zip as $zip_value) {
+									$output .= "<option value=".preg_replace('/[\s\W]+/', '', $zip_value).">$zip_value</option>";
+								}
+								$output .= '
+							</select>';
+							
+							}
+
+							$output .= '
+							
 						</div>';
 					}
 					if ( $has_tabs == '1' ) {
@@ -803,6 +838,9 @@
 					$output .= $this->get_the_meetings($result, $unique_city, "location_municipality");
 					$output .= $this->get_the_meetings($result, $unique_group, "meeting_name");
 					$output .= $this->get_the_meetings($result, $unique_location, "location_text");
+					if ( $has_zip_codes == '1' ) {
+						$output .= $this->get_the_meetings($result, $unique_zip, "location_postal_code_1");
+					}
 
 					$output .= '
 					<div class="hide" id="thislegend">';
@@ -832,13 +870,6 @@
 			{
 				foreach ($unique_data as $this_value) {
 					$this_output .= "<div class='row hide page' id='".preg_replace('/[\s\W]+/', '', $this_value)."'>";
-//					$this_output .= "<div class='meeting-header'>$this_value</div>";
-//					$this_output .= "<div class='row hide page' id='".preg_replace('/[\s\W]+/', '', $this_value)."'>";
-//					$this_output .= "<table class='bmlt-table'>";
-//					$this_output .= "<thead>";
-//					$this_output .= "<tr class='ui-state-active'><th colspan='4'>$this_value Meetings</th></tr>";
-//					$this_output .= "</thead>";
-//					$this_output .= "</table>";
 					$sunday_init = 0;
 					$monday_init = 0;
 					$tuesday_init = 0;
@@ -1160,8 +1191,19 @@
 				<p>An example parent service body is a Region.  This would be useful to get all meetings from a specific Region.</p>
 				<p>If you don't know your service body ID, ask your BMLT administrator.</p>
 				<p><i>You cannot combine the service_body and parent_service_body parameters.</i></p>
+				<h2>Dropdown Width</h2>
+				<p>With this parameter you can change the width of the dropdowns.</p>
+				<p><b>[bmlt_tabs service_body="2" header="1" dropdown_width="auto"|130px|20%]</b></p>
+				<p>dropdown_width="auto" (width will be calculated automatically) (default)</p>
+				<p>dropdown_width="130px" (width will be calculated in pixels)</p>
+				<p>dropdown_width="20%" (width will be calculated as a percent of the container width)</p>
+				<h2>Zip Codes or No Zip Codes</h2>
+				<p>With this parameter you can show or hide the zip code dropdown.</p>
+				<p><b>[bmlt_tabs service_body="2" header="1" has_zip_codes='0']</b></p>
+				<p>has_zip_codes="0" (hide zip code dropdown)</p>
+				<p>has_zip_codes="1" (show zip code dropdown) (default)</p>
 				<h2>Tabs or No Tabs</h2>
-				<p>With this option you can display meetings without tabs.</p>
+				<p>With this parameter you can display meetings without tabs.</p>
 				<p><b>[bmlt_tabs service_body="2" has_tabs="0"]</b></p>
 				<p>has_tabs="0" (display meetings without tabs)</p>
 				<p>has_tabs="1" (display meetings with tabs) (default)</p>
