@@ -71,6 +71,7 @@ div.meeting-header{
 	width: 15%;
 }
 .ui-bmlt-header {
+	border: 1px solid #08578E !important;
 	padding: .4em 0 .4em .4em;
 	margin-bottom: 10px;
 }
