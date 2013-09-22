@@ -3,7 +3,7 @@
 	Plugin Name: BMLT Tabbed UI
 	Plugin URI: http://wordpress.org/extend/plugins/bmlt-tabbed-ui/
 	Description: Adds a jQuery Tabbed UI for BMLT.
-	Version: 4.4
+	Version: 4.7
 	*/
 	/* Disallow direct access to the plugin file */
 	if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
@@ -257,24 +257,28 @@
 						$unique_cities[] = $value[location_municipality];
 						if ( $value[location_street] ) {
 							$unique_groups[] = $value[meeting_name];
-							$unique_location[] = $value[location_text];
+							$unique_locations[] = $value[location_text];
 						}
 						if ( $value[location_postal_code_1] ) {
 							$unique_zips[] = $value[location_postal_code_1];
 						}
 					}
+					
 					$unique_zip = array_unique($unique_zips);
 					$unique_city = array_unique($unique_cities);
 					$unique_group = array_unique($unique_groups);
-					$unique_location = array_unique($unique_location);
+					$unique_location = array_unique($unique_locations);
+					
 					$unique_zip = array_filter( $unique_zip );
 					$unique_city = array_filter( $unique_city );
 					$unique_group = array_filter( $unique_group );
 					$unique_location = array_filter( $unique_location );
+					
 					$unique_zip = array_slice($unique_zip, 0);
 					$unique_city = array_slice($unique_city, 0);
 					$unique_group = array_slice($unique_group, 0);
 					$unique_location = array_slice($unique_location, 0);
+					
 					asort($unique_zip);
 					asort($unique_city);
 					$number_cities = count($unique_city);
