@@ -1,0 +1,176 @@
+.value_value {
+    display: block;
+    float: none;
+    padding-bottom: 5px;
+    padding-left: 144px;
+    padding-right: 2px;
+    text-align: left;
+}
+.content tr.odd {
+    background-color: #D8DDCD;
+    color: #222222;
+}
+.content tr.even {
+    background-color: #D8DDCD;
+    color: #222222;
+}
+.entry {  
+	display: none;
+}
+
+ul.css-tabs {  
+	margin:0 !important; 
+	padding:0;
+	height:24px;
+	border-bottom:1px solid #666;
+}
+
+/* single tab */
+ul.css-tabs li {  
+	float:left;	 
+	padding:0; 
+	margin:0;  
+	list-style-type:none;	
+}
+
+/* link inside the tab. uses a background image */
+ul.css-tabs a {
+	-moz-border-bottom-colors: none;
+	-moz-border-image: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	background-color: #EFEFEF !important;
+	border-color: #666666 #666666 -moz-use-text-color !important;
+	border-radius: 4px 4px 0 0;
+	border-style: solid solid none;
+	border-width: 1px 1px 0;
+	color: #777777 !important;
+	display: block;
+	float: left;
+	font-size: 90%;
+	height: 12px;
+	margin: 0;
+	outline: 0 none;
+	padding-top: 2px;
+	padding-bottom: 9px;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-decoration: none !important;
+}
+
+ul.css-tabs a:hover {
+	background-color:#F7F7F7 !important;
+	color:#333 !important;
+}
+.bmlt_simple_meeting_one_meeting_name_td a, .bmlt_simple_meeting_one_meeting_name_td a:visited {
+	color: black !important;
+	text-decoration: underline !important;
+}
+.bmlt_simple_meeting_one_meeting_address_td a, .bmlt_simple_meeting_one_meeting_address_td a:visited {
+	color: black !important;
+	text-decoration: none !important;
+}
+.bmlt_simple_meeting_one_meeting_name_td a:hover {
+	color: blue !important;
+	text-decoration: none !important;
+}	
+/* selected tab */
+ul.css-tabs a.current {
+	background-color:#ddd !important;
+	border-bottom:1px solid #ddd;	
+	color:#000 !important;	
+	cursor:default;
+}
+/* tab pane */
+.css-panes div {
+	border:1px solid #666;
+	border-top-width: 0px;
+	background-color:#ddd !important;	
+	padding: 3px;
+	font: 100%/140% Arial,Helvetica,sans-serif;
+}
+.bmlt_simple_meetings_table, .bmlt_simple_format_table {
+	width: 100%;
+	background-color: #DDDDDD !important;
+}
+.bmlt_simple_meetings_table td, .bmlt_simple_format_table td {
+	border-right: 1px solid white !important;
+	border-top: 1px solid white !important;
+	border-bottom: 1px solid white !important;
+	border-left: 1px solid white !important;
+	padding: 4px !important;
+	vertical-align: middle !important;
+}
+.bmlt_simple_meeting_one_meeting_weekday_td, .c_comdef_search_results_province, .bmlt_simple_format_table_header {
+	display:none !important;
+}
+.bmlt_simple_meeting_one_meeting_time_td {
+	width:63px !important;
+}
+.bmlt_float_right {
+	background-color: #006699 !important;
+	float: right;
+	margin-left: 8px;
+	margin-top: 8px;
+	padding: 4px;
+	width: 35%;
+}
+.bmlt_float_left {
+	background-color: white !important;
+	color: #333333 !important;
+	float: left;
+	font-family: "MS Serif","New York",serif;
+	font-size: medium;
+	font-style: italic;
+	margin-left: 8px;
+	margin-top: 8px;
+	padding: 10px;
+	width: 40%;
+}
+.bmlt_float_left .header {
+	color: #990000 !important;
+	font-family: "Comic Sans MS",cursive;
+	font-size: large;
+	font-style: normal;
+	font-weight: bold;
+	padding-bottom: 8px;
+}
+.bmlt_float_left .bmlt_simple_meeting_one_meeting_div {
+	margin-bottom: 16px;
+	margin-left: 1em;
+}
+.bmlt_float_left div {
+	margin-left: 1em;
+}
+.bmlt_float_left div.bmlt_simple_meeting_one_meeting_name_div {
+	font-weight: bold;
+	margin-left: 0;
+}
+.bmlt_float_left div.bmlt_simple_meeting_one_meeting_time_div, .bmlt_float_left div.bmlt_simple_meeting_one_meeting_weekday_div {
+	float: left;
+	font-style: normal;
+	font-weight: bold;
+}
+.bmlt_float_left div.bmlt_simple_meeting_one_meeting_address_div {
+	clear: left;
+}
+.bmlt_float_left div.bmlt_simple_meeting_one_meeting_format_div {
+	font-style: normal;
+}
+.bmlt_float_left a, .bmlt_float_left a:visited {
+	color: #666666 !important;
+	text-decoration: none !important;
+}
+.bmlt_float_left a:hover, .bmlt_float_left a:active {
+	color: #666666 !important;
+	text-decoration: underline !important;
+}
+.date {
+	border: 1px groove #333333;
+	border-radius: 8px 8px 8px 8px;
+}
+.dataTables_wrapper {
+border: 0 none !important;
+clear: none;
+}
