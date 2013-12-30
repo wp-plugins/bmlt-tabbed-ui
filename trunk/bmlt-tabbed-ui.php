@@ -15,7 +15,7 @@
 			/**
 			 * @var string The plugin version
 			 */
-			var $version = '4.9';
+			var $version = '4.8.2';
 	
 			/**
 			 * @var string The options string name for this plugin
