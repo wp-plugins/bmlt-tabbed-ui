@@ -3,7 +3,7 @@
 	Plugin Name: BMLT Tabbed UI
 	Plugin URI: http://wordpress.org/extend/plugins/bmlt-tabbed-ui/
 	Description: Adds a jQuery Tabbed UI for BMLT.
-	Version: 4.7
+	Version: 4.8
 	*/
 	/* Disallow direct access to the plugin file */
 	if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
@@ -65,6 +65,12 @@
 							&$this,
 							"bmlt_group_count"
 						));
+						
+						add_filter('body_class', array(
+							&$this,
+							'my_class_names'
+						), 0);
+						
 					}
 				}
 				// Content filter
@@ -72,6 +78,10 @@
 					&$this,
 					'filter_content'
 				), 0);
+			}
+			function my_class_names($classes) {
+				$classes[] = 'bmlt-tabs';
+				return $classes;
 			}
 			function is_root_server_missing() {
 				$root_server = $this->options['root_server'];
@@ -125,12 +135,53 @@
 			/**
 			* @desc BMLT Tabs Create shortcode
 			*/
+
+			/**
+			 * Create Unique Arrays using an md5 hash
+			 *
+			 * @param array $array
+			 * @return array
+			 */
+			function arrayUnique($array, $preserveKeys = true)
+			{
+				// Unique Array for return
+				$arrayRewrite = array();
+				// Array with the md5 hashes
+				$arrayHashes = array();
+				foreach($array as $key => $item) {
+					// Serialize the current element and create a md5 hash
+					$hash = md5(serialize($item));
+					// If the md5 didn't come up yet, add the element to
+					// to arrayRewrite, otherwise drop it
+					if (!isset($arrayHashes[$hash])) {
+						// Save the current element hash
+						$arrayHashes[$hash] = $hash;
+						// Add element to the unique Array
+						if ($preserveKeys) {
+							$arrayRewrite[$key] = $item;
+						} else {
+							$arrayRewrite[] = $item;
+						}
+					}
+				}
+				return $arrayRewrite;
+			}
+
+			function sortBySubkey(&$array, $subkey, $sortType = SORT_ASC) {
+				foreach ($array as $subarray) {
+					$keys[] = $subarray[$subkey];
+				}
+				array_multisort($keys, $sortType, $array);
+			}
+  
 			function tabbed_ui($atts, $content = null)
 			{
+				global $template, $unique_areas;
 				extract(shortcode_atts(array(
 					"service_body" => '',
 					"service_body_parent" => '',
 					"has_tabs" => '',
+					"has_formats" => '',
 					"template" => '',
 					"dropdown_width" => '',
 					"has_zip_codes" => '',
@@ -151,17 +202,23 @@
 				if ( $has_zip_codes == '' ) {
 					$has_zip_codes = '1';
 				}
+				if ( $has_formats == '' ) {
+					$has_formats = '1';
+				}
 				if ( $has_tabs != '0' ) {
 					$has_tabs = '1';
 				}
 				if ( $header != '0' ) {
 					$header = '1';
 				}
-				if ($template != '1' && $template != '2' && $template != '3' && $template != 'btw') {
+				if ($template != '1' && $template != '2' && $template != '3' && $template != 'btw' && $template != 'voting') {
 					Return '<p>BMLT Tabs Error: Template must = 1 or 2 or 3.</p>';
 				}
 				if ($service_body_parent != Null && $service_body != Null) {
 					Return '<p>BMLT Tabs Error: Cannot use service_body_parent and service_body at the same time.</p>';
+				}
+				if ($service_body == '' && $service_body_parent == '') {
+					Return '<p>BMLT Tabs Error: Service body missing from shortcode.</p>';
 				}
 				if ($service_body != Null) {
 					$service_body = array_map('trim', explode(",", $service_body));
@@ -183,7 +240,39 @@
 						}
 					}
 				}
-				$timeout = 30; // set to zero for no timeout
+						
+				$timeout = 10; // set to zero for no timeout
+				$ch      = curl_init();
+				curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/?switcher=GetFormats");
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+				curl_setopt ( $ch, CURLOPT_HEADER, false );
+				curl_setopt ( $ch, CURLOPT_MAXREDIRS, 3 );
+				curl_setopt ( $ch, CURLOPT_ENCODING, 'gzip,deflate' );
+				$results = curl_exec($ch);
+				$c_error = curl_error ($ch);
+				$c_errno = curl_errno ($ch);
+
+				if ( $results == False ) {
+					echo "<p><b>BMLT Server Error: ".$c_errno.", ".$c_error."<br/>Please try again later</b></p>";
+					return '';
+				}
+				curl_close($ch);
+				
+				if ( $template == 'voting' ) {
+
+					$ch      = curl_init();
+					//curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/index.php?switcher=GetSearchResults&sort_key=meeting_name&data_field_key=meeting_name,location_street,location_municipality" . $services);
+					curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/index.php?switcher=GetSearchResults&sort_key=meeting_name&data_field_key=meeting_name,worldid_mixed&formats[]=-47" . $services);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+					curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+					$unique_group = curl_exec($ch);
+					curl_close($ch);
+					$unique_group = json_decode($unique_group,true);
+					$unique_group = $this->arrayUnique($unique_group);
+					$this->sortBySubkey($unique_group, 'meeting_name');
+				}
+
 				if ( $template == '3' ) {
 
 					$ch      = curl_init();
@@ -202,10 +291,10 @@
 					curl_close($ch);
 					$city = json_decode($city,true);
 				}
-
-				if ( $template == '2' || $template == '3' ) {
+				
+				if ( $template == 'btw' ) {
 					$resource = curl_init();
-					curl_setopt ( $resource, CURLOPT_URL, '$root_server/bmlt_server/client_interface/xml/GetServiceBodies.php' );
+					curl_setopt ( $resource, CURLOPT_URL, "$root_server/client_interface/xml/GetServiceBodies.php" );
 					curl_setopt ( $resource, CURLOPT_RETURNTRANSFER, true );
 					curl_setopt ( $resource, CURLOPT_HEADER, false );
 					curl_setopt ( $resource, CURLOPT_MAXREDIRS, 3 );
@@ -224,11 +313,16 @@
 
 					$tmp_array = explode('=',$services);
 					$num = $tmp_array[1];
+
+					$unique_areas = array();
 					
 					foreach ( $sb_node->childNodes as $node ) {
 						$id = $node->getAttribute('id');
 						$name = $node->getAttribute('sb_name');
 						foreach ( $node->childNodes as $sb_node1 ) {
+							//$unique_areas['id'][] = $sb_node1->getAttribute('id');
+							//$unique_areas['area'][] = $sb_node1->getAttribute('sb_name');
+							$unique_areas[$sb_node1->getAttribute('id')]=$sb_node1->getAttribute('sb_name');
 							if ( $num == $sb_node1->getAttribute('id') ) {
 								$this_area = $sb_node1->getAttribute('sb_name');
 							}
@@ -236,6 +330,37 @@
 					}
 				}
 				
+				if ( $template != 'voting') {
+					$root_server_services = 'ff_'.$root_server;
+					if ( false === ( $format = get_transient( $root_server_services ) ) ) {
+						// It wasn't there, so regenerate the data and save the transient
+						$ch      = curl_init();
+						curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/?switcher=GetFormats");
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+						curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+						$formats = curl_exec($ch);
+						curl_close($ch);
+						$format = json_decode($formats,true);
+						set_transient( $root_server_services, $format, 60*60*1 );
+					}
+
+					$format_table = '<table class="bmlt-table">';
+					if ( $template == '2' ) {
+						$format_table .= "<tr><td colspan='3' style='font-size:16px !important; color:#0066cc'><strong>MEETING FORMATS</strong></td></tr>";
+					}
+					asort($format);
+					foreach ($format as $key => $value) {
+						$format_table .= '<tr>';
+						$format_table .= "<td>$value[key_string]</td>";
+						$format_table .= "<td>$value[name_string]</td>";
+						$format_table .= "<td>$value[description_string]</td>";
+						$format_table .= "</tr>";
+					}
+					$format_table .= "</table>";
+					
+					$format_table = preg_replace('/(https?):\/\/([A-Za-z0-9\._\-\/\?=&;%,]+)/i', '<a href="$1://$2" target="_blank">$1://$2</a>', $format_table);
+				}
+
 				if ( $template == '1' || $template == '2' || $template == 'btw' ) {
 					$root_server_services = 't_'.$root_server.''.$services;
 					if ( false === ( $result = get_transient( $root_server_services ) ) ) {
@@ -245,9 +370,21 @@
 						curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
 						curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 						$results = curl_exec($ch);
+						$c_error = curl_error ($ch);
+						if ( $c_error == "couldn't connect to host" ) {
+							echo "<p><b>Could not connect to the BMLT server.  Please check back later.</b></p>";
+							return '';
+						}
 						curl_close($ch);
 						$result = json_decode($results,true);
-						set_transient( $root_server_services, $result, 60*60*12 );
+						set_transient( $root_server_services, $result, 60*60*1 );
+					}
+					$unique_formats = array();
+					foreach ($result as $key => $value) {
+						$tvalue = explode(',',$value[formats]);
+						foreach ($tvalue as $t_value) {
+							$unique_formats[] = $t_value;
+						}
 					}
 					$unique_zips = array();
 					$unique_cities = array();
@@ -268,16 +405,19 @@
 					$unique_city = array_unique($unique_cities);
 					$unique_group = array_unique($unique_groups);
 					$unique_location = array_unique($unique_locations);
+					$unique_format = array_unique($unique_formats);
 					
 					$unique_zip = array_filter( $unique_zip );
 					$unique_city = array_filter( $unique_city );
 					$unique_group = array_filter( $unique_group );
 					$unique_location = array_filter( $unique_location );
+					$unique_format = array_filter( $unique_format );
 					
 					$unique_zip = array_slice($unique_zip, 0);
 					$unique_city = array_slice($unique_city, 0);
 					$unique_group = array_slice($unique_group, 0);
 					$unique_location = array_slice($unique_location, 0);
+					$unique_format = array_slice($unique_format, 0);
 					
 					asort($unique_zip);
 					asort($unique_city);
@@ -285,35 +425,19 @@
 					$number_locations = count($unique_location);
 					asort($unique_group);
 					asort($unique_location);
-				}
-				$root_server_services = 'ff_'.$root_server;
-				if ( false === ( $format = get_transient( $root_server_services ) ) ) {
-					// It wasn't there, so regenerate the data and save the transient
-					$ch      = curl_init();
-					curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/?switcher=GetFormats");
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
-					curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-					$formats = curl_exec($ch);
-					curl_close($ch);
-					$format = json_decode($formats,true);
-					set_transient( $root_server_services, $format, 60*60*12 );
-				}
+					asort($unique_format);
 
-				$format_table = '<table class="bmlt-table">';
-				if ( $template == '2' ) {
-					$format_table .= "<tr><td colspan='3' style='font-size:16px !important; color:#0066cc'><strong>MEETING FORMATS</strong></td></tr>";
+					$unique_format_name_string = array();
+					foreach ($format as $key => $value) {
+						$key_string = $value[key_string];
+						$name_string = $value[name_string];
+						foreach ($unique_format as $value1) {
+							if ($value1 == $key_string) {
+								$unique_format_name_string[] = $name_string;
+							}								
+						}
+					}
 				}
-				asort($format);
-				foreach ($format as $key => $value) {
-					$format_table .= '<tr>';
-					$format_table .= "<td>$value[key_string]</td>";
-					$format_table .= "<td>$value[name_string]</td>";
-					$format_table .= "<td>$value[description_string]</td>";
-					$format_table .= "</tr>";
-				}
-				$format_table .= "</table>";
-				
-				$format_table = preg_replace('/(https?):\/\/([A-Za-z0-9\._\-\/\?=&;%,]+)/i', '<a href="$1://$2" target="_blank">$1://$2</a>', $format_table);			
 
 				if ( $template == '3' ) {
 					$unique_cities = array();
@@ -490,7 +614,7 @@
 					$table .= $sunday;
 					$table .= '</table><br/>';
 				}
-				if ( $template == 'btw' ) {
+				if ( $template == 'btw-testing' ) {
 					If ( $header == '1' ) {
 						$tmp_array = explode('=',$services);
 						$num = $tmp_array[1];
@@ -592,9 +716,9 @@
 					$table .= "<tr class='ui-widget-header ui-state-default'><td colspan='3'><strong>SATURDAY</strong></td></tr>";
 					if ( !$saturday ) { $saturday .= "<tr><td colspan='3'>No Meetings</td></tr>"; }
 					$table .= $saturday;
-					$table .= '</table><br/>';
+					$table .= '</table>';
 				}
-				if ( $template == '1' ) {
+				if ( $template == '1' || $template == 'btw' ) {
 					if ( $header == '0' ) {
 						$sunday = "<table class='ui-bmlt-table'>";
 						$monday = "<table class='ui-bmlt-table'>";
@@ -634,12 +758,25 @@
 							$value[comments] = $value[comments];
 							$value[comments] = preg_replace('/(https?):\/\/([A-Za-z0-9\._\-\/\?=&;%,]+)/i', '<a href="$1://$2" target="_blank">$1://$2</a>', $value[comments]);
 						};
-						$location = "<b>$value[meeting_name]</b></br>$location_text$value[location_street] $value[location_municipality], $value[location_province] $value[location_postal_code_1]$location_info";
+						$area = '';
+						if ( $template == 'btw' ) {
+							$area = $unique_areas[$value[service_body_bigint]];
+							if ( $area == '' ) {
+								$area = 'Florida Region';
+							}
+							$area = '<br/>('.$area.')';
+						}
+						$location = "<b>$value[meeting_name]</b></br>$location_text$value[location_street] $value[location_municipality], $value[location_province] $value[location_postal_code_1]$location_info$area";
 						$map_location = urlencode('"') . urlencode($value[meeting_name]) . '+-+' . urlencode($value[location_street]) . '+' . urlencode($value[location_municipality]) . '+' . urlencode($value[location_province]) . '+' . urlencode($value[location_postal_code_1]) . urlencode('"');
 						$map_location = str_replace("%28", "[", $map_location);
 						$map_location = str_replace("%29", "]", $map_location);
-						$map = "<a target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]($map_location)&z=18&iwloc=A'><button id='button' class='icon-map ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>Map</span></button></a>";
-						$column1 = "<div class='bmlt-time'><b>$value[start_time]</b></div><div class='bmlt-legend'><a id='".preg_replace('/[\s\W]+/', '', $value[meeting_name])."-cities' href='#' class='showlegend btn btn-primary btn-xs'><button id='button' class='icon-format ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>$value[formats]</span></button></a></div><div class='bmlt-comments'>".wordwrap($value[comments],35,"\n")."</div>";
+						if ( $template == 'btw' ) {
+							$map = "<a target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]($map_location)&z=18&iwloc=A'><button style='margin-bottom:0;' id='button' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>Map</span></button></a>";
+							$column1 = "<div class='bmlt-time'><b>$value[start_time]</b></div><div class='bmlt-legend'><a id='".preg_replace('/[\s\W]+/', '', $value[meeting_name])."-cities' href='#' class='showlegend btn btn-primary btn-xs'><button style='margin-bottom:0;' id='button' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>$value[formats]</span></button></a></div><div class='bmlt-comments'>".wordwrap($value[comments],35,"\n")."</div>";
+						} else {
+							$map = "<a target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]($map_location)&z=18&iwloc=A'><button id='button' class='icon-map ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>Map</span></button></a>";
+							$column1 = "<div class='bmlt-time'><b>$value[start_time]</b></div><div class='bmlt-legend'><a id='".preg_replace('/[\s\W]+/', '', $value[meeting_name])."-cities' href='#' class='showlegend btn btn-primary btn-xs'><button id='button' class='icon-format ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>$value[formats]</span></button></a></div><div class='bmlt-comments'>".wordwrap($value[comments],35,"\n")."</div>";
+						}
 						if ( $value[weekday_tinyint] == 1 && $value[location_street] ) {
 							$sunday .= "<tr>";
 							$sunday .= "<td class='bmlt-column1'>$column1</td>";
@@ -696,9 +833,14 @@
 					
 						$output .= '
 
-						<div class="hide ui-bmlt-header ui-state-default">
+						<div class="hide ui-bmlt-header ui-state-default">';
 						
-							<button id="day" class="icon-format ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="bmlt-button-weekday ui-button-text">Weekdays</span></button>
+							if ( $template == 'btw' ) {
+								$output .= '<button style="margin-bottom:0;" id="day" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="bmlt-button-weekday ui-button-text">Weekdays</span></button>';
+							} else {
+								$output .= '<button id="day" class="icon-format ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="bmlt-button-weekday ui-button-text">Weekdays</span></button>';
+							}
+							$output .= '
 							<select style="width:'.$dropdown_width.';" data-placeholder="Cities" id="e2">
 								<option></option>';
 								foreach ($unique_city as $city_value) {
@@ -707,7 +849,7 @@
 								$output .= '
 							</select>
 
-							<select style="width:'.$dropdown_width.';" data-placeholder="Home Groups" id="e3">
+							<select style="width:'.$dropdown_width.';" data-placeholder="Groups" id="e3">
 								<option></option>';
 								foreach ($unique_group as $group_value) {
 									$output .= "<option value=".preg_replace('/[\s\W]+/', '', $group_value).">$group_value</option>";
@@ -727,10 +869,24 @@
 
 							$output .= '
 
-							<select style="width:'.$dropdown_width.';" data-placeholder="Zip Codes" id="e5">
+							<select style="width:'.$dropdown_width.';" data-placeholder="Zips" id="e5">
 								<option></option>';
 								foreach ($unique_zip as $zip_value) {
 									$output .= "<option value=".preg_replace('/[\s\W]+/', '', $zip_value).">$zip_value</option>";
+								}
+								$output .= '
+							</select>';
+							
+							}
+
+							if ( $has_formats == '1' ) {
+
+							$output .= '
+
+							<select style="width:'.$dropdown_width.';" data-placeholder="Formats" id="e6">
+								<option></option>';
+								foreach ($unique_format_name_string as $format_value) {
+									$output .= "<option value=".preg_replace('/[\s\W]+/', '', $format_value).">$format_value</option>";
 								}
 								$output .= '
 							</select>';
@@ -774,7 +930,7 @@
 					
 						$output .= '<div class="tab-content row page hide" id="days">';
 
-						$output .= '<div class="bmlt-table-div">';
+						$output .= '<div id="bmlt-table-div">';
 						$output .= "<table class='bmlt-table header'>";
 						$output .= "<thead>";
 						$output .= "<tr class='ui-state-default'><th colspan='4'>SUNDAY</th></tr>";
@@ -782,7 +938,7 @@
 						$output .= "</table>";
 						$output .= $sunday;
 						$output .= '</div>';
-						$output .= '<div class="bmlt-table-div">';
+						$output .= '<div id="bmlt-table-div">';
 						$output .= "<table class='bmlt-table header'>";
 						$output .= "<thead>";
 						$output .= "<tr class='ui-state-default'><th colspan='4'>MONDAY</th></tr>";
@@ -790,7 +946,7 @@
 						$output .= "</table>";
 						$output .= $monday;
 						$output .= '</div>';
-						$output .= '<div class="bmlt-table-div">';
+						$output .= '<div id="bmlt-table-div">';
 						$output .= "<table class='bmlt-table header'>";
 						$output .= "<thead>";
 						$output .= "<tr class='ui-state-default'><th colspan='4'>TUESDAY</th></tr>";
@@ -798,7 +954,7 @@
 						$output .= "</table>";
 						$output .= $tuesday;
 						$output .= '</div>';
-						$output .= '<div class="bmlt-table-div">';
+						$output .= '<div id="bmlt-table-div">';
 						$output .= "<table class='bmlt-table header'>";
 						$output .= "<thead>";
 						$output .= "<tr class='ui-state-default'><th colspan='4'>WEDNESDAY</th></tr>";
@@ -806,7 +962,7 @@
 						$output .= "</table>";
 						$output .= $wednesday;
 						$output .= '</div>';
-						$output .= '<div class="bmlt-table-div">';
+						$output .= '<div id="bmlt-table-div">';
 						$output .= "<table class='bmlt-table header'>";
 						$output .= "<thead>";
 						$output .= "<tr class='ui-state-default'><th colspan='4'>THURSDAY</th></tr>";
@@ -814,7 +970,7 @@
 						$output .= "</table>";
 						$output .= $thursday;
 						$output .= '</div>';
-						$output .= '<div class="bmlt-table-div">';
+						$output .= '<div id="bmlt-table-div">';
 						$output .= "<table class='bmlt-table header'>";
 						$output .= "<thead>";
 						$output .= "<tr class='ui-state-default'><th colspan='4'>FRIDAY</th></tr>";
@@ -822,7 +978,7 @@
 						$output .= "</table>";
 						$output .= $friday;
 						$output .= '</div>';
-						$output .= '<div class="bmlt-table-div">';
+						$output .= '<div id="bmlt-table-div">';
 						$output .= "<table class='bmlt-table header'>";
 						$output .= "<thead>";
 						$output .= "<tr class='ui-state-default'><th colspan='4'>SATURDAY</th></tr>";
@@ -835,11 +991,14 @@
 					
 					}
 
-					$output .= $this->get_the_meetings($result, $unique_city, "location_municipality");
-					$output .= $this->get_the_meetings($result, $unique_group, "meeting_name");
-					$output .= $this->get_the_meetings($result, $unique_location, "location_text");
+					$output .= $this->get_the_meetings($result, $unique_city, "location_municipality", Null);
+					$output .= $this->get_the_meetings($result, $unique_group, "meeting_name", Null);
+					$output .= $this->get_the_meetings($result, $unique_location, "location_text", Null);
 					if ( $has_zip_codes == '1' ) {
-						$output .= $this->get_the_meetings($result, $unique_zip, "location_postal_code_1");
+						$output .= $this->get_the_meetings($result, $unique_zip, "location_postal_code_1", Null);
+					}
+					if ( $has_formats == '1' ) {
+						$output .= $this->get_the_meetings($result, $unique_format_name_string, "name_string", $format);
 					}
 
 					$output .= '
@@ -849,25 +1008,74 @@
 					</div>';
 				
 				}
-				if ( $template == '2' ) {
-					$output .= '<div>' . $table . '</div>';
-				}
-				if ( $template == 'btw' ) {
-					$output .= '<div>' . $table . '</div>';
-				}
-				if ( $template == '3' ) {
-					$output .= '<div>' . $cities . '</div>';
+				if ( $template == 'voting' ) {
+					$output = $this->get_the_group($unique_group);				
+				} else {
+					if ( $template == '2' ) {
+						$output .= '<div>' . $table . '</div>';
+					}
+					if ( $template == 'btw' ) {
+						$output .= '<div>' . $table . '</div>';
+					}
+					if ( $template == '3' ) {
+						$output .= '<div>' . $cities . '</div>';
+					}
+					
+					$output .= '<script type="text/javascript">';
+					$output .= 'jQuery( "#days" ).switchClass( "hide", "show", 1000 );';
+					$output .= 'jQuery( ".ui-bmlt-header" ).switchClass( "hide", "show", 1000 );';
+					$output .= '</script>';
 				}
 				
-				$output .= '<script type="text/javascript">';
-				$output .= 'jQuery( "#days" ).switchClass( "hide", "show", 1000 );';
-				$output .= 'jQuery( ".ui-bmlt-header" ).switchClass( "hide", "show", 1000 );';
-				$output .= '</script>';
-				
-				return $output;
+				return '<div id="bmlt-tabs">'.$output.'</div>';
 			}
-			function get_the_meetings($result_data, $unique_data, $unique_value)
+			
+			function get_the_group($result_data)
 			{
+				global $wpdb, $user_identity, $user_ID;
+				$user_ID = intval($user_ID);
+
+				$this_output = "<div>";
+				$this_output = "<table class='bmlt-table'>";
+				$this_output = "<table class='bmlt-table'>";
+				$this_output .= "<thead>";
+				$this_output .= "<tr class='ui-state-default'><th>GROUP</th><th style='text-align: center;' colspan='2'>GROUP ID</th></tr>";
+				$this_output .= "</thead><tbody>";
+				foreach ($result_data as $key => $value) {
+					if ($value[location_text]) {
+						$location_text = $value[location_text] . ',';
+					} else { 
+						$location_text = '';
+					};
+					if ($value[location_info]) {
+						$location_info = '<br/>' . $value[location_info];
+						$location_info = '<i>'.preg_replace('/(https?):\/\/([A-Za-z0-9\._\-\/\?=&;%,]+)/i', '<a href="$1://$2" target="_blank">$1://$2</a>', $location_info).'</i/>';
+					} else { 
+						$location_info = '';
+					};
+					//$location = "$value[location_street], $value[location_municipality]";
+					$this_output .= "<tr>";
+					$this_output .= "<td style='width:40%; font-size:20px;'>$value[meeting_name]</td>";
+					$this_output .= "<td style='width:30%; font-size:20px; text-align: center;'>$value[worldid_mixed]</td>";
+					if ( $value[worldid_mixed] && $user_ID == 0 ) {
+						$this_output .= "<td style='width:30%; text-align: center;'><div class=''><a class='blue button' href='http://naflorida.org/wp-login.php'>LOGIN TO VOTE</a></div</td>";
+					} elseif ( $value[worldid_mixed] && $user_ID > 0 ) {
+						$this_output .= "<td style='width:30%; text-align: center;'><div class=''><a class='blue button' href='http://naflorida.org/car-vote/'>VOTE</a></div</td>";
+					} else { 
+						$this_output .= "<td style='font-size:20px;'> </td>";
+					}
+					$this_output .= "</tr>";
+				}
+				$this_output .= '</tbody></table>';
+				return $this_output;
+			}
+
+			function get_the_meetings($result_data, $unique_data, $unique_value, $format_db)
+			{
+			global $template, $unique_areas;
+				if ($unique_value=='name_string') {
+					//$unique_data = $unique_formats;
+				}
 				foreach ($unique_data as $this_value) {
 					$this_output .= "<div class='row hide page' id='".preg_replace('/[\s\W]+/', '', $this_value)."'>";
 					$sunday_init = 0;
@@ -878,7 +1086,28 @@
 					$friday_init = 0;
 					$saturday_init = 0;
 					foreach ($result_data as $key => $value) {
-						if ( $this_value == $value[$unique_value] && $value[location_street] ) {
+						if ( ($this_value == $value[$unique_value] || $unique_value=='name_string') && $value[location_street] ) {
+							if ($unique_value=='name_string') {
+								$good = False;
+								foreach ($format_db as $key => $value1) {
+									$key_string = $value1[key_string];
+									$name_string = $value1[name_string];
+									if ( $name_string == $this_value ) {
+										$tvalue = explode(',',$value[formats]);
+										foreach ($tvalue as $t_value) {
+											if ( $t_value == $key_string ) {
+												$good = True;
+											}
+										}
+									}
+								}
+								//var_dump($good);
+								if ( $good == False ) {
+									continue;
+								}
+							}
+							
+
 							$duration = explode(':',$value[duration_time]);
 							$minutes = intval($duration[0])*60 + intval($duration[1]) + intval($duration[2]);
 							$addtime = '+ ' . $minutes . ' minutes';
@@ -900,12 +1129,25 @@
 								$value[comments] = $value[comments];
 								$value[comments] = preg_replace('/(https?):\/\/([A-Za-z0-9\._\-\/\?=&;%,]+)/i', '<a href="$1://$2" target="_blank">$1://$2</a>', $value[comments]);
 							};
-							$location = "<b>$value[meeting_name]</b></br>$location_text$value[location_street] $value[location_municipality], $value[location_province] $value[location_postal_code_1]$location_info";
+							$area = '';
+							if ( $template == 'btw' ) {
+								$area = $unique_areas[$value[service_body_bigint]];
+								if ( $area == '' ) {
+									$area = 'Florida Region';
+								}
+								$area = '<br/>('.$area.')';
+							}
+							$location = "<b>$value[meeting_name]</b></br>$location_text$value[location_street] $value[location_municipality], $value[location_province] $value[location_postal_code_1]$location_info$area";
 							$map_location = urlencode('"') . urlencode($value[meeting_name]) . '+-+' . urlencode($value[location_street]) . '+' . urlencode($value[location_municipality]) . '+' . urlencode($value[location_province]) . '+' . urlencode($value[location_postal_code_1]) . urlencode('"');
 							$map_location = str_replace("%28", "[", $map_location);
 							$map_location = str_replace("%29", "]", $map_location);
-							$map = "<a target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]($map_location)&z=18&iwloc=A'><button id='button' class='icon-map ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>Map</span></button></a>";
-							$column1 = "<div class='bmlt-time'><b>$value[start_time]</b></div><div class='bmlt-legend'><a id='".preg_replace('/[\s\W]+/', '', $value[meeting_name])."-cities' href='#' class='showlegend btn btn-primary btn-xs'><button id='button' class='icon-format ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>$value[formats]</span></button></a></div><div class='bmlt-comments'>".wordwrap($value[comments],35,"\n")."</div>";
+							if ( $template == 'btw' ) {
+								$map = "<a target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]($map_location)&z=18&iwloc=A'><button style='margin-bottom:0;' id='button' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>Map</span></button></a>";
+								$column1 = "<div class='bmlt-time'><b>$value[start_time]</b></div><div class='bmlt-legend'><a id='".preg_replace('/[\s\W]+/', '', $value[meeting_name])."-cities' href='#' class='showlegend btn btn-primary btn-xs'><button style='margin-bottom:0;' id='button' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>$value[formats]</span></button></a></div><div class='bmlt-comments'>".wordwrap($value[comments],35,"\n")."</div>";
+							} else {
+								$map = "<a target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]($map_location)&z=18&iwloc=A'><button id='button' class='icon-map ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>Map</span></button></a>";
+								$column1 = "<div class='bmlt-time'><b>$value[start_time]</b></div><div class='bmlt-legend'><a id='".preg_replace('/[\s\W]+/', '', $value[meeting_name])."-cities' href='#' class='showlegend btn btn-primary btn-xs'><button id='button' class='icon-format ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>$value[formats]</span></button></a></div><div class='bmlt-comments'>".wordwrap($value[comments],35,"\n")."</div>";
+							}
 							if ( $value[weekday_tinyint] == 1  && $value[location_street] ) {
 								if ( $sunday_init == 0 ) {
 									$sunday_data = "<table class='bmlt-table'>";
@@ -1001,32 +1243,30 @@
 						}
 					}
 					if ( $sunday_init == 1 ) {
-						$this_output .= "<div class='bmlt-table-div'>$sunday_data</tbody></table></div>";
+						$this_output .= "<div id='bmlt-table-div'>$sunday_data</tbody></table></div>";
 					}
 					if ( $monday_init == 1 ) {
-						$this_output .= "<div class='bmlt-table-div'>$monday_data</tbody></table></div>";
+						$this_output .= "<div id='bmlt-table-div'>$monday_data</tbody></table></div>";
 					}
 					if ( $tuesday_init == 1 ) {
-						$this_output .= "<div class='bmlt-table-div'>$tuesday_data</tbody></table></div>";
+						$this_output .= "<div id='bmlt-table-div'>$tuesday_data</tbody></table></div>";
 					}
 					if ( $wednesday_init == 1 ) {
-						$this_output .= "<div class='bmlt-table-div'>$wednesday_data</tbody></table></div>";
+						$this_output .= "<div id='bmlt-table-div'>$wednesday_data</tbody></table></div>";
 					}
 					if ( $thursday_init == 1 ) {
-						$this_output .= "<div class='bmlt-table-div'>$thursday_data</tbody></table></div>";
+						$this_output .= "<div id='bmlt-table-div'>$thursday_data</tbody></table></div>";
 					}
 					if ( $friday_init == 1 ) {
-						$this_output .= "<div class='bmlt-table-div'>$friday_data</tbody></table></div>";
+						$this_output .= "<div id='bmlt-table-div'>$friday_data</tbody></table></div>";
 					}
 					if ( $saturday_init == 1 ) {
-						$this_output .= "<div class='bmlt-table-div'>$saturday_data</tbody></table></div>";
+						$this_output .= "<div id='bmlt-table-div'>$saturday_data</tbody></table></div>";
 					}
 					$this_output .= '</div>';
 				}
 				return $this_output;
 			}
-
-
 
 			/**
 			* @desc BMLT Meeting Count
@@ -1079,7 +1319,7 @@
 						$results = curl_exec($ch);
 						curl_close($ch);
 						$results = count(json_decode($results)) - $subtract;
-						set_transient( $root_server_services, $results, 60*60*12 );
+						set_transient( $root_server_services, $results, 60*60*1 );
 					}
 				}
 				return $results;
@@ -1100,25 +1340,23 @@
 				if ($service_body_parent != Null && $service_body != Null) {
 					Return '<p>BMLT Tabs Error: Cannot use service_body_parent and service_body at the same time.</p>';
 				}
-				if ($service_body != Null) {
+				if ($service_body != Null && $service_body != 'btw' ) {
 					$service_body = array_map('trim', explode(",", $service_body));
 					foreach ($service_body as $key) {
 						$services .= '&services[]=' . $key;
 					}
 				}
-				if ($service_body_parent != Null) {
+				if ($service_body_parent != Null && $service_body != 'btw') {
 					$service_body = array_map('trim', explode(",", $service_body_parent));
 					$services .= '&recursive=1';
 					foreach ($service_body as $key) {
 						$services .= '&services[]=' . $key;
 					}
 				}
-				$root_server_services = 'g_'.$root_server.''.$services;
-				if ( false === ( $result = get_transient( $root_server_services ) ) ) {
-					// It wasn't there, so regenerate the data and save the transient
+				if ($service_body == 'btw') {
 					$ch      = curl_init();
 					$timeout = 0; // set to zero for no time-out
-					curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/index.php?switcher=GetSearchResults&data_field_key=meeting_name&formats[]=-47" . $services);
+						curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/index.php?switcher=GetSearchResults&data_field_key=meeting_name&formats[]=46" . $services);
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 					curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 					$results = curl_exec($ch);
@@ -1132,7 +1370,28 @@
 						  $result[$key] = super_unique($value);
 						}
 					}
-					set_transient( $root_server_services, $result, 60*60*12 );
+				} else {
+					$root_server_services = 'g_'.$root_server.''.$services;
+					if ( false === ( $result = get_transient( $root_server_services ) ) ) {
+						// It wasn't there, so regenerate the data and save the transient
+						$ch      = curl_init();
+						$timeout = 0; // set to zero for no time-out
+						curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/index.php?switcher=GetSearchResults&data_field_key=meeting_name&formats[]=-47" . $services);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+						curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+						$results = curl_exec($ch);
+						curl_close($ch);
+						$result = json_decode($results);
+						$result = array_map("unserialize", array_unique(array_map("serialize", $result)));
+						foreach ($result as $key => $value)
+						{
+							if ( is_array($value) )
+							{
+							  $result[$key] = super_unique($value);
+							}
+						}
+						set_transient( $root_server_services, $result, 60*60*1 );
+					}
 				}
 				return count($result);
 	
@@ -1197,6 +1456,11 @@
 				<p>dropdown_width="auto" (width will be calculated automatically) (default)</p>
 				<p>dropdown_width="130px" (width will be calculated in pixels)</p>
 				<p>dropdown_width="20%" (width will be calculated as a percent of the container width)</p>
+				<h2>Formats or No Formats</h2>
+				<p>With this parameter you can show or hide the formats dropdown.</p>
+				<p><b>[bmlt_tabs service_body="2" header="1" has_formats='0']</b></p>
+				<p>has_formats="0" (hide formats dropdown)</p>
+				<p>has_formats="1" (show formats dropdown) (default)</p>
 				<h2>Zip Codes or No Zip Codes</h2>
 				<p>With this parameter you can show or hide the zip code dropdown.</p>
 				<p><b>[bmlt_tabs service_body="2" header="1" has_zip_codes='0']</b></p>
