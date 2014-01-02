@@ -1,4 +1,4 @@
-=== BMLT Tabbed UI ===Contributors: Jack STags: na, meeting list, meeting finder, maps, recovery, addiction, webservant, bmltRequires at least: 3.6Tested up to: 3.8Stable tag: 4.8.7BMLT Tabbed UI implements a jQuery tabbed UI for BMLT.
+=== BMLT Tabbed UI === Contributors: Jack STags: na, meeting list, meeting finder, maps, recovery, addiction, webservant, bmltRequires at least: 3.6Tested up to: 3.8Stable tag: 4.8.7BMLT Tabbed UI implements a jQuery tabbed UI for BMLT.
 == Description ==
 This plugin provides a jQuery Tabbed UI for the Basic Meeting List Toolbox (BMLT).  You must have BMLT installed and running.  Simply put the shortcode into a Wordpress page to get your very own tabbed interface to BMLT.  Not into a tabbed interface?  There is a shortcode parameter to display meetings in a table without tabs.  This would be useful for Areas that have fewer meetings.  This plugin also provides various shortcodes to return the number of meetings and groups in specified service bodies.  Please visit settings - BMLT Tabbed UI for shortcode instructions.
 == Installation ==
