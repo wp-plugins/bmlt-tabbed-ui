@@ -3,6 +3,7 @@
 	Plugin Name: BMLT Tabbed UI
 	Plugin URI: http://wordpress.org/extend/plugins/bmlt-tabbed-ui/
 	Description: Adds a jQuery Tabbed UI for BMLT.
+	Author: Jack S Florida Region
 	Version: 4.8.6
 	*/
 	/* Disallow direct access to the plugin file */
@@ -110,19 +111,19 @@
 			*/
 			function enqueue_backend_files()
 			{
-				wp_enqueue_style("bmlttabsfrontend-css", plugin_dir_url(__FILE__) . "css/bmlt_tabs.css", false, "1.0", 'all');
+				wp_enqueue_style("bmlttabsfrontend-css", plugin_dir_url(__FILE__) . "css/bmlt_tabs.css", false, null, false);
 			}
 			/**
 			* @desc Adds JS/CSS to the header
 			*/
 			function enqueue_frontend_files()
 			{
-				wp_enqueue_style("jqueryui-css", plugin_dir_url(__FILE__) . "css/jquery.ui.all.css", false, "1.0", 'all');
-				wp_enqueue_style("select2", plugin_dir_url(__FILE__) . "css/select2.css", false, "1.0", 'all');
-				wp_enqueue_style("bmlttabsfrontend-css", plugin_dir_url(__FILE__) . "css/bmlt_tabs.css", false, "1.0", 'all');
-				wp_enqueue_script("jqueryui-min-js", plugin_dir_url(__FILE__) . "js/jqueryui.min.js", array('jquery'), "1.0", false);
-				wp_enqueue_script("select2.min", plugin_dir_url(__FILE__) . "js/select2.min.js", array('jquery'), "1.0", false);
-				wp_enqueue_script("bmlt_tabs", plugin_dir_url(__FILE__) . "js/bmlt_tabs.js", array('jquery'), "1.0", false);
+				wp_enqueue_style("bmlt-tabs-jqueryui-css", plugin_dir_url(__FILE__) . "css/jquery-ui.custom.min.css", false, null, false);
+				wp_enqueue_style("bmlt-tabs-select2-css", plugin_dir_url(__FILE__) . "css/select2.css", false, null, false);
+				wp_enqueue_style("bmlt-tabs-css", plugin_dir_url(__FILE__) . "css/bmlt_tabs.css", false, null, false);
+				wp_enqueue_script("bmlt-tabls-jqueryui-js", plugin_dir_url(__FILE__) . "js/jqueryui.min.js", array('jquery'), null, false);
+				wp_enqueue_script("bmlt-tabs-select2-js", plugin_dir_url(__FILE__) . "js/select2.min.js", array('jquery'), null, false);
+				wp_enqueue_script("bmlt-tabs-js", plugin_dir_url(__FILE__) . "js/bmlt_tabs.js", array('jquery'), null, false);
 			}
 			/**
 			* @desc BMLT Tabs Create shortcode
@@ -550,43 +551,43 @@
 						$map = "<a target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]+($value[meeting_name])&ll=$value[latitude],$value[longitude]'>Map and Directions</a>";
 						if ( $value[weekday_tinyint] == 1 && $value[location_street] ) {
 							$sunday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
-							$sunday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a href='#legend'>$value[formats]</a>$value[comments]</td>";
+							$sunday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a class='show-popup bmlt-button' href='#'>$value[formats]</a></div>$value[comments]</td>";
 							$sunday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
 							$sunday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
 							$sunday .= "</tr>";
 						} elseif ( $value[weekday_tinyint] == 2 && $value[location_street] ) {
 							$monday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
-							$monday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a href='#legend'>$value[formats]</a>$value[comments]</td>";
+							$monday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a class='show-popup bmlt-button' href='#'>$value[formats]</a></div>$value[comments]</td>";
 							$monday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
 							$monday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
 							$monday .= "</tr>";
 						} elseif ( $value[weekday_tinyint] == 3 && $value[location_street] ) {
 							$tuesday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
-							$tuesday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a href='#legend'>$value[formats]</a>$value[comments]</td>";
+							$tuesday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a class='show-popup bmlt-button' href='#'>$value[formats]</a></div>$value[comments]</td>";
 							$tuesday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
 							$tuesday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
 							$tuesday .= "</tr>";
 						} elseif ( $value[weekday_tinyint] == 4 && $value[location_street] ) {
 							$wednesday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
-							$wednesday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a href='#legend'>$value[formats]</a>$value[comments]</td>";
+							$wednesday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a class='show-popup bmlt-button' href='#'>$value[formats]</a></div>$value[comments]</td>";
 							$wednesday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
 							$wednesday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
 							$wednesday .= "</tr>";
 						} elseif ( $value[weekday_tinyint] == 5 && $value[location_street] ) {
 							$thursday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
-							$thursday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a href='#legend'>$value[formats]</a>$value[comments]</td>";
+							$thursday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a class='show-popup bmlt-button' href='#'>$value[formats]</a></div>$value[comments]</td>";
 							$thursday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
 							$thursday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
 							$thursday .= "</tr>";
 						} elseif ( $value[weekday_tinyint] == 6 && $value[location_street] ) {
 							$friday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
-							$friday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a href='#legend'>$value[formats]</a>$value[comments]</td>";
+							$friday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a class='show-popup bmlt-button' href='#'>$value[formats]</a></div>$value[comments]</td>";
 							$friday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
 							$friday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
 							$friday .= "</tr>";
 						} elseif ( $value[weekday_tinyint] == 7 && $value[location_street] ) {
 							$saturday .= "<tr class='bmlt_simple_meeting_one_meeting_tr'>";
-							$saturday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a href='#legend'>$value[formats]</a>$value[comments]</td>";
+							$saturday .= "<td class='bmlt_simple_meeting_one_meeting_time_t2_td'><b>$value[start_time]</b><br/><a class='show-popup bmlt-button' href='#'>$value[formats]</a></div>$value[comments]</td>";
 							$saturday .= "<td class='bmlt_simple_meeting_one_meeting_address_t2_td'>$location</td>";
 							$saturday .= "<td class='bmlt_simple_meeting_one_meeting_map_t2_td'>$map</td>";
 							$saturday .= "</tr>";
@@ -760,17 +761,14 @@
 							}
 							$area = '<br/>('.$area.')';
 						}
+						//$value[meeting_name] = strtoupper($value[meeting_name]);
 						$location = "<b>$value[meeting_name]</b></br>$location_text$value[location_street] $value[location_municipality], $value[location_province] $value[location_postal_code_1]$location_info$area";
 						$map_location = urlencode('"') . urlencode($value[meeting_name]) . '+-+' . urlencode($value[location_street]) . '+' . urlencode($value[location_municipality]) . '+' . urlencode($value[location_province]) . '+' . urlencode($value[location_postal_code_1]) . urlencode('"');
 						$map_location = str_replace("%28", "[", $map_location);
 						$map_location = str_replace("%29", "]", $map_location);
-						if ( $template == 'btw' ) {
-							$map = "<a target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]($map_location)&z=18&iwloc=A'><button style='margin-bottom:0;' id='button' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>Map</span></button></a>";
-							$column1 = "<div class='bmlt-time'><b>$value[start_time]</b></div><div class='bmlt-legend'><a id='".preg_replace('/[\s\W]+/', '', $value[meeting_name])."-cities' href='#' class='showlegend btn btn-primary btn-xs'><button style='margin-bottom:0;' id='button' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>$value[formats]</span></button></a></div><div class='bmlt-comments'>".wordwrap($value[comments],35,"\n")."</div>";
-						} else {
-							$map = "<a target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]($map_location)&z=18&iwloc=A'><button id='button' class='icon-map ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>Map</span></button></a>";
-							$column1 = "<div class='bmlt-time'><b>$value[start_time]</b></div><div class='bmlt-legend'><a id='".preg_replace('/[\s\W]+/', '', $value[meeting_name])."-cities' href='#' class='showlegend btn btn-primary btn-xs'><button id='button' class='icon-format ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>$value[formats]</span></button></a></div><div class='bmlt-comments'>".wordwrap($value[comments],35,"\n")."</div>";
-						}
+						$map = "<a class='bmlt-button' target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]($map_location)&z=18&iwloc=A'>Map</a>";
+						$column1 = "<div class='bmlt-time'><b>$value[start_time]</b></div><div class='show-popup bmlt-button'><a id='".preg_replace('/[\s\W]+/', '', $value[meeting_name])."-cities' href='#'>$value[formats]</a></div><div class='bmlt-comments'>".wordwrap($value[comments],35,"\n")."</div>";
+						
 						if ( $value[weekday_tinyint] == 1 && $value[location_street] ) {
 							$sunday .= "<tr>";
 							$sunday .= "<td class='bmlt-column1'>$column1</td>";
@@ -829,11 +827,8 @@
 
 						<div class="hide ui-bmlt-header ui-state-default">';
 						
-							if ( $template == 'btw' ) {
-								$output .= '<button style="margin-bottom:0;" id="day" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="bmlt-button-weekday ui-button-text">Weekdays</span></button>';
-							} else {
-								$output .= '<button id="day" class="icon-format ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="bmlt-button-weekday ui-button-text">Weekdays</span></button>';
-							}
+							
+							$output .= '<div class="bmlt-button-container"><a id="day" class="bmlt-button bmlt-button-weekdays">Weekdays</a></div>';
 							$output .= '
 							<select style="width:'.$dropdown_width.';" data-placeholder="Cities" id="e2">
 								<option></option>';
@@ -994,14 +989,8 @@
 					if ( $has_formats == '1' ) {
 						$output .= $this->get_the_meetings($result, $unique_format_name_string, "name_string", $format);
 					}
-
-					$output .= '
-					<div class="hide" id="thislegend">';
-						$output .= $format_table;
-						$output .= '
-					</div>';
-				
 				}
+				
 				if ( $template == 'voting' ) {
 					$output = $this->get_the_group($unique_group);				
 				} else {
@@ -1015,13 +1004,26 @@
 						$output .= '<div>' . $cities . '</div>';
 					}
 					
-					$output .= '<script type="text/javascript">';
-					$output .= 'jQuery( "#days" ).switchClass( "hide", "show", 1000 );';
-					$output .= 'jQuery( ".ui-bmlt-header" ).switchClass( "hide", "show", 1000 );';
-					$output .= '</script>';
+					//$output .= '<script type="text/javascript">';
+					//$output .= 'jQuery( "#days" ).removeClass("hide").addClass("show");';
+					//$output .= 'jQuery( ".ui-bmlt-header" ).removeClass("hide").addClass("show");';
+					//$output .= '</script>';
 				}
 				
-				return '<div id="bmlt-tabs">'.$output.'</div>';
+				$output .'<div id="bmlt-tabs" class="hide">'.$output.'</div>';
+
+				$output .= "
+				<div class='overlay-bg'>
+				<div class='overlay-title'>
+				<span class='overlay-title-text'>Meeting Formats</span>
+				<a class='bmlt-button close-btn' href='#'>Close</a>
+				</div>
+				<div class='overlay-content'>
+				$format_table
+				</div>
+				</div>";				
+
+				return $output;
 			}
 			
 			function get_the_group($result_data)
@@ -1135,13 +1137,8 @@
 							$map_location = urlencode('"') . urlencode($value[meeting_name]) . '+-+' . urlencode($value[location_street]) . '+' . urlencode($value[location_municipality]) . '+' . urlencode($value[location_province]) . '+' . urlencode($value[location_postal_code_1]) . urlencode('"');
 							$map_location = str_replace("%28", "[", $map_location);
 							$map_location = str_replace("%29", "]", $map_location);
-							if ( $template == 'btw' ) {
-								$map = "<a target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]($map_location)&z=18&iwloc=A'><button style='margin-bottom:0;' id='button' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>Map</span></button></a>";
-								$column1 = "<div class='bmlt-time'><b>$value[start_time]</b></div><div class='bmlt-legend'><a id='".preg_replace('/[\s\W]+/', '', $value[meeting_name])."-cities' href='#' class='showlegend btn btn-primary btn-xs'><button style='margin-bottom:0;' id='button' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>$value[formats]</span></button></a></div><div class='bmlt-comments'>".wordwrap($value[comments],35,"\n")."</div>";
-							} else {
-								$map = "<a target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]($map_location)&z=18&iwloc=A'><button id='button' class='icon-map ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>Map</span></button></a>";
-								$column1 = "<div class='bmlt-time'><b>$value[start_time]</b></div><div class='bmlt-legend'><a id='".preg_replace('/[\s\W]+/', '', $value[meeting_name])."-cities' href='#' class='showlegend btn btn-primary btn-xs'><button id='button' class='icon-format ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span class='bmlt-button ui-button-text'>$value[formats]</span></button></a></div><div class='bmlt-comments'>".wordwrap($value[comments],35,"\n")."</div>";
-							}
+							$map = "<a class='bmlt-button' target='_blank' href='http://maps.google.com/maps?q=$value[latitude],$value[longitude]($map_location)&z=18&iwloc=A'>Map</a>";
+							$column1 = "<div class='bmlt-time'><b>$value[start_time]</b></div><div class='show-popup bmlt-button'><a id='".preg_replace('/[\s\W]+/', '', $value[meeting_name])."-cities' href='#'>$value[formats]</a></div><div class='bmlt-comments'>".wordwrap($value[comments],35,"\n")."</div>";
 							if ( $value[weekday_tinyint] == 1  && $value[location_street] ) {
 								if ( $sunday_init == 0 ) {
 									$sunday_data = "<table class='bmlt-table'>";

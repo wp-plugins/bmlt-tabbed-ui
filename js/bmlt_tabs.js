@@ -6,48 +6,6 @@
 	$('#ui-tabs').tabs( "option", "active", n );
     $(".bmlt-table tr:even, .bmlt_simple_format_table tr:even").addClass("bmlt_alt_0");
     $(".bmlt-table tr:odd, .bmlt_simple_format_table tr:odd").addClass("bmlt_alt_0");
-    $("#ui-tabs").show();
-    $(".icon-map").button({
-        icons: {
-            primary: "ui-icon-link"
-        }
-    });
-    $(".icon-format").button({
-        icons: {
-            primary: "ui-icon-link"
-        }
-    });
-    $(".showlegend").on('click', function(e) {
-        e.preventDefault();
-        $("#thislegend").removeClass("hide").addClass("show");
-        $(".selector").dialog({
-            position: {
-                my: "center",
-                at: "center",
-                of: window
-            }
-        });
-        $("#thislegend").dialog({
-            height: 800,
-            width: 700,
-            hide: "fade",
-            show: "fade",
-            title: "Meeting Formats",
-            closeOnEscape: true,
-            modal: false,
-            position: {
-                my: "center",
-                at: "center",
-                of: window
-            }
-        });
-        $("#thislegend").dialog({
-            close: function(event, ui) {
-                $(this).dialog("destroy");
-                $(this).removeClass("show").addClass("hide");
-            }
-        });
-    });
     $("#e2").select2({
         placeholder: "Cities",
         dropdownAutoWidth: true,
@@ -209,4 +167,26 @@
     function showPage(thisTarget) {
         $("#" + thisTarget).fadeIn().removeClass("hide").addClass("show");
     }
+
+	$('.show-popup').click(function(event){
+	event.preventDefault(); // disable normal link function so that it doesn't refresh the page
+	$('.overlay-bg').show(); //display your popup
+	});
+	 
+	// hide popup when user clicks on close button
+	$('.close-btn').click(function(){
+	$('.overlay-bg').hide(); // hide the overlay
+	});
+	 
+	// hides the popup if user clicks anywhere outside the container
+	$('.overlay-bg').click(function(){
+		$('.overlay-bg').hide();
+	})
+	// prevents the overlay from closing if user clicks inside the popup overlay
+	$('.overlay-content').click(function(){
+		return false;
+	});	
+	$( "#days" ).removeClass("hide").addClass("show");
+	$( ".ui-bmlt-header" ).removeClass("hide").addClass("show");
+    $("#bmlt-tabs").fadeIn().removeClass("hide").addClass("show");	
 });
