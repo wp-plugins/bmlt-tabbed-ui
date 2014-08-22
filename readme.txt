@@ -2,29 +2,33 @@
 Contributors: Jack S
 Tags: na, meeting list, meeting finder, maps, recovery, addiction, webservant, bmlt
 Requires at least: 3.6
-Tested up to: 3.8
-Stable tag: 4.8.7
+Tested up to: 3.9.2
+Stable tag: 4.8.8
 
 BMLT Tabbed UI implements a jQuery tabbed UI for BMLT.
 
 == Description ==
 
-This plugin provides a jQuery Tabbed UI for the Basic Meeting List Toolbox (BMLT).  You must have BMLT installed and running.  Simply put the shortcode into a Wordpress page to get your very own tabbed interface to BMLT.  Not into a tabbed interface?  There is a shortcode parameter to display meetings in a table without tabs.  This would be useful for Areas that have fewer meetings.  This plugin also provides various shortcodes to return the number of meetings and groups in specified service bodies.  Please visit settings - BMLT Tabbed UI for shortcode instructions.
+This plugin provides a jQuery Tabbed UI for the Basic Meeting List Toolbox (BMLT).  Simply put the shortcode into a Wordpress page to get your very own tabbed interface to BMLT.  Not into a tabbed interface?  There is a shortcode parameter to display meetings in a table without tabs.  This would be useful for Areas that have fewer meetings.  This plugin also provides various shortcodes to return the number of meetings and groups in specified service bodies.  Please visit settings - BMLT Tabbed UI for shortcode instructions.
 
 == Installation ==
 
 1. Place the 'bmlt-tabbed-ui' folder in your '/wp-content/plugins/' directory.
 2. Activate bmlt-tabbed-ui.
-3. Enter shortcode into a new or existing Wordpress page.
-4. For shortcode usage see Settings - BMLT Tabs.
-5. View your site.
-6. Adjust the CSS of your theme as needed.
+3. Enter BMLT Root Server into Settings - BMLT Tabs
+4. Enter shortcode into a new or existing Wordpress page.
+5. For shortcode usage see Settings - BMLT Tabs.
+6. View your site.
+7. Adjust the CSS of your theme as needed.
 
 == Screenshots ==
 
 <a href="http://orlandona.org/meetings/">Go to this Web page to get an idea of how this works.</a>
 
 == Changelog ==
+
+= 4.8.8 =
+* Fixed problem with connecting to some root servers (added CURLOPT_USERAGENT).
 
 = 4.8.7 =
 * Replaced jqueryui buttons with html for compatibility with bootstrap.css
