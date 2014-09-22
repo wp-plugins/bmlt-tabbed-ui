@@ -2,14 +2,14 @@
 Contributors: Jack S
 Tags: na, meeting list, meeting finder, maps, recovery, addiction, webservant, bmlt
 Requires at least: 3.6
-Tested up to: 3.9.2
-Stable tag: 4.8.8
+Tested up to: 4.0
+Stable tag: 5.0
 
 BMLT Tabbed UI implements a jQuery tabbed UI for BMLT.
 
 == Description ==
 
-This plugin provides a jQuery Tabbed UI for the Basic Meeting List Toolbox (BMLT).  Simply put the shortcode into a Wordpress page to get your very own tabbed interface to BMLT.  Not into a tabbed interface?  There is a shortcode parameter to display meetings in a table without tabs.  This would be useful for Areas that have fewer meetings.  This plugin also provides various shortcodes to return the number of meetings and groups in specified service bodies.  Please visit settings - BMLT Tabbed UI for shortcode instructions.
+This plugin provides a jQuery Tabbed UI and more for the Basic Meeting List Toolbox (BMLT).  Simply put the shortcode [bmlt_tabs] into a Wordpress page to get your very own tabbed interface to BMLT.  Not into a tabbed interface?  There is a shortcode parameter to display meetings without tabs.  This would be useful for Areas that have fewer meetings.  This plugin also provides various shortcodes to return the number of meetings and groups in specified service bodies.  Please visit settings - BMLT Tabbed UI for shortcode instructions.
 
 == Installation ==
 
@@ -26,6 +26,19 @@ This plugin provides a jQuery Tabbed UI for the Basic Meeting List Toolbox (BMLT
 <a href="http://orlandona.org/meetings/">Go to this Web page to get an idea of how this works.</a>
 
 == Changelog ==
+
+= 5.0 =
+* New - Default Service Body dropdown option field.  This will allow using the shortcode [bmlt_tabs], [bmlt_count] and [group_count] without a specifying a service body.
+* New - Meeting Cache option field.  This will allow specifying the meeting cache time along with deleting the cache.
+* New - Shortcode parameter "root_server".  This will allow displaying meetings from a different root server.
+* New - Shortcode parameter "view_by".  This will allowing listing meetings by weekday or city.
+* New - Shortcode parameter "include_city_button".  This will allowing exluding the city button.
+* New - Shortcode parameter "include_weekday_button".  This will allow excluding the weekday button.
+* New - Meeting format tooltip.  This eliminates the format legend popup and replaces it with a more informative format legend per meeting.
+* Replaced - jQueryui scripts with built in Wordpress jQueryui scripts.
+* Improved - Included additional checks for connection to root server with informative error messages.
+* Improved - Plugin code was partially re-written to be more efficient along with CSS style sheets.
+* Future - Shortcode paramters will become option fields to allow saving as defaults (similiar to the Default Service Body).
 
 = 4.8.8 =
 * Fixed problem with connecting to some root servers (added CURLOPT_USERAGENT).

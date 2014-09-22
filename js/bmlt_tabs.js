@@ -1,5 +1,16 @@
 ﻿jQuery(document).ready(function($) {
     // drop down selection listener
+	$('.tooltip').tooltipster({
+	   animation: 'grow',
+	   delay: 200,
+	   theme: 'tooltipster-noir',
+	   contentAsHTML: true,
+	   touchDevices: true,
+	   iconTouch: true,
+	   interactive: true,
+	   position: 'right',
+	   trigger: 'hover'
+	});
     $("#ui-tabs").tabs();
     var d = new Date();
     var n = d.getDay();
@@ -49,14 +60,16 @@
         // check the pages to find the page that is visible and hide it
         var val = $("#e2").val();
         $('.bmlt-page').each(function(index) {
-            if (this.className.indexOf('show', 0) > -1) {
-                $("#" + this.id).fadeOut(function() {
+            //if (this.className.indexOf('show', 0) > -1) {
+                //$("#" + this.id).fadeOut(function() {
                     $("#" + this.id).removeClass("show").addClass("hide");
+					$("#city").css({"background-color":"#63B8EE","color":"#000"});
+					$("#day").css({"background-color":"#63B8EE","color":"#000"});
                     showPage(val);
-                });
+                //});
                 // found the visible page now break out of the each loop.
                 return;
-            }
+            //}
         });
     });
     $("#e3").on('click', function() {
@@ -67,14 +80,16 @@
         $("#e6").select2("val", null);
         var val = $("#e3").val();
         $('.bmlt-page').each(function(index) {
-            if (this.className.indexOf('show', 0) > -1) {
-                $("#" + this.id).fadeOut(function() {
+            //if (this.className.indexOf('show', 0) > -1) {
+                //$("#" + this.id).fadeOut(function() {
                     $("#" + this.id).removeClass("show").addClass("hide");
+					$("#city").css({"background-color":"#63B8EE","color":"#000"});
+					$("#day").css({"background-color":"#63B8EE","color":"#000"});
                     showPage(val);
-                });
+                //});
                 // found the visible page now break out of the each loop.
                 return;
-            }
+            //}
         });
     });
     $("#e4").on('click', function() {
@@ -85,14 +100,16 @@
         $("#e6").select2("val", null);
         var val = $("#e4").val();
         $('.bmlt-page').each(function(index) {
-            if (this.className.indexOf('show', 0) > -1) {
-                $("#" + this.id).fadeOut(function() {
+            //if (this.className.indexOf('show', 0) > -1) {
+                //$("#" + this.id).fadeOut(function() {
                     $("#" + this.id).removeClass("show").addClass("hide");
+					$("#city").css({"background-color":"#63B8EE","color":"#000"});
+					$("#day").css({"background-color":"#63B8EE","color":"#000"});
                     showPage(val);
-                });
+                //});
                 // found the visible page now break out of the each loop.
                 return;
-            }
+            //}
         });
     });
     $("#e5").on('click', function() {
@@ -103,14 +120,16 @@
         $("#e6").select2("val", null);
         var val = $("#e5").val();
         $('.bmlt-page').each(function(index) {
-            if (this.className.indexOf('show', 0) > -1) {
-                $("#" + this.id).fadeOut(function() {
+            //if (this.className.indexOf('show', 0) > -1) {
+                //$("#" + this.id).fadeOut(function() {
                     $("#" + this.id).removeClass("show").addClass("hide");
+					$("#city").css({"background-color":"#63B8EE","color":"#000"});
+					$("#day").css({"background-color":"#63B8EE","color":"#000"});
                     showPage(val);
-                });
+                //});
                 // found the visible page now break out of the each loop.
                 return;
-            }
+            //}
         });
     });
     $("#e6").on('click', function() {
@@ -121,14 +140,16 @@
         $("#e5").select2("val", null);
         var val = $("#e6").val();
         $('.bmlt-page').each(function(index) {
-            if (this.className.indexOf('show', 0) > -1) {
-                $("#" + this.id).fadeOut(function() {
+            //if (this.className.indexOf('show', 0) > -1) {
+                //$("#" + this.id).fadeOut(function() {
                     $("#" + this.id).removeClass("show").addClass("hide");
+					$("#city").css({"background-color":"#63B8EE","color":"#000"});
+					$("#day").css({"background-color":"#63B8EE","color":"#000"});
                     showPage(val);
-                });
+                //});
                 // found the visible page now break out of the each loop.
                 return;
-            }
+            //}
         });
     });
     $("#day").on('click', function() {
@@ -139,27 +160,49 @@
         $("#e6").select2("val", null);
         // check the pages to find the page that is visible and hide it
         $('.bmlt-page').each(function(index) {
-            if (this.className.indexOf('show', 0) > -1) {
-                $("#" + this.id).fadeOut(function() {
+            //if (this.className.indexOf('show', 0) > -1) {
+                //$("#" + this.id).fadeOut(function() {
                     $("#" + this.id).removeClass("show").addClass("hide");
+					$("#day").css({"background-color":"#FF6B7F","color":"#fff"});
+					$("#city").css({"background-color":"#63B8EE","color":"#000"});
                     showPage("days");
-                });
+                //});
                 // found the visible page now break out of the each loop.
                 return;
-            }
+            //}
+        });
+    });
+    $("#city").on('click', function() {
+        $("#e2").select2("val", null);
+        $("#e3").select2("val", null);
+        $("#e4").select2("val", null);
+        $("#e5").select2("val", null);
+        $("#e6").select2("val", null);
+        // check the pages to find the page that is visible and hide it
+        $('.bmlt-page').each(function(index) {
+            //if (this.className.indexOf('show', 0) > -1) {
+                //$("#" + this.id).fadeOut(function() {
+                    $("#" + this.id).removeClass("show").addClass("hide");
+					$("#city").css({"background-color":"#FF6B7F","color":"#fff"});
+					$("#day").css({"background-color":"#63B8EE","color":"#000"});
+                    showPage("cities");
+                //});
+                // found the visible page now break out of the each loop.
+                return;
+            //}
         });
     });
     $('.custom-ul').on('click', 'a', function(event) {
         // check the pages to find the page that is visible and hide it
         $('.bmlt-page').each(function(index) {
-            if (this.className.indexOf('show', 0) > -1) {
-                $("#" + this.id).fadeOut(function() {
+            //if (this.className.indexOf('show', 0) > -1) {
+                //$("#" + this.id).fadeOut(function() {
                     $("#" + this.id).removeClass("show").addClass("hide");
                     showPage(event.target.id);
-                });
+                //});
                 // found the visible page now break out of the each loop.
                 return;
-            }
+            //}
         });
     });
     // show the selected page
@@ -186,7 +229,8 @@
 	$('.overlay-content').click(function(){
 		return false;
 	});	
-	$( "#days" ).removeClass("hide").addClass("show");
+	//$( "#days" ).removeClass("hide").addClass("show");
+	//$( "#cities" ).removeClass("hide").addClass("show");
 	$( ".ui-bmlt-header" ).removeClass("hide").addClass("show");
     $("#bmlt-tabs").fadeIn().removeClass("hide").addClass("show");	
 });
