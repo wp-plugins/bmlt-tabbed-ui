@@ -10,7 +10,7 @@
 
 	Author: Jack S Florida Region
 
-	Version: 5.0
+	Version: 5.0.1
 
 	*/
 
@@ -34,7 +34,7 @@
 
 			 */
 
-			var $version = '5.0';
+			var $version = '5.0.1';
 
 	
 

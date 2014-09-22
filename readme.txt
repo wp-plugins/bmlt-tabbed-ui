@@ -27,7 +27,7 @@ This plugin provides a jQuery Tabbed UI and more for the Basic Meeting List Tool
 
 == Changelog ==
 
-= 5.0 =
+= 5.0.1 =
 * New - Default Service Body dropdown option field.  This will allow using the shortcode [bmlt_tabs], [bmlt_count] and [group_count] without a specifying a service body.
 * New - Meeting Cache option field.  This will allow specifying the meeting cache time along with deleting the cache.
 * New - Shortcode parameter "root_server".  This will allow displaying meetings from a different root server.
