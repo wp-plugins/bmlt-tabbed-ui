@@ -176,11 +176,11 @@ color: #555;
 	padding: 8px;
 	border: 1px solid #DDD;
 }
-.bmlt-tabs .bmlt_alt_0 {
+.bmlt-tabs .bmlt_alt_0 th {
 	background-color: #FFF;
 	text-align: left
 }
-.bmlt-tabs .bmlt_alt_1 {
+.bmlt-tabs .bmlt_alt_1 th {
 	background-color: #FFF;
 	text-align: left
 }

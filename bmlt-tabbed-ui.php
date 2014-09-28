@@ -10,7 +10,7 @@
 
 	Author: Jack S Florida Region
 
-	Version: 5.0.2
+	Version: 5.0.3
 
 	*/
 
@@ -34,7 +34,7 @@
 
 			 */
 
-			var $version = '5.0.2';
+			var $version = '5.0.3';
 
 	
 
@@ -94,58 +94,57 @@
 					if (function_exists('bp_is_groups_component') && bp_is_groups_component()) {
 
 						/* Do not add JS/CSS if Buddypress installed and in a Buddypress group */
-
-					} else {
-
-						add_action("init", array(
-
-							&$this,
-
-							"enqueue_frontend_files"
-
-						));
-
-						add_action("wp_head", array(
-
-							&$this,
-
-							"has_shortcode"
-
-						));
-
-						add_shortcode('bmlt_tabs', array(
-
-							&$this,
-
-							"tabbed_ui"
-
-						));
-
-						add_shortcode('bmlt_count', array(
-
-							&$this,
-
-							"meeting_count"
-
-						));
-
-						add_shortcode('meeting_count', array(
-
-							&$this,
-
-							"meeting_count"
-
-						));
-
-						add_shortcode('group_count', array(
-
-							&$this,
-
-							"bmlt_group_count"
-
-						));					
-
+						return;
+						
 					}
+
+					add_action("init", array(
+
+						&$this,
+
+						"enqueue_frontend_files"
+
+					));
+/*
+					add_action("wp_head", array(
+
+						&$this,
+
+						"has_shortcode"
+
+					));
+*/
+					add_shortcode('bmlt_tabs', array(
+
+						&$this,
+
+						"tabbed_ui"
+
+					));
+
+					add_shortcode('bmlt_count', array(
+
+						&$this,
+
+						"meeting_count"
+
+					));
+
+					add_shortcode('meeting_count', array(
+
+						&$this,
+
+						"meeting_count"
+
+					));
+
+					add_shortcode('group_count', array(
+
+						&$this,
+
+						"bmlt_group_count"
+
+					));					
 
 				}
 
@@ -167,13 +166,27 @@
 				 
 				// false because we have to search through the post content first
 				$found = false;
+				
+				var_dump($content);exit;
 				 
 				// check the post content for the short code
 				if ( stripos($post_to_check->post_content, '[bmlt_tabs') !== false ) {
-					// we have found the short code
-					
-					$this->testRootServer($this->options['root_server']);
+					return true;
 				}
+				
+				if ( stripos($post_to_check->post_content, '[bmlt_count') !== false ) {
+					return true;
+				}
+				
+				if ( stripos($post_to_check->post_content, '[meeting_count') !== false ) {
+					return true;
+				}
+				
+				if ( stripos($post_to_check->post_content, '[group_count') !== false ) {
+					return true;
+				}
+				
+				return false;
 				
 			}
 
@@ -366,7 +379,7 @@
 
 				curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"); 
 				
-				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
 
 				$unique_group = curl_exec($ch);
 
@@ -383,47 +396,27 @@
 			
 			function getAllMeetings($root_server, $services) {
 
-				$transient_key = 'bmlt_tabs_'.md5($root_server."/client_interface/json/?switcher=GetSearchResults".$services."&sort_key=time");
+				$ch=curl_init();
+				curl_setopt($ch, CURLOPT_URL,"$root_server/client_interface/json/?switcher=GetSearchResults$services&sort_key=time" );
+				curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"); 
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch,CURLOPT_VERBOSE,false);
+				curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+				curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, FALSE);
+				curl_setopt($ch,CURLOPT_SSLVERSION,3);
+				curl_setopt($ch,CURLOPT_SSL_VERIFYHOST, FALSE);
+				$results=curl_exec($ch);
+				//echo curl_error($ch);
+				$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+				$c_error = curl_error ($ch);
+				$c_errno = curl_errno ($ch);
+				curl_close($ch);
+				
+				if ($httpcode != 200 && $httpcode != 302 && $httpcode != 304) { echo "<p style='color: #FF0000;'>Problem Connecting to BMLT Root Server: $root_server</p>"; return 0; }
 
-				if ( false === ( $result = get_transient( $transient_key ) ) || intval($this->options['cache_time']) == 0 ) {
-
-						// It wasn't there, so regenerate the data and save the transient
-
-					$ch=curl_init();
-					curl_setopt($ch, CURLOPT_URL,"$root_server/client_interface/json/?switcher=GetSearchResults$services&sort_key=time" );
-					curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"); 
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-					curl_setopt($ch,CURLOPT_VERBOSE,false);
-					curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-					curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, FALSE);
-					curl_setopt($ch,CURLOPT_SSLVERSION,3);
-					curl_setopt($ch,CURLOPT_SSL_VERIFYHOST, FALSE);
-					$results=curl_exec($ch);
-					//echo curl_error($ch);
-					$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-					$c_error = curl_error ($ch);
-					$c_errno = curl_errno ($ch);
-					curl_close($ch);
+				$result = json_decode($results,true);
 					
-					if ( $results == False ) {
-						echo '<div style="font-size: 20px;text-align:center;font-weight:normal;color:#F00;margin:0 auto;margin-top: 30px;"><p>Problem Connecting to BMLT Root Server</p><p>'.$root_server.'</p><p>Error: '.$c_errno.', '.$c_error.'</p><p>Please try again later</p></div>';
-						return '';
-					}
-
-					$result = json_decode($results,true);
-					
-					if ( intval($this->options['cache_time']) > 0 ) {
-
-						set_transient( $transient_key, $result, intval($this->options['cache_time']) * HOUR_IN_SECONDS );
-						
-					}
-
-				}
-
-				If ( count($result) == 0 || $result == null ) {
-					echo "No meetings were found.";
-					return 0;
-				}
+				If ( count($result) == 0 || $result == null ) { echo "<p style='color: #FF0000;'>No Meetings were Found.<br/>BMLT Root Server: $root_server ($services)</p>"; return 0; }
 				
 				return $result;
 					
@@ -449,62 +442,46 @@
 
 			function getTheFormats($root_server) {
 			
-				$transient_key = 'bmlt_tabs_'.md5($root_server."/client_interface/json/?switcher=GetFormats");
+				$ch      = curl_init();
 
-				if ( false === ( $format = get_transient( $transient_key ) ) || intval($this->options['cache_time']) == 0 ) {
+				curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/?switcher=GetFormats");
 
-					// It wasn't there, so regenerate the data and save the transient
-
-					$ch      = curl_init();
-
-					curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/?switcher=GetFormats");
-
-					curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"); 
-					
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
-
-					curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-
-					$formats = curl_exec($ch);
-
-					curl_close($ch);
-
-					$format = json_decode($formats,true);
-
-					if ( intval($this->options['cache_time']) > 0 ) {
-
-						set_transient( $transient_key, $format, intval($this->options['cache_time']) * HOUR_IN_SECONDS );
-						
-					}
-
-				}
+				curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"); 
 				
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+
+				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+
+				$formats = curl_exec($ch);
+
+				curl_close($ch);
+
+				$format = json_decode($formats,true);
+
 				return $format;
 				
 			}
 
 			function testRootServer($root_server) {
 
-				$ch=curl_init();
+			$ch=curl_init();
 				curl_setopt($ch, CURLOPT_URL,"$root_server/client_interface/json/?switcher=GetFormats" );
 				curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"); 
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt($ch,CURLOPT_VERBOSE,false);
-				curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+				curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 				curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, FALSE);
 				curl_setopt($ch,CURLOPT_SSLVERSION,3);
 				curl_setopt($ch,CURLOPT_SSL_VERIFYHOST, FALSE);
 				$results=curl_exec($ch);
-				//echo curl_error($ch);
 				$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 				$c_error = curl_error ($ch);
 				$c_errno = curl_errno ($ch);
 				curl_close($ch);
 								
-				if ( $results == False ) {
-					echo '<div style="font-size: 20px;text-align:center;font-weight:normal;color:#F00;margin:0 auto;margin-top: 30px;"><p>Problem Connecting to BMLT Root Server</p><p>'.$root_server.'</p><p>Error: '.$c_errno.', '.$c_error.'</p><p>Please try again later</p></div>';
-					exit;
-				}
+				if ($httpcode != 200 && $httpcode != 302 && $httpcode != 304) { echo '<p>Problem Connecting to BMLT Root Server: '.$root_server.'</p>'; return false;};
+								
+				return true;
 				
 			}
 
@@ -515,7 +492,7 @@
 				global $template, $unique_areas;
 
 				extract(shortcode_atts(array(
-					"this_root_server" => '',
+					"root_server" => '',
 					"service_body" => '',
 					"service_body_parent" => '',
 					"has_tabs" => '1',
@@ -532,7 +509,9 @@
 					"has_zip_codes" => '1',
 					"header" => '1'
 				), $atts));
-
+				
+				$root_server = ($root_server != '' ? $root_server : $this->options['root_server']);
+				
 				$has_tabs = ($has_meetings == '0' ? '0' : $has_tabs);
 
 				//$has_tabs = ($include_weekday_button == '0' ? '1' : $has_tabs);
@@ -571,9 +550,6 @@
 
 				}
 
-				$root_server = ($this_root_server != '' ? $this_root_server : $this->options['root_server']);
-				
-//print_r($this->options['service_body_1']);exit;									
 				if ( $service_body_parent == Null && $service_body == Null) {
 
 					$area_data = explode(',',$this->options['service_body_1']);
@@ -594,14 +570,6 @@
 					Return '<p><strong>BMLT Tabs Error: Root Server missing.<br/><br/>Please go to Settings -> BMLT_Tabs and verify Root Server</strong></p>';
 
 				}
-
-				$output   = '';
-
-				$output .= '<script type="text/javascript">';
-
-				$output .= 'jQuery( "body" ).addClass( "bmlt-tabs");';
-												
-				$output .= '</script>';	
 
 				$services = '';
 								
@@ -656,14 +624,22 @@
 					}
 
 				}
-
-				$the_meetings = $this->getAllMeetings($root_server, $services);
 				
-				if ( $the_meetings == 0 ) {
+				$transient_key = 'bmlt_tabs_'.md5($root_server.$services.$has_tabs.$has_groups.$has_cities.$has_meetings.$has_formats.$has_locations.$include_city_button.$include_weekday_button.$template.$view_by.$dropdown_width.$has_zip_codes.$header);
 				
-					return;
+				if ( intval($this->options['cache_time']) > 0 ) {
+				
+					$output = get_transient( $transient_key );
+					
+					if ( $output != '' ) { return $output; }
 					
 				}
+				
+				//var_dump($output);exit;
+				
+				$the_meetings = $this->getAllMeetings($root_server, $services);
+				
+				if ( $the_meetings == 0 ) { return ""; }
 
 				$formats = $this->getTheFormats($root_server);
 					
@@ -1098,7 +1074,13 @@
 					
 				}
 				
-				//var_dump($x);exit;
+				$output   = '';
+
+				$output .= '<script type="text/javascript">';
+
+				$output .= 'jQuery( "body" ).addClass( "bmlt-tabs");';
+												
+				$output .= '</script>';	
 
 				If ( $header == '1' ) {
 				
@@ -1315,6 +1297,14 @@
 	
 				$output = '<div id="bmlt-tabs" class="hide">'.$output.'</div>';
 
+				if ( intval($this->options['cache_time']) > 0 ) {
+
+				//var_dump($transient_key);exit;
+				
+					set_transient( $transient_key, $output, intval($this->options['cache_time']) * HOUR_IN_SECONDS );
+					
+				}
+				
 				return $output;
 
 			}
@@ -1913,7 +1903,7 @@
 
 					"service_body" => '',
 
-					"this_root_server" => '',
+					"root_server" => '',
 					
 					"subtract" => '',
 
@@ -1921,8 +1911,14 @@
 
 				), $atts));
 
-				$root_server = ($this_root_server != '' ? $this_root_server : $this->options['root_server']);
+				if ( $atts == "" ) {
 				
+					//return;
+					
+				}
+				
+				$root_server = ($root_server != '' ? $root_server : $this->options['root_server']);
+								
 				if ( $service_body_parent == Null && $service_body == Null) {
 
 					$area_data = explode(',',$this->options['service_body_1']);
@@ -1958,13 +1954,9 @@
 
 						$services .= '&services[]=' . $key;
 
-						$t_services .= $key;
-
 					}
 
-				}
-
-				if ($service_body_parent != Null && $service_body != 'btw') {
+				} elseif ( $service_body_parent != Null && $service_body != 'btw') {
 
 					$service_body = array_map('trim', explode(",", $service_body_parent));
 
@@ -1974,65 +1966,52 @@
 
 						$services .= '&services[]=' . $key;
 
-						$t_services .= $key;
-
 					}
 
 				}
 
 				if ($service_body == 'btw') {
-
-					$ch      = curl_init();
-
-					$timeout = 30; // set to zero for no timeout
-
-					curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/index.php?switcher=GetSearchResults&formats[]=46");
-
-					curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"); 
+				
+					$the_query = $root_server."/client_interface/json/index.php?switcher=GetSearchResults&formats[]=46";
 					
+				} else {
+				
+					$the_query = $root_server."/client_interface/json/index.php?switcher=GetSearchResults&formats[]=-47" . $services;
+					
+				}
+				//print_r($the_query);return;
+				
+				$transient_key = 'bmlt_tabs_'.md5($the_query);
+
+				if ( false === ( $results = get_transient( $transient_key ) ) || intval($this->options['cache_time']) == 0 ) {
+
+					$ch=curl_init();
+					curl_setopt($ch, CURLOPT_URL,$the_query );
+					curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"); 
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+					curl_setopt($ch,CURLOPT_VERBOSE,false);
+					curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+					curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, FALSE);
+					curl_setopt($ch,CURLOPT_SSLVERSION,3);
+					curl_setopt($ch,CURLOPT_SSL_VERIFYHOST, FALSE);
+					
+					$results=curl_exec($ch);
 
-					curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-
-					$results = curl_exec($ch);
-
+					$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+					
 					curl_close($ch);
 
-					$results = count(json_decode($results)) - $subtract;
+					if ($httpcode != 200 && $httpcode != 302 && $httpcode != 304) { return '[connect error]'; };
 
-				} else {
+					if ( intval($this->options['cache_time']) > 0 ) {
 
-					$transient_key = 'bmlt_tabs_'.md5($root_server."/client_interface/json/index.php?switcher=GetSearchResults&formats[]=-47" . $services);
-
-					if ( false === ( $results = get_transient( $transient_key ) ) || intval($this->options['cache_time']) == 0 ) {
-
-						$ch      = curl_init();
-
-						$timeout = 30; // set to zero for no timeout
-
-						curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/index.php?switcher=GetSearchResults&formats[]=-47" . $services);
-
-						curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"); 
+						set_transient( $transient_key, $results, intval($this->options['cache_time']) * HOUR_IN_SECONDS );
 						
-						curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-						curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-
-						$results = curl_exec($ch);
-
-						curl_close($ch);
-
-						if ( intval($this->options['cache_time']) > 0 ) {
-
-							set_transient( $transient_key, $results, intval($this->options['cache_time']) * HOUR_IN_SECONDS );
-							
-						}
-
 					}
 
-					$results = count(json_decode($results)) - $subtract;
-
 				}
+
+				$results = count(json_decode($results)) - $subtract;
 
 				return $results;
 
@@ -2054,13 +2033,19 @@
 
 					"subtract" => '',
 					
-					"this_root_server" => '',
+					"root_server" => '',
 
 					"service_body_parent" => ''
 
 				), $atts));
 
-				$root_server = ($this_root_server != '' ? $this_root_server : $this->options['root_server']);
+				if ( $atts == "" ) {
+				
+					//return;
+					
+				}
+
+				$root_server = ($root_server != '' ? $root_server : $this->options['root_server']);
 				
 				if ( $service_body_parent == Null && $service_body == Null) {
 
@@ -2114,22 +2099,38 @@
 				}
 
 				if ($service_body == 'btw') {
-
-					$ch      = curl_init();
-
-					$timeout = 0; // set to zero for no time-out
-
-					curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/index.php?switcher=GetSearchResults&data_field_key=meeting_name&formats[]=46" . $services);
+				
+					$the_query = "$root_server/client_interface/json/index.php?switcher=GetSearchResults&data_field_key=meeting_name&formats[]=46" . $services;
 					
+				} else {
+				
+					$the_query = "$root_server/client_interface/json/index.php?switcher=GetSearchResults&data_field_key=meeting_name&formats[]=-47" . $services;
+					
+				}
+
+				$transient_key = 'bmlt_tabs_'.md5($the_query);
+
+				if ( false === ( $result = get_transient( $transient_key ) ) || intval($this->options['cache_time']) == 0 ) {
+
+					// It wasn't there, so regenerate the data and save the transient
+
+					$ch=curl_init();
+					curl_setopt($ch, CURLOPT_URL,$the_query );
 					curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"); 
-
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+					curl_setopt($ch,CURLOPT_VERBOSE,false);
+					curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+					curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, FALSE);
+					curl_setopt($ch,CURLOPT_SSLVERSION,3);
+					curl_setopt($ch,CURLOPT_SSL_VERIFYHOST, FALSE);
+					
+					$results=curl_exec($ch);
 
-					curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-
-					$results = curl_exec($ch);
-
+					$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+					
 					curl_close($ch);
+					
+					if ($httpcode != 200 && $httpcode != 302 && $httpcode != 304) { return '[connect error]'; };
 
 					$result = json_decode($results);
 
@@ -2149,54 +2150,10 @@
 
 					}
 
-				} else {
+					if ( intval($this->options['cache_time']) > 0 ) {
 
-					$transient_key = 'bmlt_tabs_'.md5($root_server."/client_interface/json/index.php?switcher=GetSearchResults&data_field_key=meeting_name&formats[]=-47" . $services);
-
-					if ( false === ( $result = get_transient( $transient_key ) ) || intval($this->options['cache_time']) == 0 ) {
-
-						// It wasn't there, so regenerate the data and save the transient
-
-						$ch      = curl_init();
-
-						$timeout = 0; // set to zero for no time-out
-
-						curl_setopt($ch, CURLOPT_URL, "$root_server/client_interface/json/index.php?switcher=GetSearchResults&data_field_key=meeting_name&formats[]=-47" . $services);
-
-						curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"); 
+						set_transient( $transient_key, $result, intval($this->options['cache_time']) * HOUR_IN_SECONDS );
 						
-						curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-						curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-
-						$results = curl_exec($ch);
-
-						curl_close($ch);
-
-						$result = json_decode($results);
-
-						$result = array_map("unserialize", array_unique(array_map("serialize", $result)));
-
-						foreach ($result as $key => $value)
-
-						{
-
-							if ( is_array($value) )
-
-							{
-
-							  $result[$key] = super_unique($value);
-
-							}
-
-						}
-
-						if ( intval($this->options['cache_time']) > 0 ) {
-
-							set_transient( $transient_key, $result, intval($this->options['cache_time']) * HOUR_IN_SECONDS );
-							
-						}
-
 					}
 
 				}
@@ -2220,12 +2177,21 @@
 					$resource = curl_init();
 					curl_setopt( $resource, CURLOPT_URL, "$root_server/client_interface/json/?switcher=GetServiceBodies" );			
 					curl_setopt($resource, CURLOPT_RETURNTRANSFER, 1); 
-					curl_setopt($resource, CURLOPT_CONNECTTIMEOUT, 10);
+					curl_setopt($resource, CURLOPT_CONNECTTIMEOUT, 5);
 					curl_setopt($resource, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"); 
 					$results = curl_exec ( $resource );
-					curl_close ( $resource );
 					$result = json_decode($results,true);
 
+					$httpcode = curl_getinfo($resource, CURLINFO_HTTP_CODE);
+					$c_error = curl_error ($resource);
+					$c_errno = curl_errno ($resource);
+					curl_close($resource);
+									
+					if ( $results == False ) {
+						echo '<div style="font-size: 20px;text-align:center;font-weight:normal;color:#F00;margin:0 auto;margin-top: 30px;"><p>Problem Connecting to BMLT Root Server</p><p>'.$root_server.'</p><p>Error: '.$c_errno.', '.$c_error.'</p><p>Please try again later</p></div>';
+						return 0;
+					}
+					
 					if ( intval($this->options['cache_time']) > 0 ) {
 
 						set_transient( $transient_key, $result, intval($this->options['cache_time']) * HOUR_IN_SECONDS );
@@ -2356,6 +2322,8 @@
 								</ul>
 						</div>
 						
+						<? if ( $this->testRootServer($this->options['root_server'] ) ) { ?>
+					
 						<div style="padding: 0 15px;" class="postbox">
 							
 							<h3>Default Service Body</span></h3>
@@ -2386,7 +2354,9 @@
 							</ul>
 							
 						</div>
-
+						
+						<? } ?>
+					
 						<div style="padding: 0 15px;" class="postbox">
 							
 							<h3>Meeting Cache (<?= $this->count_transient_cache(); ?> Cached Entries)</h3>
@@ -2723,7 +2693,7 @@
 				
 				wp_cache_flush();
 				
-				return $num1 + $num2;
+				return $num1;
 				
 			}
 
