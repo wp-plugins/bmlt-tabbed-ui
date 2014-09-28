@@ -34,7 +34,7 @@
 
 			 */
 
-			var $version = '5.0.3';
+			var $version = '5.0.4';
 
 	
 
@@ -835,8 +835,7 @@
 							
 							//print_r($duration);
 
-							$minutes = intval($duration[0])*60 + intval((isset($duration[1]) ? $duration[1] : '0')) + intval((isset($duration[1]) ? $duration[1] : '0'));
-							
+							$minutes = intval($duration[0])*60 + intval((isset($duration[1]) ? $duration[1] : '0'));							
 							$addtime = '+ ' . $minutes . ' minutes';
 
 							$end_time = date ('g:i A',strtotime($value['start_time'] . ' ' . $addtime));
@@ -1467,8 +1466,7 @@
 
 						$duration = explode(':',$value['duration_time']);
 
-						$minutes = intval($duration[0])*60 + intval((isset($duration[1]) ? $duration[1] : '0')) + intval((isset($duration[1]) ? $duration[1] : '0'));
-
+						$minutes = intval($duration[0])*60 + intval((isset($duration[1]) ? $duration[1] : '0'));
 						$addtime = '+ ' . $minutes . ' minutes';
 
 						$end_time = date ('g:i A',strtotime($value['start_time'] . ' ' . $addtime));
@@ -2322,7 +2320,7 @@
 								</ul>
 						</div>
 						
-						<? if ( $this->testRootServer($this->options['root_server'] ) ) { ?>
+						<?php if ( $this->testRootServer($this->options['root_server'] ) ) { ?>
 					
 						<div style="padding: 0 15px;" class="postbox">
 							
@@ -2332,21 +2330,21 @@
 								<li>
 									<label for="service_body_1">Service Body: </label>
 									<select style="display:inline;" onchange="getValueSelected()" id="service_body_1" name="service_body_1">
-									<? $unique_areas = $this->get_areas($this->options['root_server'], 'dropdown'); ?>
-									<? asort($unique_areas); ?>
-									<? foreach($unique_areas as $key=>$unique_area){ ?>
+									<?php $unique_areas = $this->get_areas($this->options['root_server'], 'dropdown'); ?>
+									<?php asort($unique_areas); ?>
+									<?php foreach($unique_areas as $key=>$unique_area){ ?>
 
-										<? $area_data = explode(',',$unique_area); ?>
-										<? $area_name = $area_data[0]; ?>
-										<? $area_id = $area_data[1]; ?>
-										<? $area_parent = $area_data[2]; ?>
+										<?php $area_data = explode(',',$unique_area); ?>
+										<?php $area_name = $area_data[0]; ?>
+										<?php $area_id = $area_data[1]; ?>
+										<?php $area_parent = $area_data[2]; ?>
 							
-										<? if ( $unique_area == $this->options['service_body_1'] ) { ?>
-											<option selected="selected" value="<?= $unique_area ?>"><?= $area_name ?></option>
-										<? } else { ?>
-											<option value="<?= $unique_area ?>"><?= $area_name ?></option>
-										<? } ?>
-									<? } ?>
+										<?php if ( $unique_area == $this->options['service_body_1'] ) { ?>
+											<option selected="selected" value="<?php echo $unique_area ?>"><?php echo $area_name ?></option>
+										<?php } else { ?>
+											<option value="<?php echo $unique_area ?>"><?php echo $area_name ?></option>
+										<?php } ?>
+									<?php } ?>
 									</select>							
 									<div style="margin-left: 5px; display:inline;">Shortcode: <input class="bmlt-input" size="41" type="text" id="txtSelectedValues1" readonly></div>
 									<div style="margin-left: 5px; display:inline;">Service Body Parent: <input class="bmlt-input" size="2" type="text" id="txtSelectedValues2" readonly></div>
@@ -2355,17 +2353,17 @@
 							
 						</div>
 						
-						<? } ?>
+						<?php } ?>
 					
 						<div style="padding: 0 15px;" class="postbox">
 							
-							<h3>Meeting Cache (<?= $this->count_transient_cache(); ?> Cached Entries)</h3>
+							<h3>Meeting Cache (<?php echo $this->count_transient_cache(); ?> Cached Entries)</h3>
 							
-							<? global $_wp_using_ext_object_cache; ?>
+							<?php global $_wp_using_ext_object_cache; ?>
 
-							<? if ( $_wp_using_ext_object_cache ) { ?>
+							<?php if ( $_wp_using_ext_object_cache ) { ?>
 								<p>This site is using an external object cache.</p>
-							<? } ?>
+							<?php } ?>
 							<p>Meeting data is cached (as database transient) to load BMLT Tabs faster.</p>
 							<ul>
 								<li>
@@ -2655,7 +2653,7 @@
 					
 				</div>
 
-				<?
+				<?php
 
 			}
 
