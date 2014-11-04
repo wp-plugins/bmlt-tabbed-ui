@@ -1,737 +1,844 @@
-.hide {
-	display: none!important
+.ui-dialog-titlebar.ui-widget-header.ui-corner-all.ui-helper-clearfix {
+text-align: right;
 }
-.show {
-	display: block!important
+button.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-icon-only.ui-dialog-titlebar-close {
+background: #63B8EE;
+background-color: #63B8EE;
+color: #222;
+height: inherit;
+margin: 3px;
 }
-#bmlt-tabs  {
-	font-family: Arial, Helvetica, sans-serif;
+.ui-dialog-title {
+display: none;
 }
-.bmlt-tabs .select2-results {
-	max-height: 400px !important;
-	padding: 0 0 0 4px;
-	margin: 4px 4px 4px 0;
-	position: relative;
-	overflow-x: hidden;
-	overflow-y: auto;
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+.ui-front {
+    z-index:1000000 !important; /* The default is 100. !important overrides the default. */
+	border: 2px solid #000;
 }
-.bmlt-tabs .select2-result-label {
+#element_to_pop_up { display:none; }
+#dvLoading
+{
+   background:#000 url(/wp-admin/images/wpspin_light.gif) no-repeat center center;
+   height: 32px;
+   width: 32px;
+   position: fixed;
+   z-index: 9999;
+   left: 50%;
+   top: 50%;
+  /*  display: none; */
+   margin: -25px 0 0 -25px;
+}
+.hide
+{
+	display: none!important;
+}
+.show
+{
+	display: block!important;
+}
+.bmlt-tabs *, .bmlt-tabs *, [class^="bmlt"], [id^="bmlt"], .bmlt-tabs p, .bmlt-tabs div, .bmlt-tabs span
+{
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 14px;
+	color: #555;
+	text-align: left;
+}
+[class^="select"], [id^="select"]
+{
+	font-family: "Arial", "Helvetica", sans-serif !important;
 	font-size: 12px;
+	color: inherit;
+	font-weight: normal;
 }
-.bmlt-tabs .select2-container {
-font-weight: normal;
+.bmlt-tabs .select2-default span
+{
+	color: #999 !important;
 }
-.bmlt-tabs .bmlt-time {
-	font-weight:700;
+.bmlt-tabs .bmlt-time
+{
+	font-family: "Arial", "Helvetica", sans-serif !important;
 	color: #555;
-	font-size: 12px;
+	font-size: 14px !important;
+	font-weight: 700;
+	word-wrap: normal;
+	word-break: break-word;
 }
-.bmlt-tabs .bmlt-time-2 {
-	font-weight:700;
+.bmlt-tabs .bmlt-time-2
+{
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 14px !important;
 	color: #555;
+	font-weight: 700;
+	word-wrap: normal;
+	word-break: break-word;
 }
-.bmlt-tabs .bmlt-day {
-	font-weight:700;
+.bmlt-tabs .bmlt-day
+{
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 14px !important;
 	color: #555;
-	/* text-transform: uppercase; */
-}
-.bmlt-tabs .bmlt-comments {
-	margin-top:4px;
-	color: #555;
-}
-.bmlt-tabs div.meeting-header{
-	font-size:1.3em;
-	font-weight:bold;
-	padding-left:.8em;
+	font-weight: 700;
 	text-transform: uppercase;
-	/* font-family: Arial, Helvetica, sans-serif; */
-	margin-bottom: 10px;
-	margin-top: 10px;
+}
+.tooltip-map.tooltipstered {
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 14px !important;
+	color: #111;
+}
+.tooltip.tooltipstered {
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	color: #111;
+}
+.bmlt-tabs .bmlt-comments
+{
+	color: #555;
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 14px !important;
+	margin-top: 4px;
+	word-wrap: normal;
+	word-break: break-word;
+}
+.bmlt-tabs div.meeting-header
+{
 	color: #08578E;
 	display: none;
-}
-.bmlt-tabs .ui-state-active.bmlt_alt_0 {
-	color: #FFF;
-	text-transform: uppercase;
+	font-size: 1.3em;
 	font-weight: bold;
-}
-.bmlt-tabs .ui-state-active.bmlt_alt_1 {
-	color: #FFF;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding-left: .8em;
 	text-transform: uppercase;
-	font-weight: bold;
+	text-align: left;
 }
-.bmlt-tabs .ui-state-default.bmlt_alt_0 {
-	font-size: 110%;
-}
-.bmlt-tabs .ui-state-default.bmlt_alt_1 {
-	font-size: 110%;
-}
-.bmlt-tabs .bmlt-column1 {
+.bmlt-tabs tr:nth-child(even) {background: #F2F2F2;}
+.bmlt-tabs tr:nth-child(odd) {background: #FFF;}
+
+.bmlt-tabs .bmlt-column1
+{
 	text-align: left;
 	width: 30%;
 	word-break: break-all;
+	vertical-align: top;
 }
-.bmlt-tabs .bmlt-column2 {
+.bmlt-tabs .bmlt-column2
+{
+	color: #555;
 	text-align: left;
 	width: 55%;
-	color: #555;
+	vertical-align: top;
 }
-.bmlt-tabs .bmlt-column3 {
+.bmlt-tabs .bmlt-column3
+{
+	text-align: center !important;
 	vertical-align: middle !important;
-	text-align: center;
 	width: 15%;
 }
-.bmlt-tabs .meeting-name {
-	/* text-transform: uppercase; */
+.bmlt-tabs .meeting-name
+{
+	color: #555;
 	font-weight: 700;
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 14px !important;
+}
+.bmlt-tabs .meeting-address {
 	color: #555;
+	font-weight: normal;
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 14px !important;
 }
-.bmlt-tabs .ui-bmlt-header {
-	border: 1px solid #08578E !important;
-	padding: .4em 0 .5em .4em;
-	margin-bottom: 10px;
-	font-size: 14px;
+.bmlt-tabs .location-text {
+	color: #555;
+	font-weight: normal;
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 14px !important;
+}
+.bmlt-tabs .location-information {
+	color: #555;
+	font-style: italic;
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 14px !important;
+}
+.bmlt-tabs .meeting-area {
+	color: #555;
+	font-style: italic;
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 14px !important;
+}
+.bmlt-tabs .ui-bmlt-header
+{
+	border: 0;
 	color: #2C4359;
+	font-size: 14px;
+	margin-bottom: 0px;
+	padding: 6px 4px 4px 6px;
+	text-align: left;
 }
-.bmlt-tabs .ui-bmlt-column3 {
-	vertical-align: middle !important;
+.bmlt-tabs .ui-bmlt-column3
+{
 	text-align: center;
+	vertical-align: middle !important;
 	width: 15%;
 }
-.bmlt-tabs .ui-bmlt-table td, .bmlt-tabs .bmlt-table td {
-	border: 1px solid #AFC7D8;
+.bmlt-tabs .ui-bmlt-table td, .bmlt-tabs .bmlt-table td
+{
+	border: 1px solid #C2C2C2;
 	padding: .6em;
 }
-.bmlt-tabs table.ui-bmlt-table {
-	margin-top: 0;
+.bmlt-tabs table, .ui-bmlt-table table
+{
+	background-color: #FFF;
 	border-collapse: collapse;
 	margin-bottom: 0px;
-	background-color: #FFF;
-	width: 100%;
-}
-.bmlt-tabs #bmlt-table-div  table.bmlt-table, .bmlt-tabs #ui-tabs  table.bmlt-table, .bmlt-tabs table.bmlt-table {
-	background-color: #FFF;
 	margin-top: 0;
-	margin-bottom: 0;
-	border-collapse: collapse;
-	width: 100%;
-	border: 1px;
+	width: 100% !important;
 }
-.bmlt-tabs table.bmlt-table {
+.bmlt-tabs #bmlt-table-div table.bmlt-table, .bmlt-tabs #ui-tabs table.bmlt-table, .bmlt-tabs table.bmlt-table
+{
 	background-color: #FFF;
-	margin-top: 0;
-	margin-bottom: 0;
+	border: 0;
 	border-collapse: collapse;
-	width: 100%;
+	margin: 0;
+	width: 100% !important;
 }
-.bmlt-tabs #bmlt-table-div {
-border: 1px solid #08578E;
-margin-bottom: 10px;
-font-size: 14px;
-line-height: 1.5em;
-color: #2C4359;
-}
-.bmlt-tabs #bmlt-table-div  .bmlt-table.header, .bmlt-tabs #ui-tabs .bmlt-table.header {
+.bmlt-tabs table.bmlt-table
+{
+	background-color: #FFF;
+	border-collapse: collapse;
 	margin-bottom: 0;
-	border: 1px;
+	margin-top: 0;
+	width: 100% !important;
 }
-.bmlt-tabs #bmlt-table-div  .bmlt-table td, .bmlt-tabs #ui-tabs .bmlt-table td {
-	border: 1px solid #AFC7D8;
-	padding: .8em;
+.bmlt-tabs #bmlt-table-div
+{
+	border: 0;
+	color: #2C4359;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.5em;
+	margin-bottom: 0px;
+	font-family: "Arial", "Helvetica", sans-serif;
+	padding: 6px 6px 0;
 }
-.bmlt-tabs #bmlt-table-div .bmlt-table th, .bmlt-tabs #ui-tabs .bmlt-table th {
-	border: 1px solid #AFC7D8;
-	padding: .4em 0 .4em .8em;
-}
-.bmlt-tabs #bmlt-table-div .bmlt-table th {
-background: #93C3CD url(images/ui-bg_diagonals-small_50_93c3cd_40x40.png) 50% 50% repeat !important;
-font-weight: 700;
-color: #555;
-}
-.bmlt-tabs .ui-widget-header th {
+.bmlt-tabs #bmlt-table-div .bmlt-table.header, .bmlt-tabs #ui-tabs .bmlt-table.header
+{
+	border: 0;
+	margin-bottom: 0;
 	text-align: left;
-	font-size: 1.2em;
-	border: 1px solid #08578E;
+	font-family: "Arial", "Helvetica", sans-serif;
+}
+.bmlt-tabs #bmlt-table-div .bmlt-table td, .bmlt-tabs #ui-tabs .bmlt-table td
+{
+	border: 1px solid #C2C2C2;
 	padding: .8em;
 }
-.bmlt-tabs .meetings_per {
+.bmlt-tabs #bmlt-table-div .bmlt-table th, .bmlt-tabs #ui-tabs .bmlt-table th
+{
+	border: 1px solid #C2C2C2;
+	padding: .4em 0 .4em .8em;
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 15px !important;
+}
+.bmlt-tabs #bmlt-table-div .bmlt-table th
+{
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 15px !important;
+	background: #93C3CD url(images/ui-bg_diagonals-small_50_93c3cd_40x40.png) 50% 50% repeat !important;
+	color: #333;
+	font-weight: bold;
 	text-transform: uppercase;
 }
-.bmlt-tabs .we_now_have {
+.bmlt-tabs .ui-widget-header th
+{
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 15px !important;
+	border: 0;
+	font-size: 1.2em;
+	padding: .8em;
+	text-align: left;
+}
+.bmlt-tabs .meetings_per
+{
+	text-transform: uppercase;
+}
+.bmlt-tabs .we_now_have
+{
 	font-weight: normal;
 }
-.bmlt-tabs .cities thead th {
+.bmlt-tabs .cities thead th
+{
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 15px !important;
+	border: 0;
 	font-weight: bold;
-	vertical-align: middle;
-	text-align: left;
 	padding: 8px;
-	border: 1px solid #DDD;
+	text-align: left;
+	vertical-align: middle;
 }
-.bmlt-tabs .weekdays {
+.bmlt-tabs .weekdays
+{
+	border: 0;
+	font-size: 14px !important;
 	font-weight: bold;
-	vertical-align: middle;
-	text-align: left;
-	font-size: 16px !important;
 	padding: 8px;
-	border: 1px solid #DDD;
-}
-.bmlt-tabs .bmlt_alt_0 th {
-	background-color: #FFF;
-	text-align: left
-}
-.bmlt-tabs .bmlt_alt_1 th {
-	background-color: #FFF;
-	text-align: left
-}
-.bmlt-tabs .bmlt_simple_meeting_one_meeting_time_td {
-	width: 63px!important;
-	font-size: 14px;
-}
-.bmlt-tabs .bmlt_simple_meeting_one_meeting_time_t2_td {
-	width: 30%;
 	text-align: left;
-	font-size: 14px;
+	vertical-align: middle;
 }
-.bmlt-tabs .bmlt_simple_meeting_one_meeting_address_t2_td {
-	width: 50%;
+.bmlt-tabs .bmlt_alt_0 th
+{
+	background-color: #FFF;
 	text-align: left;
-	font-size: 14px;
 }
-.bmlt-tabs .bmlt_simple_meeting_one_meeting_map_t2_td {
-	width: 20%;
-	text-align: center;
-	vertical-align: middle!important;
-	font-size: 14px;
+.bmlt-tabs .bmlt_alt_1 th
+{
+	background-color: #FFF;
+	text-align: left;
 }
-.bmlt-tabs table.bmlt_simple_meetings_table, .bmlt-tabs .bmlt_simple_format_table {
-	border-collapse: collapse!important;
-	margin: 0 !important;
-}
-.bmlt-tabs .bmlt_simple_meetings_table td, .bmlt-tabs .bmlt_simple_format_table, .bmlt-tabs .cities td {
-	border: 1px solid #DDD;
-	padding: 8px!important;
-}
-.bmlt-tabs .ui-dialog .ui-dialog-content {
+.bmlt-tabs .ui-dialog .ui-dialog-content
+{
 	padding: .1em !important;
 }
-.bmlt-tabs .ui-widget-content {
-border: 0 !important;
+.bmlt-tabs .ui-widget-content
+{
+	border: 0;
+	background: none;
 }
-.bmlt-tabs #ui-tabs .ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all {
--moz-border-radius-bottomright: 0 !important;
--webkit-border-bottom-right-radius: 0 !important;
--khtml-border-bottom-right-radius: 0 !important;
-border-bottom-right-radius: 0 !important;
--moz-border-radius-bottomleft: 0 !important;
--webkit-border-bottom-left-radius: 0 !important;
--khtml-border-bottom-left-radius: 0 !important;
-border-bottom-left-radius: 0 !important;
-margin: 0;
+.bmlt-tabs #ui-tabs .ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
+{
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+	khtml-border-bottom-left-radius: 0 !important;
+	khtml-border-bottom-right-radius: 0 !important;
+	margin: 0;
+	moz-border-radius-bottomleft: 0 !important;
+	moz-border-radius-bottomright: 0 !important;
+	webkit-border-bottom-left-radius: 0 !important;
+	webkit-border-bottom-right-radius: 0 !important;
 }
-.bmlt-tabs .ui-tabs .ui-tabs-panel, .bmlt-tabs .ui-dialog {
-display: block;
-border-width: 0;
-padding: .3em !important;
-background: #35414F url(images/ui-bg_dots-small_35_35414f_2x2.png) 50% 50% repeat !important;
+.bmlt-tabs .ui-tabs .ui-tabs-panel, .bmlt-tabs .ui-dialog
+{
+	background: #35414F url(images/ui-bg_dots-small_35_35414f_2x2.png) 50% 50% repeat !important;
+	border-width: 0;
+	display: block;
+	padding: 4px 6px 0px 6px !important;
 }
-.bmlt-tabs .ui-widget-header {
-border: 0 !important;
+.bmlt-tabs .ui-widget-header
+{
+	border: 0 !important;
+	text-align: left;
 }
-.bmlt-tabs .ui-tabs {
-padding: 0;
-font-size: 14px; 
-font-weight: normal;
-line-height: 1.5em;
-color: #2C4359;
+.bmlt-tabs .ui-tabs
+{
+	color: #2C4359;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.5em;
+	padding: 0;
+	text-align: left;
 }
-.bmlt-tabs .bmlt-button  {
-	background-color:#63b8ee;
-	-webkit-border-top-left-radius:4px;
-	-moz-border-radius-topleft:4px;
-	border-top-left-radius:4px;
-	-webkit-border-top-right-radius:4px;
-	-moz-border-radius-topright:4px;
-	border-top-right-radius:4px;
-	-webkit-border-bottom-right-radius:4px;
-	-moz-border-radius-bottomright:4px;
-	border-bottom-right-radius:4px;
-	-webkit-border-bottom-left-radius:4px;
-	-moz-border-radius-bottomleft:4px;
-	border-bottom-left-radius:4px;
-	text-indent:0;
-	border:1px solid #3866a3;
-	display:inline-block;
-	font-size:12px;
-	text-decoration:none;
-	text-align:center;
-	padding: 2px 7px 2px 7px;
-	cursor: hand;
-	cursor: pointer;
+.bmlt-tabs .bmlt-button
+{
+	background-color: #63b8ee;
+	border: 1px solid #3866a3;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
 	color: #333;
-}
-.bmlt-tabs .bmlt-formats {
-	background-color:#63b8ee;
-	-webkit-border-top-left-radius:4px;
-	-moz-border-radius-topleft:4px;
-	border-top-left-radius:4px;
-	-webkit-border-top-right-radius:4px;
-	-moz-border-radius-topright:4px;
-	border-top-right-radius:4px;
-	-webkit-border-bottom-right-radius:4px;
-	-moz-border-radius-bottomright:4px;
-	border-bottom-right-radius:4px;
-	-webkit-border-bottom-left-radius:4px;
-	-moz-border-radius-bottomleft:4px;
-	border-bottom-left-radius:4px;
-	text-indent:0;
-	border:1px solid #3866a3;
-	display:inline-block;
-	font-size:12px;
-	text-decoration:none;
-	text-align:center;
-	padding: 0px 8px 0px 4px;
 	cursor: hand;
 	cursor: pointer;
+	display: inline-block;
+	font-size: 12px;
+	moz-border-radius-bottomleft: 4px;
+	moz-border-radius-bottomright: 4px;
+	moz-border-radius-topleft: 4px;
+	moz-border-radius-topright: 4px;
+	padding: 2px 7px 2px 7px;
+	text-align: center;
+	text-decoration: none;
+	text-indent: 0;
+	webkit-border-bottom-left-radius: 4px;
+	webkit-border-bottom-right-radius: 4px;
+	webkit-border-top-left-radius: 4px;
+	webkit-border-top-right-radius: 4px;
+}
+.bmlt-tabs #map-button
+{
+	font-size: 13px !important;
+	padding: 1px 7px 1px 5px !important;
 	color: #111;
-	margin-top:4px;
 }
- .bmlt-tabs .bmlt-formats:hover  {
-	background-color:#fb9e25;
+.bmlt-tabs .bmlt-formats
+{
+	background-color: #63b8ee;
+	border: 1px solid #3866a3;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	color: #111;
+	cursor: hand;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 10px !important;
+	margin-top: 4px;
+	moz-border-radius-bottomleft: 4px;
+	moz-border-radius-bottomright: 4px;
+	moz-border-radius-topleft: 4px;
+	moz-border-radius-topright: 4px;
+	padding: 0px 4px 0px 2px;
+	text-align: center;
+	text-decoration: none;
+	text-indent: 0;
+	webkit-border-bottom-left-radius: 4px;
+	webkit-border-bottom-right-radius: 4px;
+	webkit-border-top-left-radius: 4px;
+	webkit-border-top-right-radius: 4px;
 }
-.bmlt-tabs .bmlt-button:hover {
-	background-color:#fb9e25;
+.bmlt-tabs .bmlt-formats:hover
+{
+	background-color: #fb9e25;
 }
-.bmlt-tabs .bmlt-button:active {
-	position:relative;
-	top:1px;
+.bmlt-tabs .bmlt-button:hover
+{
+	background-color: #fb9e25;
 }
-.bmlt-tabs .bmlt-button a {
+.bmlt-tabs .bmlt-button:active
+{
+	position: relative;
+	top: 1px;
+}
+.bmlt-tabs .bmlt-button a
+{
+	border-bottom: 0;
 	color: #111;
 	font-size: 12px;
-	text-decoration:none;
-	border-bottom: 0;
+	text-decoration: none;
 }
-.bmlt-tabs .bmlt-button-container {
-	display:inline;
-	top: 1px;
+.bmlt-tabs .bmlt-button-container
+{
+	display: inline;
 	position: relative;
+	top: 1px;
 }
-.bmlt-tabs .bmlt-button-weekdays {
-	/* background-color:#DB4865; */
-	padding: 0px 8px;
-	min-height: 26px !important;
-	line-height: 26px !important;
-	font-size:14px;
-	margin-top:2px;
+.bmlt-tabs .bmlt-button-weekdays
+{
+	font-size: 14px;
 	font-weight: normal;
-}
-.bmlt-tabs .bmlt-button-cities {
-	/* background-color:#DB4865; */
-	padding: 0px 8px;
-	min-height: 26px !important;
 	line-height: 26px !important;
-	font-size:14px;
-	margin-top:2px;
-	margin-left:4px;
+	margin-top: 2px;
+	min-height: 26px !important;
+	padding: 0px 8px;
+}
+.bmlt-tabs .bmlt-button-cities
+{
+	font-size: 14px;
 	font-weight: normal;
+	line-height: 26px !important;
+	margin-left: 4px;
+	margin-top: 2px;
+	min-height: 26px !important;
+	padding: 0px 8px;
 }
-.select2-container .select2-choice {
-  min-height: 28px;
-  height: 28px;
-  line-height: 28px;
+.bmlt-tabs .main-content
+{
+	height: 800px;
+	margin: 0 auto;
+	width: 1000px;
 }
-.bmlt-tabs .main-content {
-height: 800px;
-width: 1000px;
-margin: 0 auto;
+.bmlt-tabs .close-btn
+{
+	float: right;
 }
- 
-.bmlt-tabs .overlay-bg {
-display: none;
-position: fixed;
-top: 0;
-left: 0;
-height:100%;
-width: 100%;
-cursor: pointer;
-/* background: #111; /* fallback */
-/* background: rgba(0,0,0,0.75); */
-z-index: 9999;
+.bmlt-tabs .ui-tabs .ui-tabs-nav li
+{
+	line-height: 15px;
 }
-.bmlt-tabs .overlay-title-text {
-font-weight: bold;
-font-size: 20px;
-padding-left: 5px;
-color: #E1E463;
+.bmlt-tabs .ui-tabs .ui-tabs-nav li a
+{
+	border-bottom: 0;
+	padding: .4em .6em;
+	line-height: 1;
 }
-
-.bmlt-tabs .overlay-title {
-/* border: 10x solid #111; */
-color: #fff;
-background: #111;
-padding: 6px 10px 0px 10px;
-height: 30px;
-width: 80%;
-position: relative;
-top: 40px;
-margin: 0 auto; /* add negative left margin for half the width to center the div */
-cursor: default;
--moz-box-sizing: content-box;
-box-sizing: content-box;
-/* border-radius: 4px; */
-/* box-shadow: 0 0 5px rgba(0,0,0,0.9); */
+.bmlt-tabs .ui-tabs .ui-tabs-nav
+{
+	margin: 0;
+	padding: .3em 0em 0 .4em;
 }
-.bmlt-tabs .overlay-content {
-/* border: 10px solid #111; */
-background: #fff;
-/* padding: 5px; */
-width: 80%;
-position: relative;
-top: 40px;
-margin: 0 auto; /* add negative left margin for half the width to center the div */
-cursor: default;
-/* border-radius: 4px; */
-/* box-shadow: 0 0 5px rgba(0,0,0,0.9); */
-overflow: auto;
-max-height:85%;
-border: 10px solid #111;
--moz-box-sizing: content-box;
-box-sizing: content-box;
-font-size: 14px;
-line-height: 1.5em;
-color: #2C4359;
+.bmlt-tabs .show-popup.bmlt-button
+{
+	margin-bottom: 6px;
+	word-wrap: break-word;
 }
-.bmlt-tabs .close-btn {
-float: right;
+.bmlt-tabs tr.ui-state-default.meeting-header
+{
+	color: #555;
+	font-weight: 700;
+	text-transform: uppercase;
+	text-align: left;
 }
-.bmlt-tabs .ui-tabs .ui-tabs-nav li {
-line-height: 15px;
-}
-.bmlt-tabs .ui-tabs .ui-tabs-nav li a {
-border-bottom: 0;
-padding: .4em .6em;
-}
-.bmlt-tabs .ui-tabs .ui-tabs-nav {
-margin: 0;
-padding: .3em 0em 0 .4em;
-}
-.show-popup.bmlt-button {
-margin-bottom: 6px;
-word-wrap: break-word;
-}
-tr.ui-state-default.meeting-header {
-text-transform: uppercase;
-font-weight: 700;
-color:#555;
-}
-.bmlt-tabs table.a_format td {
+.bmlt_a_format td
+{
 	border: 1px solid #eee !important;
 	padding: .6em !important;
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 14px !important;
+	color: #555 !important;
+	font-weight: normal !important;
 }
-.bmlt-tabs table.a_format {
+.bmlt_a_format td a
+{
+	font-family: "Arial", "Helvetica", sans-serif !important;
+	font-size: 14px !important;
+}
+table.bmlt_a_format
+{
 	margin: 0 !important;
 	padding: 0 !important;
+	margin: 0 !important;
 }
-.tooltipster-noir {
-	border-radius: 0px; 
-	border: 3px solid #2c2c2c;
+.tooltipster-noir
+{
 	background: #fff;
+	border: 3px solid #2c2c2c;
+	border-radius: 0px;
 	color: #2c2c2c;
 }
-.tooltipster-noir .tooltipster-content {
+.tooltipster-noir .tooltipster-content
+{
 	font-family: 'Georgia', serif;
 	font-size: 14px;
 	line-height: 16px;
 	padding: 4px 4px;
 }
-/* This is the default Tooltipster theme (feel free to modify or duplicate and create multiple themes!): */
-.tooltipster-default {
-	border-radius: 5px; 
-	border: 2px solid #111;
+.tooltipster-default
+{
 	background: #4c4c4c;
+	border: 2px solid #111;
+	border-radius: 5px;
 	color: #fff;
 }
-
-/* Use this next selector to style things like font-size and line-height: */
-.tooltipster-default .tooltipster-content {
+.tooltipster-default .tooltipster-content
+{
 	font-family: Arial, sans-serif;
 	font-size: 14px;
 	line-height: 16px;
-	padding: 8px 8px;
 	overflow: hidden;
+	padding: 8px 8px;
 }
-
-/* This next selector defines the color of the border on the outside of the arrow. This will automatically match the color and size of the border set on the main tooltip styles. Set display: none; if you would like a border around the tooltip but no border around the arrow */
-.tooltipster-default .tooltipster-arrow .tooltipster-arrow-border {
-	/* border-color: ... !important; */
+.tooltipster-default .tooltipster-arrow .tooltipster-arrow-border
+{
 }
-
-
-/* If you're using the icon option, use this next selector to style them */
-.tooltipster-icon {
+.tooltipster-icon
+{
 	cursor: help;
 	margin-left: 4px;
 }
-
-
-
-
-
-
-
-
-/* This is the base styling required to make all Tooltipsters work */
-.tooltipster-base {
-	padding: 0;
+.tooltipster-base
+{
 	font-size: 0;
-	line-height: 0;
-	position: absolute;
 	left: 0;
-	top: 0;
-	z-index: 9999999;
-	pointer-events: none;
-	width: auto;
+	line-height: 0;
 	overflow: visible;
+	padding: 0;
+	pointer-events: none;
+	position: absolute;
+	top: 0;
+	width: auto;
+	z-index: 9999999;
 }
-.tooltipster-base .tooltipster-content {
+.tooltipster-base .tooltipster-content
+{
 	overflow: hidden;
 }
-
-
-/* These next classes handle the styles for the little arrow attached to the tooltip. By default, the arrow will inherit the same colors and border as what is set on the main tooltip itself. */
-.tooltipster-arrow {
+.tooltipster-arrow
+{
 	display: block;
-	text-align: center;
-	width: 100%;
 	height: 100%;
-	position: absolute;
-	top: 0;
 	left: 0;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 100%;
 	z-index: -1;
 }
-.tooltipster-arrow span, .tooltipster-arrow-border {
+.tooltipster-arrow span, .tooltipster-arrow-border
+{
 	display: block;
-	width: 0; 
 	height: 0;
 	position: absolute;
+	width: 0;
 }
-.tooltipster-arrow-top span, .tooltipster-arrow-top-right span, .tooltipster-arrow-top-left span {
+.tooltipster-arrow-top span, .tooltipster-arrow-top-right span, .tooltipster-arrow-top-left span
+{
 	border-left: 8px solid transparent !important;
 	border-right: 8px solid transparent !important;
 	border-top: 8px solid;
 	bottom: -7px;
 }
-.tooltipster-arrow-top .tooltipster-arrow-border, .tooltipster-arrow-top-right .tooltipster-arrow-border, .tooltipster-arrow-top-left .tooltipster-arrow-border {
+.tooltipster-arrow-top .tooltipster-arrow-border, .tooltipster-arrow-top-right .tooltipster-arrow-border, .tooltipster-arrow-top-left .tooltipster-arrow-border
+{
 	border-left: 9px solid transparent !important;
 	border-right: 9px solid transparent !important;
 	border-top: 9px solid;
 	bottom: -7px;
 }
-
-.tooltipster-arrow-bottom span, .tooltipster-arrow-bottom-right span, .tooltipster-arrow-bottom-left span {
+.tooltipster-arrow-bottom span, .tooltipster-arrow-bottom-right span, .tooltipster-arrow-bottom-left span
+{
+	border-bottom: 8px solid;
 	border-left: 8px solid transparent !important;
 	border-right: 8px solid transparent !important;
-	border-bottom: 8px solid;
 	top: -7px;
 }
-.tooltipster-arrow-bottom .tooltipster-arrow-border, .tooltipster-arrow-bottom-right .tooltipster-arrow-border, .tooltipster-arrow-bottom-left .tooltipster-arrow-border {
+.tooltipster-arrow-bottom .tooltipster-arrow-border, .tooltipster-arrow-bottom-right .tooltipster-arrow-border, .tooltipster-arrow-bottom-left .tooltipster-arrow-border
+{
+	border-bottom: 9px solid;
 	border-left: 9px solid transparent !important;
 	border-right: 9px solid transparent !important;
-	border-bottom: 9px solid;
 	top: -7px;
 }
-.tooltipster-arrow-top span, .tooltipster-arrow-top .tooltipster-arrow-border, .tooltipster-arrow-bottom span, .tooltipster-arrow-bottom .tooltipster-arrow-border {
+.tooltipster-arrow-top span, .tooltipster-arrow-top .tooltipster-arrow-border, .tooltipster-arrow-bottom span, .tooltipster-arrow-bottom .tooltipster-arrow-border
+{
 	left: 0;
-	right: 0;
 	margin: 0 auto;
+	right: 0;
 }
-.tooltipster-arrow-top-left span, .tooltipster-arrow-bottom-left span {
+.tooltipster-arrow-top-left span, .tooltipster-arrow-bottom-left span
+{
 	left: 6px;
 }
-.tooltipster-arrow-top-left .tooltipster-arrow-border, .tooltipster-arrow-bottom-left .tooltipster-arrow-border {
+.tooltipster-arrow-top-left .tooltipster-arrow-border, .tooltipster-arrow-bottom-left .tooltipster-arrow-border
+{
 	left: 5px;
 }
-.tooltipster-arrow-top-right span,  .tooltipster-arrow-bottom-right span {
+.tooltipster-arrow-top-right span, .tooltipster-arrow-bottom-right span
+{
 	right: 6px;
 }
-.tooltipster-arrow-top-right .tooltipster-arrow-border, .tooltipster-arrow-bottom-right .tooltipster-arrow-border {
+.tooltipster-arrow-top-right .tooltipster-arrow-border, .tooltipster-arrow-bottom-right .tooltipster-arrow-border
+{
 	right: 5px;
 }
-.tooltipster-arrow-left span, .tooltipster-arrow-left .tooltipster-arrow-border {
-	border-top: 8px solid transparent !important;
-	border-bottom: 8px solid transparent !important; 
+.tooltipster-arrow-left span, .tooltipster-arrow-left .tooltipster-arrow-border
+{
+	border-bottom: 8px solid transparent !important;
 	border-left: 8px solid;
-	top: 50%;
+	border-top: 8px solid transparent !important;
 	margin-top: -7px;
 	right: -7px;
-}
-.tooltipster-arrow-left .tooltipster-arrow-border {
-	border-top: 9px solid transparent !important;
-	border-bottom: 9px solid transparent !important; 
-	border-left: 9px solid;
-	margin-top: -8px;
-}
-.tooltipster-arrow-right span, .tooltipster-arrow-right .tooltipster-arrow-border {
-	border-top: 8px solid transparent !important;
-	border-bottom: 8px solid transparent !important; 
-	border-right: 8px solid;
 	top: 50%;
-	margin-top: -7px;
-	left: -7px;
 }
-.tooltipster-arrow-right .tooltipster-arrow-border {
+.tooltipster-arrow-left .tooltipster-arrow-border
+{
+	border-bottom: 9px solid transparent !important;
+	border-left: 9px solid;
 	border-top: 9px solid transparent !important;
-	border-bottom: 9px solid transparent !important; 
-	border-right: 9px solid;
 	margin-top: -8px;
 }
-
-
-/* Some CSS magic for the awesome animations - feel free to make your own custom animations and reference it in your Tooltipster settings! */
-
-.tooltipster-fade {
+.tooltipster-arrow-right span, .tooltipster-arrow-right .tooltipster-arrow-border
+{
+	border-bottom: 8px solid transparent !important;
+	border-right: 8px solid;
+	border-top: 8px solid transparent !important;
+	left: -7px;
+	margin-top: -7px;
+	top: 50%;
+}
+.tooltipster-arrow-right .tooltipster-arrow-border
+{
+	border-bottom: 9px solid transparent !important;
+	border-right: 9px solid;
+	border-top: 9px solid transparent !important;
+	margin-top: -8px;
+}
+.tooltipster-fade
+{
+	moz-transition-property: opacity;
+	ms-transition-property: opacity;
 	opacity: 0;
-	-webkit-transition-property: opacity;
-	-moz-transition-property: opacity;
-	-o-transition-property: opacity;
-	-ms-transition-property: opacity;
+	o-transition-property: opacity;
 	transition-property: opacity;
+	webkit-transition-property: opacity;
 }
-.tooltipster-fade-show {
+.tooltipster-fade-show
+{
 	opacity: 1;
 }
-
-.tooltipster-grow {
-	-webkit-transform: scale(0,0);
-	-moz-transform: scale(0,0);
-	-o-transform: scale(0,0);
-	-ms-transform: scale(0,0);
+.tooltipster-grow
+{
+	moz-transform: scale(0,0);
+	moz-transition-property: -moz-transform;
+	ms-transform: scale(0,0);
+	ms-transition-property: -ms-transform;
+	o-transform: scale(0,0);
+	o-transition-property: -o-transform;
 	transform: scale(0,0);
-	-webkit-transition-property: -webkit-transform;
-	-moz-transition-property: -moz-transform;
-	-o-transition-property: -o-transform;
-	-ms-transition-property: -ms-transform;
 	transition-property: transform;
-	-webkit-backface-visibility: hidden;
+	webkit-backface-visibility: hidden;
+	webkit-transform: scale(0,0);
+	webkit-transition-property: -webkit-transform;
 }
-.tooltipster-grow-show {
-	-webkit-transform: scale(1,1);
-	-moz-transform: scale(1,1);
-	-o-transform: scale(1,1);
-	-ms-transform: scale(1,1);
+.tooltipster-grow-show
+{
+	moz-transform: scale(1,1);
+	moz-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
+	ms-transform: scale(1,1);
+	ms-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
+	o-transform: scale(1,1);
+	o-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
 	transform: scale(1,1);
-	-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
-	-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15); 
-	-moz-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15); 
-	-ms-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15); 
-	-o-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15); 
 	transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
+	webkit-transform: scale(1,1);
+	webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+	webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
 }
-
-.tooltipster-swing {
+.tooltipster-swing
+{
+	moz-transform: rotateZ(4deg);
+	moz-transition-property: -moz-transform;
+	ms-transform: rotateZ(4deg);
+	ms-transition-property: -ms-transform;
 	opacity: 0;
-	-webkit-transform: rotateZ(4deg);
-	-moz-transform: rotateZ(4deg);
-	-o-transform: rotateZ(4deg);
-	-ms-transform: rotateZ(4deg);
+	o-transform: rotateZ(4deg);
+	o-transition-property: -o-transform;
 	transform: rotateZ(4deg);
-	-webkit-transition-property: -webkit-transform, opacity;
-	-moz-transition-property: -moz-transform;
-	-o-transition-property: -o-transform;
-	-ms-transition-property: -ms-transform;
 	transition-property: transform;
+	webkit-transform: rotateZ(4deg);
+	webkit-transition-property: -webkit-transform, opacity;
 }
-.tooltipster-swing-show {
+.tooltipster-swing-show
+{
+	moz-transform: rotateZ(0deg);
+	moz-transition-timing-function: cubic-bezier(0.230, 0.635, 0.495, 2.4);
+	ms-transform: rotateZ(0deg);
+	ms-transition-timing-function: cubic-bezier(0.230, 0.635, 0.495, 2.4);
 	opacity: 1;
-	-webkit-transform: rotateZ(0deg);
-	-moz-transform: rotateZ(0deg);
-	-o-transform: rotateZ(0deg);
-	-ms-transform: rotateZ(0deg);
+	o-transform: rotateZ(0deg);
+	o-transition-timing-function: cubic-bezier(0.230, 0.635, 0.495, 2.4);
 	transform: rotateZ(0deg);
-	-webkit-transition-timing-function: cubic-bezier(0.230, 0.635, 0.495, 1);
-	-webkit-transition-timing-function: cubic-bezier(0.230, 0.635, 0.495, 2.4); 
-	-moz-transition-timing-function: cubic-bezier(0.230, 0.635, 0.495, 2.4); 
-	-ms-transition-timing-function: cubic-bezier(0.230, 0.635, 0.495, 2.4); 
-	-o-transition-timing-function: cubic-bezier(0.230, 0.635, 0.495, 2.4); 
 	transition-timing-function: cubic-bezier(0.230, 0.635, 0.495, 2.4);
+	webkit-transform: rotateZ(0deg);
+	webkit-transition-timing-function: cubic-bezier(0.230, 0.635, 0.495, 1);
+	webkit-transition-timing-function: cubic-bezier(0.230, 0.635, 0.495, 2.4);
 }
-
-.tooltipster-fall {
+.tooltipster-fall
+{
+	moz-transition-property: top;
+	moz-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
+	ms-transition-property: top;
+	ms-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
+	o-transition-property: top;
+	o-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
 	top: 0;
-	-webkit-transition-property: top;
-	-moz-transition-property: top;
-	-o-transition-property: top;
-	-ms-transition-property: top;
 	transition-property: top;
-	-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
-	-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15); 
-	-moz-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15); 
-	-ms-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15); 
-	-o-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15); 
-	transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15); 
-}
-.tooltipster-fall-show {
-}
-.tooltipster-fall.tooltipster-dying {
-	-webkit-transition-property: all;
-	-moz-transition-property: all;
-	-o-transition-property: all;
-	-ms-transition-property: all;
-	transition-property: all;
-	top: 0px !important;
-	opacity: 0;
-}
-
-.tooltipster-slide {
-	left: -40px;
-	-webkit-transition-property: left;
-	-moz-transition-property: left;
-	-o-transition-property: left;
-	-ms-transition-property: left;
-	transition-property: left;
-	-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
-	-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15); 
-	-moz-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15); 
-	-ms-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15); 
-	-o-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15); 
 	transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
+	webkit-transition-property: top;
+	webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+	webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
 }
-.tooltipster-slide.tooltipster-slide-show {
+.tooltipster-fall-show
+{
 }
-.tooltipster-slide.tooltipster-dying {
-	-webkit-transition-property: all;
-	-moz-transition-property: all;
-	-o-transition-property: all;
-	-ms-transition-property: all;
-	transition-property: all;
-	left: 0px !important;
+.tooltipster-fall.tooltipster-dying
+{
+	moz-transition-property: all;
+	ms-transition-property: all;
 	opacity: 0;
+	o-transition-property: all;
+	top: 0px !important;
+	transition-property: all;
+	webkit-transition-property: all;
 }
-
-
-/* CSS transition for when contenting is changing in a tooltip that is still open. The only properties that will NOT transition are: width, height, top, and left */
-.tooltipster-content-changing {
+.tooltipster-slide
+{
+	left: -40px;
+	moz-transition-property: left;
+	moz-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
+	ms-transition-property: left;
+	ms-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
+	o-transition-property: left;
+	o-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
+	transition-property: left;
+	transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
+	webkit-transition-property: left;
+	webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+	webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.15);
+}
+.tooltipster-slide.tooltipster-slide-show
+{
+}
+.tooltipster-slide.tooltipster-dying
+{
+	left: 0px !important;
+	moz-transition-property: all;
+	ms-transition-property: all;
+	opacity: 0;
+	o-transition-property: all;
+	transition-property: all;
+	webkit-transition-property: all;
+}
+.tooltipster-content-changing
+{
+	moz-transform: scale(1.1, 1.1);
+	ms-transform: scale(1.1, 1.1);
 	opacity: 0.5;
-	-webkit-transform: scale(1.1, 1.1);
-	-moz-transform: scale(1.1, 1.1);
-	-o-transform: scale(1.1, 1.1);
-	-ms-transform: scale(1.1, 1.1);
+	o-transform: scale(1.1, 1.1);
 	transform: scale(1.1, 1.1);
+	webkit-transform: scale(1.1, 1.1);
 }
-.dashicons-search:before { 
-content: "\179";
-display: inline-block;
-color: #BDFFF7;
--webkit-font-smoothing: antialiased;
-font: normal 18px/1 'dashicons';
-margin-top: 0px;
-width: 16px;
-height: 16px;
-margin-right: 4px;
+.dashicons-search:before
+{
+	color: #BDFFF7;
+	content: "\179";
+	display: inline-block;
+	font: normal 16px/1 'dashicons';
+	height: 16px;
+	margin-top: 2px;
+	webkit-font-smoothing: antialiased;
+	width: 16px;
 }
-@media screen and (max-width: 480px) {
-	.dashicons, .dashicons-before:before { 
-	display: none !important;
+.dashicons-map:before
+{
+	color: #BDFFF7;
+	content: "\f319";
+	display: inline-block;
+	font: normal 18px/1 'dashicons';
+	height: 16px;
+	margin-right: 10px;
+	margin-top: 1px;
+	webkit-font-smoothing: antialiased;
+	width: 16px;
+}
+@media screen and (max-width: 480px)
+{
+	.dashicons, .dashicons-before:before
+	{
+		display: none !important;
 	}
+}
+.bmlt-tabs [class*="column"] + [class*="column"]:last-child {
+float: none;
+}
+input.readonly, input[readonly], textarea.readonly, textarea[readonly] {
+background-color: #fff !important;
+border-color: #FFF !important;
+box-shadow: none !important;
+}
+span.bmlt_sb {
+padding: 4px 6px;
+background-color: #FDFDFD;
+margin-right: 10px;
+border: 1px solid #D5D5D5;
+/* box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07); */
+}
+.ui-widget-header {
+background: #35414F url("images/ui-bg_dots-small_35_35414f_2x2.png") 50% 50% repeat;
+}
+div#cities {
+padding-bottom: 6px;
+}
+div.bmlt-page {
+padding-bottom: 6px;
+}
+.bmlt-tabs tr.ui-state-default {
+border: 0;
 }
