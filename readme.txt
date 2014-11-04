@@ -4,7 +4,7 @@ Contributors: Jack S
 Tags: na, meeting list, meeting finder, maps, recovery, addiction, webservant, bmlt
 Requires at least: 3.6
 Tested up to: 4.0
-Stable tag: 5.1
+Stable tag: 5.1.1
 BMLT Tabbed UI implements a jQuery tabbed UI for BMLT.
 
 == Description ==
@@ -27,6 +27,8 @@ This plugin provides a jQuery Tabbed UI and more for the Basic Meeting List Tool
 
 == Changelog ==
 
+= 5.1.1 =
+* Fix - SVN problem. CSS file was missing.
 = 5.1 =
 * New - Combined header (dropdowns) with meetings into one interface.
 * New - Added "Map" popup with options for directions, street map, earth map, print map and GPS coordinates.

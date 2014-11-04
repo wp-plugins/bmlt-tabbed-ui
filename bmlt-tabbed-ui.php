@@ -4,7 +4,7 @@ Plugin Name: BMLT Tabbed UI
 Plugin URI: http://wordpress.org/extend/plugins/bmlt-tabbed-ui/
 Description: Adds a jQuery Tabbed UI for BMLT.
 Author: Jack S Florida Region
-Version: 5.1
+Version: 5.1.1
 */
 
 /* Disallow direct access to the plugin file */
@@ -17,7 +17,7 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 if (!class_exists("BMLTTabs")) {
 	class BMLTTabs {
 		/*** @var string The plugin version */
-		var $version = '5.1';
+		var $version = '5.1.1';
 		/*** @var string The options string name for this plugin */
 		var $optionsName = 'bmlt_tabs_options';
 		var $options = array();
