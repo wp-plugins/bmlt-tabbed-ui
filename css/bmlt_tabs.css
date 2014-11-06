@@ -1,4 +1,4 @@
-.ui-dialog-titlebar.ui-widget-header.ui-corner-all.ui-helper-clearfix {
+.bmlt-tabs .ui-tabs .ui-tabs-nav .ui-tabs-anchor {	float: left;	padding: 0.3em .5em;	text-decoration: none;}.ui-dialog-titlebar.ui-widget-header.ui-corner-all.ui-helper-clearfix {
 text-align: right;
 }
 button.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-icon-only.ui-dialog-titlebar-close {
@@ -449,20 +449,10 @@ display: none;
 {
 	float: right;
 }
-.bmlt-tabs .ui-tabs .ui-tabs-nav li
-{
-	line-height: 15px;
-}
-.bmlt-tabs .ui-tabs .ui-tabs-nav li a
-{
-	border-bottom: 0;
-	padding: .4em .6em;
-	line-height: 1;
-}
 .bmlt-tabs .ui-tabs .ui-tabs-nav
 {
 	margin: 0;
-	padding: .3em 0em 0 .4em;
+	padding: .2em 0 0 .4em;
 }
 .bmlt-tabs .show-popup.bmlt-button
 {
