@@ -50,7 +50,7 @@ display: none;
 	color: inherit;
 	font-weight: normal;
 }
-.bmlt-tabs .select2-default span
+.select2-results .select2-result-label {color: #000 !important;}.select2-results .select2-highlighted {color: #FFF !important;}.bmlt-tabs .select2-default span
 {
 	color: #999 !important;
 }
@@ -449,11 +449,7 @@ display: none;
 {
 	float: right;
 }
-.bmlt-tabs .ui-tabs .ui-tabs-nav
-{
-	margin: 0;
-	padding: .2em 0 0 .4em;
-}
+#bmlt-tabs ul, .ui-tabs ul, .ui-tabs-nav ul {margin: 0 !important;padding: .2em 0 0 .4em !important;line-height: 20px !important;}
 .bmlt-tabs .show-popup.bmlt-button
 {
 	margin-bottom: 6px;
@@ -778,7 +774,7 @@ table.bmlt_a_format
 .dashicons-search:before
 {
 	color: #BDFFF7;
-	content: "\179";
+	content: "\f179";
 	display: inline-block;
 	font: normal 16px/1 'dashicons';
 	height: 16px;
