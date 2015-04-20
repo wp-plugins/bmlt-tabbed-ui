@@ -6,9 +6,9 @@ Tags: na, meeting list, meeting finder, maps, recovery, addiction, webservant, b
 
 Requires at least: 3.6
 
-Tested up to: 4.1
+Tested up to: 4.2
 
-Stable tag: 5.1.4
+Stable tag: 5.1.5
 
 BMLT Tabbed UI implements a jQuery tabbed UI for BMLT.
 
@@ -37,6 +37,14 @@ This plugin provides a jQuery Tabbed UI and more for the Basic Meeting List Tool
 <a href="http://orlandona.org/meetings/">Go to this Web page to get an idea of how this works.</a>
 
 == Changelog ==
+
+= 5.1.5 =
+
+* Fix - Apostrophe in format description was breaking html.
+
+* Fix - On some sites having no meetings on a weekday was breaking tab.
+
+* Fix - Cleaned up some css on the tabs.
 
 = 5.1.4 =
 

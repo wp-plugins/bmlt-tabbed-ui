@@ -4,7 +4,7 @@ Plugin Name: BMLT Tabbed UI
 Plugin URI: http://wordpress.org/extend/plugins/bmlt-tabbed-ui/
 Description: Adds a jQuery Tabbed UI for BMLT.
 Author: Jack S Florida Region
-Version: 5.1.4
+Version: 5.1.5
 */
 
 /* Disallow direct access to the plugin file */
@@ -17,7 +17,7 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 if (!class_exists("BMLTTabs")) {
 	class BMLTTabs {
 		/*** @var string The plugin version */
-		var $version = '5.1.4';
+		var $version = '5.1.5';
 		/*** @var string The options string name for this plugin */
 		var $optionsName = 'bmlt_tabs_options';
 		var $options = array();
@@ -624,6 +624,11 @@ if (!class_exists("BMLTTabs")) {
 						
 					}
 					
+					if ( $x == 1 && $meeting_tab_header == '' ) {
+						$meetings_tab .= "<div id='ui-tabs-" . $this_value . "'>";
+						$meetings_tab .= "</div>";
+					}
+					
 				}
 				
 			}
@@ -1111,7 +1116,7 @@ if (!class_exists("BMLTTabs")) {
 					$name_string = $fvalue['name_string'];
 					
 					if ($t_value == $key_string) {
-						$meeting_formats .= '<tr><td>' . $t_value . '</td><td>' . $fvalue['name_string'] . '</td><td>' . $fvalue['description_string'] . '</td></tr>';
+						$meeting_formats .= '<tr><td>' . $t_value . '</td><td>' . htmlentities($fvalue['name_string'], ENT_QUOTES) . '</td><td>' . htmlentities($fvalue['description_string'], ENT_QUOTES) . '</td></tr>';
 					}
 				}
 			}
