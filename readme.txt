@@ -1,4 +1,4 @@
-=== BMLT Tabbed UI === 
+﻿=== BMLT Tabbed UI === 
 
 Contributors: Jack S
 
@@ -6,9 +6,9 @@ Tags: na, meeting list, meeting finder, maps, recovery, addiction, webservant, b
 
 Requires at least: 3.6
 
-Tested up to: 4.2
+Tested up to: 4.2.2
 
-Stable tag: 5.1.5
+Stable tag: 5.2
 
 BMLT Tabbed UI implements a jQuery tabbed UI for BMLT.
 
@@ -37,6 +37,12 @@ This plugin provides a jQuery Tabbed UI and more for the Basic Meeting List Tool
 <a href="http://orlandona.org/meetings/">Go to this Web page to get an idea of how this works.</a>
 
 == Changelog ==
+
+= 5.2 =
+
+* Update - Added latest version of select2 javascript library.  This should fix conflict with All-in-One Event Calendar plugin.
+
+* Fix - Cleaned up css on dropdowns.
 
 = 5.1.5 =
 

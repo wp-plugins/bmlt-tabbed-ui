@@ -91,40 +91,52 @@ jQuery(document).ready(function($) {
     //$(".bmlt-table tr:even, .bmlt_simple_format_table tr:even").addClass("bmlt_alt_0");
     //$(".bmlt-table tr:odd, .bmlt_simple_format_table tr:odd").addClass("bmlt_alt_0");
 	$("#e2").select2({
+		//tags: "true",
 		placeholder: "Cities",
 		dropdownAutoWidth: true,
+		dropdownMaxWidth: '100px',
 		allowClear: false,
-		width: "copy",
+		width: "resolve",
 		minimumResultsForSearch: 1
 	});
 	$("#e3").select2({
+		//tags: "true",
 		placeholder: "Groups",
 		dropdownAutoWidth: true,
+		dropdownMaxWidth: '100px',
 		allowClear: false,
-		width: "copy",
+		width: "resolve",
 		minimumResultsForSearch: 1
 	});
 	$("#e4").select2({
+		//tags: "true",
 		placeholder: "Locations",
 		dropdownAutoWidth: true,
 		allowClear: false,
-		width: "copy",
+		width: "resolve",
 		minimumResultsForSearch: 1
 	});
 	$("#e5").select2({
+		//tags: "true",
 		placeholder: "Zips",
 		dropdownAutoWidth: true,
 		allowClear: false,
-		width: "copy",
+		width: "resolve",
 		minimumResultsForSearch: 1
 	});
 	$("#e6").select2({
+		//tags: "true",
 		placeholder: "Formats",
 		dropdownAutoWidth: true,
 		allowClear: false,
-		width: "copy",
+		width: "resolve",
 		minimumResultsForSearch: 1
 	});
+	$("#e2").select2({dropdownCssClass : 'bigdrop'}); 
+	$("#e3").select2({dropdownCssClass : 'bigdrop'}); 
+	$("#e4").select2({dropdownCssClass : 'bigdrop'}); 
+	$("#e5").select2({dropdownCssClass : 'bigdrop'}); 
+	$("#e6").select2({dropdownCssClass : 'bigdrop'}); 
 	if(jQuery.browser.mobile)
 	{
 		$("#e2").prop("readonly",true);
@@ -139,11 +151,12 @@ jQuery(document).ready(function($) {
 		$(".bmlt-tabs .bmlt-button-weekdays").css({"width":"98%","margin-bottom":"3px"});
 		$(".bmlt-tabs .bmlt-button-cities").css({"width":"98%","margin-bottom":"3px"});
 	}
-    $("#e2").on('click', function() {
-        $("#e3").select2("val", null);
-        $("#e4").select2("val", null);
-        $("#e5").select2("val", null);
-        $("#e6").select2("val", null);
+    $("#e2").on('select2:select', function(e) {
+		//$.fn.select2.defaults.reset();
+		if ( $( "#e3" ).length ) { $("#e3").select2("val", null); }
+		if ( $( "#e4" ).length ) { $("#e4").select2("val", null); }
+		if ( $( "#e5" ).length ) { $("#e5").select2("val", null); }
+		if ( $( "#e6" ).length ) { $("#e6").select2("val", null); }
 		if(jQuery.browser.mobile)
 		{
 			$("#e2").prop("readonly",true);
@@ -165,12 +178,12 @@ jQuery(document).ready(function($) {
             //}
         });
     });
-    $("#e3").on('click', function() {
+    $("#e3").on('select2:select', function(e) {
         // check the pages to find the page that is visible and hide it
-        $("#e2").select2("val", null);
-        $("#e4").select2("val", null);
-        $("#e5").select2("val", null);
-        $("#e6").select2("val", null);
+		if ( $( "#e2" ).length ) { $("#e2").select2("val", null); }
+		if ( $( "#e4" ).length ) { $("#e4").select2("val", null); }
+		if ( $( "#e5" ).length ) { $("#e5").select2("val", null); }
+		if ( $( "#e6" ).length ) { $("#e6").select2("val", null); }
         var val = $("#e3").val();
         $('.bmlt-page').each(function(index) {
             //if (this.className.indexOf('show', 0) > -1) {
@@ -185,12 +198,12 @@ jQuery(document).ready(function($) {
             //}
         });
     });
-    $("#e4").on('click', function() {
+    $("#e4").on('select2:select', function() {
         // check the pages to find the page that is visible and hide it
-        $("#e2").select2("val", null);
-        $("#e3").select2("val", null);
-        $("#e5").select2("val", null);
-        $("#e6").select2("val", null);
+		if ( $( "#e2" ).length ) { $("#e2").select2("val", null); }
+		if ( $( "#e3" ).length ) { $("#e3").select2("val", null); }
+		if ( $( "#e5" ).length ) { $("#e5").select2("val", null); }
+		if ( $( "#e6" ).length ) { $("#e6").select2("val", null); }
         var val = $("#e4").val();
         $('.bmlt-page').each(function(index) {
             //if (this.className.indexOf('show', 0) > -1) {
@@ -205,12 +218,12 @@ jQuery(document).ready(function($) {
             //}
         });
     });
-    $("#e5").on('click', function() {
+    $("#e5").on('select2:select', function() {
         // check the pages to find the page that is visible and hide it
-        $("#e2").select2("val", null);
-        $("#e3").select2("val", null);
-        $("#e4").select2("val", null);
-        $("#e6").select2("val", null);
+		if ( $( "#e2" ).length ) { $("#e2").select2("val", null); }
+		if ( $( "#e3" ).length ) { $("#e3").select2("val", null); }
+		if ( $( "#e4" ).length ) { $("#e4").select2("val", null); }
+		if ( $( "#e6" ).length ) { $("#e6").select2("val", null); }
         var val = $("#e5").val();
         $('.bmlt-page').each(function(index) {
             //if (this.className.indexOf('show', 0) > -1) {
@@ -225,12 +238,12 @@ jQuery(document).ready(function($) {
             //}
         });
     });
-    $("#e6").on('click', function() {
+    $("#e6").on('select2:select', function() {
         // check the pages to find the page that is visible and hide it
-        $("#e2").select2("val", null);
-        $("#e3").select2("val", null);
-        $("#e4").select2("val", null);
-        $("#e5").select2("val", null);
+		if ( $( "#e2" ).length ) { $("#e2").select2("val", null); }
+		if ( $( "#e3" ).length ) { $("#e3").select2("val", null); }
+		if ( $( "#e4" ).length ) { $("#e4").select2("val", null); }
+		if ( $( "#e5" ).length ) { $("#e5").select2("val", null); }
         var val = $("#e6").val();
         $('.bmlt-page').each(function(index) {
             //if (this.className.indexOf('show', 0) > -1) {
@@ -246,11 +259,11 @@ jQuery(document).ready(function($) {
         });
     });
     $("#day").on('click', function() {
-        $("#e2").select2("val", null);
-        $("#e3").select2("val", null);
-        $("#e4").select2("val", null);
-        $("#e5").select2("val", null);
-        $("#e6").select2("val", null);
+		if ( $( "#e2" ).length ) { $("#e2").select2("val", null); }
+		if ( $( "#e3" ).length ) { $("#e3").select2("val", null); }
+		if ( $( "#e4" ).length ) { $("#e4").select2("val", null); }
+		if ( $( "#e5" ).length ) { $("#e5").select2("val", null); }
+		if ( $( "#e6" ).length ) { $("#e6").select2("val", null); }
         // check the pages to find the page that is visible and hide it
         $('.bmlt-page').each(function(index) {
             //if (this.className.indexOf('show', 0) > -1) {
@@ -266,11 +279,11 @@ jQuery(document).ready(function($) {
         });
     });
     $("#city").on('click', function() {
-        $("#e2").select2("val", null);
-        $("#e3").select2("val", null);
-        $("#e4").select2("val", null);
-        $("#e5").select2("val", null);
-        $("#e6").select2("val", null);
+		if ( $( "#e2" ).length ) { $("#e2").select2("val", null); }
+		if ( $( "#e3" ).length ) { $("#e3").select2("val", null); }
+		if ( $( "#e4" ).length ) { $("#e4").select2("val", null); }
+		if ( $( "#e5" ).length ) { $("#e5").select2("val", null); }
+		if ( $( "#e6" ).length ) { $("#e6").select2("val", null); }
         // check the pages to find the page that is visible and hide it
         $('.bmlt-page').each(function(index) {
             //if (this.className.indexOf('show', 0) > -1) {
@@ -306,4 +319,28 @@ jQuery(document).ready(function($) {
 
 	$( ".ui-bmlt-header" ).removeClass("hide").addClass("show");
     $(".bmlt-tabs").removeClass("hide").addClass("show").fadeIn();	
+	
+	$(".bmlt-tabs").tabs({
+		create: function(event, ui) {
+			var tabs = $('.bmlt-tabs').data('tabs'),
+				links = tabs.anchors;
+			tabs.panels.each(function(i){
+				this.id = 'mod_' + this.id;
+				links[i].hash = '#' + this.id;
+			});
+		}
+	});
+
+	/**
+	 * Add hash to URL of the current page
+	 * 
+	 * http://chwang.blogspot.com/2010/02/jquery-ui-tabs-updating-url-with-hash.html
+	 * http://stackoverflow.com/questions/570276/changing-location-hash-with-jquery-ui-tabs
+	 */
+	$(".bmlt-tabs").bind('tabsshow', function(event, ui) {
+		window.location.hash = ui.tab.hash.replace('mod_', '');
+		$('.current').html(window.location.hash);
+		$('.actual').html(ui.tab.hash);
+	});	
+	
 });

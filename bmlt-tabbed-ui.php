@@ -4,7 +4,7 @@ Plugin Name: BMLT Tabbed UI
 Plugin URI: http://wordpress.org/extend/plugins/bmlt-tabbed-ui/
 Description: Adds a jQuery Tabbed UI for BMLT.
 Author: Jack S Florida Region
-Version: 5.1.5
+Version: 5.2
 */
 
 /* Disallow direct access to the plugin file */
@@ -148,14 +148,13 @@ if (!class_exists("BMLTTabs")) {
 			if ( $this->has_shortcode() ) {
 		
 				wp_enqueue_style("bmlt-tabs-jqueryui", plugin_dir_url(__FILE__) . "css/jquery-ui.min.css", false, null, false);
-				wp_enqueue_style("bmlt-tabs-select2", plugin_dir_url(__FILE__) . "css/select2.css", false, null, false);
+				wp_enqueue_style("bmlt-tabs-select2", plugin_dir_url(__FILE__) . "css/select2.min.css", false, null, false);
 				wp_enqueue_style("bmlt-tabs", plugin_dir_url(__FILE__) . "css/bmlt_tabs.css", false, null, false);
 				wp_enqueue_script("tooltipster", plugin_dir_url(__FILE__) . "js/jquery.tooltipster.min.js", array('jquery'), null, true);
-				//wp_enqueue_script("google-maps", "https://maps.googleapis.com/maps/api/js?v=3.exp", array('jquery'), null, true);
 				wp_enqueue_script('jquery-ui-core');
 				wp_enqueue_script('jquery-ui-tabs');
 				wp_enqueue_script('jquery-ui-dialog');
-				wp_enqueue_script("bmlt-tabs-select2", plugin_dir_url(__FILE__) . "js/select2.min.js", array('jquery'), null, true);
+				wp_enqueue_script("bmlt-tabs-select2", plugin_dir_url(__FILE__) . "js/select2.full.min.js", array('jquery'), null, true);
 				wp_enqueue_script("spin", plugin_dir_url(__FILE__) . "js/spin.min.js", array('jquery'), null, false);
 				wp_enqueue_script("bmlt-tabs", plugin_dir_url(__FILE__) . "js/bmlt_tabs.js", array('jquery'), null, false);
 				wp_enqueue_style('dashicons');
@@ -669,67 +668,62 @@ if (!class_exists("BMLTTabs")) {
 				
 				
 				if ($has_cities == '1') {
-					$output .= '
-						<select style="width:' . $dropdown_width . ';" data-placeholder="Cities" id="e2">
-							<option></option>';
+					$output .= '<span style="margin-left: 3px;">';
+					$output .= '<select style="width:' . $dropdown_width . ';" data-placeholder="Cities" id="e2">';
+					$output .= '<option></option>';
 					foreach ($unique_city as $city_value) {
-						$output .= "<option value=a-" . strtolower(preg_replace("/\W|_/", '-', $city_value)) . ">$city_value</option>";
-					}
-					
-					$output .= '
-						</select>';
+						$output .= "<option value=a-" . strtolower(preg_replace("/\W|_/", '-', $city_value)) . ">".$city_value."</option>";
+					}				
+					$output .= '</select>';
+					$output .= '</span>';
 				}
 				
 				
 				if ($has_groups == '1') {
-					$output .= '
-						<select style="width:' . $dropdown_width . ';" data-placeholder="Groups" id="e3">
-							<option></option>';
+					$output .= '<span style="margin-left: 3px;">';
+					$output .= '<select style="width:' . $dropdown_width . ';" data-placeholder="Cities" id="e3">';
+					$output .= '<option></option>';
 					foreach ($unique_group as $group_value) {
 						$output .= "<option value=a-" . strtolower(preg_replace("/\W|_/", '-', $group_value)) . ">$group_value</option>";
 					}
-					
-					$output .= '
-						</select>';
+					$output .= '</select>';
+					$output .= '</span>';
 				}
 				
 				
 				if ($has_locations == '1') {
-					$output .= '
-						<select style="width:' . $dropdown_width . ';" data-placeholder="Locations" id="e4">
-							<option></option>';
+					$output .= '<span style="margin-left: 3px;">';
+					$output .= '<select style="width:' . $dropdown_width . ';" data-placeholder="Locations" id="e4">';
+					$output .= '<option></option>';
 					foreach ($unique_location as $location_value) {
 						$output .= "<option value=a-" . strtolower(preg_replace("/\W|_/", '-', $location_value)) . ">$location_value</option>";
 					}
-					
-					$output .= '
-						</select>';
+					$output .= '</select>';
+					$output .= '</span>';
 				}
 				
 				
 				if ($has_zip_codes == '1') {
-					$output .= '
-						<select style="width:' . $dropdown_width . ';" data-placeholder="Zip Codes" id="e5">
-							<option></option>';
+					$output .= '<span style="margin-left: 3px;">';
+					$output .= '<select style="width:' . $dropdown_width . ';" data-placeholder="Zips" id="e5">';
+					$output .= '<option></option>';
 					foreach ($unique_zip as $zip_value) {
 						$output .= "<option value=a-" . strtolower(preg_replace("/\W|_/", '-', $zip_value)) . ">$zip_value</option>";
-					}
-					
-					$output .= '
-						</select>';
+					}		
+					$output .= '</select>';
+					$output .= '</span>';
 				}
 				
-				
+			
 				if ($has_formats == '1') {
-					$output .= '
-						<select style="width:' . $dropdown_width . ';" data-placeholder="Formats" id="e6">
-							<option></option>';
+					$output .= '<span style="margin-left: 3px;">';
+					$output .= '<select style="width:' . $dropdown_width . ';" data-placeholder="Formats" id="e6">';
+					$output .= '<option></option>';
 					foreach ($unique_format_name_string as $format_value) {
 						$output .= "<option value=a-" . strtolower(preg_replace("/\W|_/", '-', $format_value)) . ">$format_value</option>";
 					}
-					
-					$output .= '
-						</select>';
+					$output .= '</select>';
+					$output .= '</span>';
 				}
 				
 				$output .= '</div>';
