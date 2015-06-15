@@ -1,3 +1,14 @@
+span.select2.select2-container.select2-container--default {
+  height: 30px;
+}
+#bmlt-tabs .bmlt-dropdown-container {
+  display: inline;
+  position: relative;
+  margin-left: 3px;
+}
+.bigdrop {
+    width: 200px !important;
+}
 .bmlt-tabs .ui-corner-all, .bmlt-tabs .ui-corner-top, .bmlt-tabs .ui-corner-left, .bmlt-tabs .ui-corner-tl {
   border-top-left-radius: 0px;
 }
@@ -67,9 +78,7 @@ display: none;
 /* #e2 {
     width: 200px !important;       
 } */
-.bigdrop{
-    width: 200px !important;
-}
+
  .select2-container--default .select2-results__option--highlighted[aria-selected] {
 	background-color: #5897FB;
 	color: #FFF !important;
@@ -218,7 +227,7 @@ span.select2-results ul li{
 	color: #2C4359;
 	font-size: 14px;
 	margin-bottom: 0px;
-	padding: 3px 4px 0px 6px;
+	padding: 6px 4px 0px 6px; 
 	text-align: left;
 }
 #bmlt-tabs .ui-bmlt-column3
@@ -467,25 +476,22 @@ span.select2-results ul li{
 {
 	display: inline;
 	position: relative;
-	top: 1px;
 }
 #bmlt-tabs .bmlt-button-weekdays
 {
 	font-size: 14px;
 	font-weight: normal;
-	line-height: 26px !important;
-	margin-top: 2px;
-	min-height: 26px !important;
+	line-height: 27px !important;
+	min-height: 27px !important;
 	padding: 0px 8px;
 }
 #bmlt-tabs .bmlt-button-cities
 {
 	font-size: 14px;
 	font-weight: normal;
-	line-height: 26px !important;
+	line-height: 27px !important;
 	margin-left: 3px;
-	margin-top: 2px;
-	min-height: 26px !important;
+	min-height: 27px !important;
 	padding: 0px 8px;
 }
 #bmlt-tabs .main-content
