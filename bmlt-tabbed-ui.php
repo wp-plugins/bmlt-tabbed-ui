@@ -4,7 +4,7 @@ Plugin Name: BMLT Tabbed UI
 Plugin URI: http://wordpress.org/extend/plugins/bmlt-tabbed-ui/
 Description: Adds a jQuery Tabbed UI for BMLT.
 Author: Jack S Florida Region
-Version: 5.2.1
+Version: 5.2.3
 */
 
 /* Disallow direct access to the plugin file */
@@ -17,7 +17,7 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 if (!class_exists("BMLTTabs")) {
 	class BMLTTabs {
 		/*** @var string The plugin version */
-		var $version = '5.2.1';
+		var $version = '5.2.3';
 		/*** @var string The options string name for this plugin */
 		var $optionsName = 'bmlt_tabs_options';
 		var $options = array();
@@ -668,65 +668,66 @@ if (!class_exists("BMLTTabs")) {
 				
 				
 				if ($has_cities == '1') {
-					$output .= '<span style="margin-left: 3px;">';
-					$output .= '<select style="width:' . $dropdown_width . ';" data-placeholder="Cities" id="e2">';
+					$output .= '<div class="bmlt-dropdown-container">';
+					$output .= '<select style="height: 26px; width:' . $dropdown_width . ';" data-placeholder="Cities" id="e2">';
 					$output .= '<option></option>';
 					foreach ($unique_city as $city_value) {
 						$output .= "<option value=a-" . strtolower(preg_replace("/\W|_/", '-', $city_value)) . ">".$city_value."</option>";
 					}				
 					$output .= '</select>';
-					$output .= '</span>';
+					$output .= '</div>';
 				}
 				
 				
 				if ($has_groups == '1') {
-					$output .= '<span style="margin-left: 3px;">';
-					$output .= '<select style="width:' . $dropdown_width . ';" data-placeholder="Cities" id="e3">';
+					$output .= '<div class="bmlt-dropdown-container">';
+					$output .= '<select style="width:' . $dropdown_width . ';" data-placeholder="Groups" id="e3">';
 					$output .= '<option></option>';
 					foreach ($unique_group as $group_value) {
 						$output .= "<option value=a-" . strtolower(preg_replace("/\W|_/", '-', $group_value)) . ">$group_value</option>";
 					}
 					$output .= '</select>';
-					$output .= '</span>';
+					$output .= '</div>';
 				}
 				
 				
 				if ($has_locations == '1') {
-					$output .= '<span style="margin-left: 3px;">';
+					$output .= '<div class="bmlt-dropdown-container">';
 					$output .= '<select style="width:' . $dropdown_width . ';" data-placeholder="Locations" id="e4">';
 					$output .= '<option></option>';
 					foreach ($unique_location as $location_value) {
 						$output .= "<option value=a-" . strtolower(preg_replace("/\W|_/", '-', $location_value)) . ">$location_value</option>";
 					}
 					$output .= '</select>';
-					$output .= '</span>';
+					$output .= '</div>';
 				}
 				
 				
 				if ($has_zip_codes == '1') {
-					$output .= '<span style="margin-left: 3px;">';
+					$output .= '<div class="bmlt-dropdown-container">';
 					$output .= '<select style="width:' . $dropdown_width . ';" data-placeholder="Zips" id="e5">';
 					$output .= '<option></option>';
 					foreach ($unique_zip as $zip_value) {
 						$output .= "<option value=a-" . strtolower(preg_replace("/\W|_/", '-', $zip_value)) . ">$zip_value</option>";
 					}		
 					$output .= '</select>';
-					$output .= '</span>';
+					$output .= '</div>';
 				}
 				
 			
 				if ($has_formats == '1') {
-					$output .= '<span style="margin-left: 3px;">';
+					$output .= '<div class="bmlt-dropdown-container">';
 					$output .= '<select style="width:' . $dropdown_width . ';" data-placeholder="Formats" id="e6">';
 					$output .= '<option></option>';
 					foreach ($unique_format_name_string as $format_value) {
 						$output .= "<option value=a-" . strtolower(preg_replace("/\W|_/", '-', $format_value)) . ">$format_value</option>";
 					}
 					$output .= '</select>';
-					$output .= '</span>';
+					$output .= '</div>';
 				}
 				
 				$output .= '</div>';
+				
 			}
 			
 			
