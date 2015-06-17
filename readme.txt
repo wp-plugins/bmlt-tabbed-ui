@@ -8,7 +8,7 @@ Requires at least: 3.6
 
 Tested up to: 4.2.2
 
-Stable tag: 5.2.2
+Stable tag: 5.2.3
 
 BMLT Tabbed UI implements a jQuery tabbed UI for BMLT.
 
@@ -37,6 +37,10 @@ This plugin provides a jQuery Tabbed UI and more for the Basic Meeting List Tool
 <a href="http://orlandona.org/meetings/">Go to this Web page to get an idea of how this works.</a>
 
 == Changelog ==
+
+= 5.2.3 =
+
+* Fix - PHP encoding issue causing headers already sent error.
 
 = 5.2.2 =
 
