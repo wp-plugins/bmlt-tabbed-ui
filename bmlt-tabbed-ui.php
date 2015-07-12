@@ -13,7 +13,7 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 	// die('Sorry, but you cannot access this page directly.');
 }
 
-
+// TODO: I need to fix this thing here
 if (!class_exists("BMLTTabs")) {
 	class BMLTTabs {
 		/*** @var string The plugin version */
@@ -123,10 +123,10 @@ if (!class_exists("BMLTTabs")) {
 		function filter_content($content) {
 			return $content;
 		}
-		
-		/**
-		 * @desc Adds JS/CSS to the header
-		 */
+
+        /**
+         * @param $hook
+         */
 		function enqueue_backend_files($hook) {
 		
 			if( $hook == 'settings_page_bmlt-tabbed-ui' ) {
